@@ -3,115 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>French 101</title>
+  <title>Mosap Tools</title>
   <style>
     :root {
-      --bg: #0d1117;
-      --sidebar: #161b22;
-      --text: #c9d1d9;
+      --bg: #0a0c10;
+      --card: #161b22;
       --accent: #58a6ff;
+      --text: #c9d1d9;
+      --text-light: #8b949e;
     }
+    
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      overflow-x: hidden;
+      line-height: 1.6;
     }
+
     .header {
-      background: #161b22;
-      padding: 15px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #30363d;
+      background: rgba(22, 27, 34, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 16px 20px;
       position: sticky;
       top: 0;
       z-index: 100;
+      border-bottom: 1px solid #30363d;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
+
     .header h1 {
-      font-size: 1.4rem;
+      font-size: 1.55rem;
+      font-weight: 600;
       color: var(--accent);
     }
+
     .menu-btn {
       background: none;
       border: none;
-      color: white;
-      font-size: 28px;
+      font-size: 30px;
+      color: var(--text);
       cursor: pointer;
-      padding: 5px 10px;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
     }
+    .menu-btn:hover { background: #21262d; }
+
     .sidebar {
       position: fixed;
       top: 0;
-      right: -280px;           /* مخفي في الأول (لأن dir=rtl) */
-      width: 280px;
+      right: -300px;
+      width: 300px;
       height: 100vh;
-      background: var(--sidebar);
-      padding: 20px;
-      transition: right 0.3s ease;
+      background: var(--card);
+      padding: 25px 20px;
+      transition: right 0.4s ease;
       z-index: 200;
-      overflow-y: auto;
-      border-left: 1px solid #30363d;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.5);
     }
     .sidebar.open { right: 0; }
+
     .overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
+      inset: 0;
+      background: rgba(0,0,0,0.75);
       z-index: 150;
       display: none;
+      backdrop-filter: blur(3px);
     }
     .overlay.show { display: block; }
 
-    .main-content {
-      padding: 20px;
-      margin-top: 60px;        /* عشان الـ header */
+    .sidebar h2 {
+      color: var(--accent);
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #30363d;
     }
-    button {
+
+    .tool-btn {
       width: 100%;
-      padding: 16px;
-      margin: 10px 0;
+      padding: 18px 16px;
+      margin: 8px 0;
       background: #21262d;
       color: var(--text);
       border: 1px solid #30363d;
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 17px;
-      cursor: pointer;
       text-align: right;
-    }
-    button:hover {
-      background: #30363d;
-      border-color: var(--accent);
-    }
-    iframe {
-      width: 100%;
-      height: 75vh;
-      border: 1px solid #30363d;
-      border-radius: 10px;
-      background: white;
-    }
-    .welcome {
-      text-align: center;
-      color: #8b949e;
-      margin-top: 80px;
-      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    /* Responsive adjustments */
+    .tool-btn:hover {
+      background: #30363d;
+      border-color: var(--accent);
+      transform: translateX(-4px);
+    }
+
+    .main-content {
+      padding: 20px;
+      margin-top: 70px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 78vh;
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      background: white;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-top: 120px;
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    .welcome small {
+      display: block;
+      margin-top: 12px;
+      opacity: 0.7;
+    }
+
     @media (min-width: 768px) {
       .sidebar {
         position: relative;
         right: 0;
-        width: 280px;
+        width: 300px;
         height: auto;
-        border-left: none;
+        box-shadow: none;
       }
       .main-content {
         margin-top: 0;
-        padding: 20px 20px 20px 300px;   /* مسافة للسايدبار */
+        padding: 30px 30px 30px 330px;
       }
       .menu-btn, .overlay { display: none; }
     }
@@ -119,55 +155,55 @@
 </head>
 <body>
 
-  <!-- Header -->
   <div class="header">
-    <h1>My Tools</h1>
+    <h1>Mosap Tools</h1>
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   </div>
 
-  <!-- Overlay -->
   <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <h2 style="margin-bottom:20px; color:#58a6ff;">الأدوات المتاحة</h2>
+    <h2>Available Tools</h2>
     
-    <button onclick="loadTool('french-reader.html')">📖 French reader</button>
-    <button onclick="loadTool('A0-Paragraphs.html')">📝 A0-Paragraphs</button>
-    <button onclick="loadTool('A0-Practice.html')">⚡ A0-Practice</button>
+    <button class="tool-btn" onclick="loadTool('french-reader.html')">
+      📖 French Reader
+    </button>
     
-    <!-- أضف أدوات جديدة هنا بنفس الطريقة -->
+    <button class="tool-btn" onclick="loadTool('A0-Paragraphs.html')">
+      📝 A0 - Paragraphs
+    </button>
+    
+    <button class="tool-btn" onclick="loadTool('A0-Practice.html')">
+      ⚡ A0 - Practice
+    </button>
   </div>
 
-  <!-- Main Content -->
   <div class="main-content">
     <iframe id="toolFrame" src="about:blank"></iframe>
+    
     <div id="welcome" class="welcome">
-      اختر أداة من القائمة عشان تبدأ<br>
-      <small>كل الأدوات تعمل offline بعد أول تحميل</small>
+      Welcome to my personal tools<br>
+      Choose a tool from the menu to start
+      <small>All tools work offline after first load</small>
     </div>
   </div>
 
   <script>
     function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('show');
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('show');
     }
 
     function loadTool(filename) {
       document.getElementById('welcome').style.display = 'none';
       document.getElementById('toolFrame').src = filename;
-      
-      // على الموبايل: نقفل السايدبار تلقائي بعد اختيار أداة
+
       if (window.innerWidth < 768) {
         toggleSidebar();
       }
     }
 
-    // إغلاق السايدبار لو ضغط Esc
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', (e) => {
       if (e.key === "Escape") {
         const sidebar = document.getElementById('sidebar');
         if (sidebar.classList.contains('open')) toggleSidebar();
