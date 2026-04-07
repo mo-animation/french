@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Français A0 — Lecture Quotidienne</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ed;
+  --card:#ffffff;
+  --blue:#1a3a8f;
+  --red:#c8102e;
+  --gold:#c9a030;
+  --green:#1e6b45;
+  --ink:#18181b;
+  --muted:#71717a;
+  --warm:#ede8df;
+  --border:rgba(0,0,0,0.07);
+  --playing:#1a3a8f;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);min-height:100vh;}
+
+/* STRIPE */
+.stripe{height:5px;background:linear-gradient(90deg,#002395 33.3%,#fff 33.3% 66.6%,#ED2939 66.6%);}
+
+/* HEADER */
+.header{background:var(--blue);padding:44px 24px 36px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 50%,rgba(201,160,48,.12) 0%,transparent 60%),
+             repeating-linear-gradient(135deg,transparent,transparent 50px,rgba(255,255,255,.02) 50px,rgba(255,255,255,.02) 100px);}
+.header-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
+.header-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;}
+.header h1{font-family:'Fraunces',serif;font-size:clamp(28px,6vw,52px);color:#fff;line-height:1.05;margin-bottom:12px;}
+.header h1 em{color:var(--gold);font-style:italic;}
+.header p{color:rgba(255,255,255,.65);font-size:14px;line-height:1.7;max-width:520px;}
+.header-meta{display:flex;gap:16px;margin-top:18px;flex-wrap:wrap;}
+.meta-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:5px 14px;border-radius:99px;font-size:12px;font-weight:500;}
+
+/* CONTROLS BAR */
+.controls{background:var(--warm);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:none;}
+.ctrl-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.speed-btns{display:flex;gap:6px;}
+.speed-btn{padding:5px 12px;border-radius:99px;border:1.5px solid #ccc;background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);transition:all .2s;}
+.speed-btn.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+.ctrl-sep{width:1px;height:20px;background:#ddd;margin:0 4px;}
+.voice-select{padding:6px 12px;border-radius:8px;border:1.5px solid #ccc;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:#fff;cursor:pointer;outline:none;}
+
+/* PROGRESS */
+.day-nav{background:var(--warm);border-bottom:2px solid var(--border);overflow-x:auto;}
+.day-nav-inner{display:flex;gap:4px;padding:10px 16px;min-width:max-content;}
+.day-btn{padding:7px 14px;border:none;background:transparent;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap;}
+.day-btn:hover{background:rgba(26,58,143,.08);color:var(--blue);}
+.day-btn.on{background:var(--blue);color:#fff;}
+.day-btn.done{position:relative;}
+.day-btn.done::after{content:'✓';position:absolute;top:-4px;right:-4px;background:var(--green);color:#fff;border-radius:50%;width:14px;height:14px;font-size:9px;display:flex;align-items:center;justify-content:center;line-height:1;}
+
+/* MAIN */
+main{max-width:760px;margin:0 auto;padding:28px 16px 80px;}
+
+/* DAY SHEET */
+.day-sheet{display:none;}
+.day-sheet.on{display:block;}
+
+/* DAY HEADER */
+.day-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+.day-head-left h2{font-family:'Fraunces',serif;font-size:26px;color:var(--ink);margin-bottom:4px;}
+.day-head-left p{font-size:13px;color:var(--muted);}
+.day-badge{background:var(--blue);color:#fff;border-radius:12px;padding:8px 16px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
+
+/* PARAGRAPH CARD */
+.para-card{background:var(--card);border-radius:20px;border:1.5px solid var(--border);box-shadow:0 2px 20px rgba(0,0,0,.05);margin-bottom:20px;overflow:hidden;transition:box-shadow .2s;}
+.para-card:hover{box-shadow:0 4px 28px rgba(0,0,0,.09);}
+
+.para-top{padding:22px 24px 0;}
+.para-topic{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-bottom:12px;}
+.topic-blue{background:#e0e9ff;color:var(--blue);}
+.topic-red{background:#ffe0e4;color:var(--red);}
+.topic-green{background:#e0f5ec;color:var(--green);}
+.topic-gold{background:#fff3db;color:#8a5500;}
+.topic-purple{background:#f0e0ff;color:#6200c8;}
+
+.para-title{font-family:'Fraunces',serif;font-size:19px;color:var(--ink);margin-bottom:14px;line-height:1.3;}
+
+/* TEXT */
+.para-text{font-size:15px;line-height:2;color:var(--ink);padding:0 24px 20px;font-family:'DM Sans',sans-serif;}
+.para-text .word{display:inline;cursor:default;border-radius:3px;padding:0 1px;transition:background .15s;}
+.para-text .word.active{background:#fef3c7;color:#92400e;}
+
+/* PLAYER */
+.player{background:var(--warm);border-top:1.5px solid var(--border);padding:16px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.play-btn{width:48px;height:48px;border-radius:50%;background:var(--blue);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;box-shadow:0 4px 14px rgba(26,58,143,.3);}
+.play-btn:hover{background:#122c6e;transform:scale(1.05);}
+.play-btn svg{width:20px;height:20px;fill:#fff;}
+.play-btn.playing{background:var(--red);box-shadow:0 4px 14px rgba(200,16,46,.3);}
+
+.player-info{flex:1;min-width:120px;}
+.player-title{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.player-sub{font-size:11px;color:var(--muted);}
+
+/* PROGRESS BAR IN PLAYER */
+.prog-wrap{flex:2;min-width:100px;}
+.prog-bar{height:5px;background:#ddd;border-radius:99px;overflow:hidden;margin-bottom:4px;}
+.prog-inner{height:100%;background:linear-gradient(90deg,var(--blue),var(--red));border-radius:99px;width:0%;transition:width .1s linear;}
+.prog-time{font-size:10px;color:var(--muted);text-align:right;}
+
+/* REPLAY & SLOW */
+.player-actions{display:flex;gap:8px;}
+.pact-btn{padding:6px 12px;border-radius:8px;border:1.5px solid #ccc;background:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;}
+.pact-btn:hover{border-color:var(--blue);color:var(--blue);}
+
+/* TRANSLATION TOGGLE */
+.trans-wrap{padding:0 24px 16px;}
+.trans-btn{background:none;border:1.5px solid #ddd;border-radius:8px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;}
+.trans-btn:hover{border-color:var(--blue);color:var(--blue);}
+.translation{display:none;margin-top:10px;padding:14px 16px;background:#f0f7ff;border-radius:10px;border-left:3px solid var(--blue);font-size:13px;line-height:1.8;color:var(--muted);font-style:italic;}
+.translation.show{display:block;}
+
+/* DONE MARK */
+.mark-done-wrap{padding:0 24px 20px;}
+.mark-done-btn{width:100%;padding:10px;border-radius:10px;background:transparent;border:1.5px dashed #ccc;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:#aaa;cursor:pointer;transition:all .2s;}
+.mark-done-btn:hover{border-color:var(--green);color:var(--green);}
+.mark-done-btn.done{background:#e0f5ec;border-color:var(--green);border-style:solid;color:var(--green);}
+
+/* OVERALL PROGRESS */
+.overall{background:var(--warm);border-top:2px solid var(--border);padding:16px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;bottom:0;z-index:10;}
+.ov-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.ov-track{flex:1;min-width:80px;height:7px;background:#ddd;border-radius:99px;overflow:hidden;}
+.ov-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--red));border-radius:99px;transition:width .4s ease;width:0%;}
+.ov-num{font-size:12px;font-weight:700;color:var(--blue);}
+
+/* NOT SUPPORTED */
+.no-speech{background:#fff3db;border:1.5px solid var(--gold);border-radius:10px;padding:12px 16px;font-size:13px;color:#7a5500;display:none;margin-bottom:16px;}
+
+@media(max-width:500px){
+  .header{padding:28px 16px 24px;}
+  main{padding:16px 12px 80px;}
+  .para-top,.para-text,.player,.trans-wrap,.mark-done-wrap{padding-left:16px;padding-right:16px;}
+  .player{gap:10px;}
+  .prog-wrap{min-width:80px;}
+}
+</style>
+</head>
+<body>
+
+<div class="stripe"></div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Niveau A0 · Mme Sabria</div>
+    <h1>Lecture <em>Quotidienne</em></h1>
+    <p>Read aloud every day. Tap ▶ to hear the correct French pronunciation, then repeat each sentence.</p>
+    <div class="header-meta">
+      <span class="meta-pill">📖 30 paragraphes</span>
+      <span class="meta-pill">🔊 Audio intégré</span>
+      <span class="meta-pill">📅 Un par jour</span>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <span class="ctrl-label">Vitesse</span>
+  <div class="speed-btns">
+    <button class="speed-btn" onclick="setSpeed(0.6,this)">0.6×</button>
+    <button class="speed-btn" onclick="setSpeed(0.8,this)">0.8×</button>
+    <button class="speed-btn on" onclick="setSpeed(1,this)">1×</button>
+    <button class="speed-btn" onclick="setSpeed(1.2,this)">1.2×</button>
+  </div>
+  <div class="ctrl-sep"></div>
+  <span class="ctrl-label">Voix</span>
+  <select class="voice-select" id="voiceSelect" onchange="setVoice()"></select>
+</div>
+
+<div class="day-nav">
+  <div class="day-nav-inner" id="dayNav"></div>
+</div>
+
+<main id="mainArea">
+  <div class="no-speech" id="noSpeech">⚠️ Your browser doesn't support speech synthesis. Try Chrome or Edge for audio.</div>
+</main>
+
+<div class="overall">
+  <span class="ov-label">Progression</span>
+  <div class="ov-track"><div class="ov-fill" id="ovFill"></div></div>
+  <span class="ov-num" id="ovNum">0 / 30</span>
+</div>
+
+<script>
+// ─── PARAGRAPH DATA ───────────────────────────────────────────────────────────
+var days = [
+{
+  day:1, title:"Je me présente", topic:"👤 Se présenter", topicClass:"topic-blue",
+  text:"Bonjour ! Je m'appelle Ahmed. J'ai vingt-huit ans. Je suis égyptien. Je suis né le vingt mars mille neuf cent quatre-vingt-dix-sept. J'habite en Égypte, exactement au Caire. Je suis ingénieur. J'ai les yeux noirs et les cheveux noirs. Je suis grand et mince. Je suis content de vous rencontrer !",
+  translation:"Hello! My name is Ahmed. I am 28 years old. I am Egyptian. I was born on March 20th, 1997. I live in Egypt, exactly in Cairo. I am an engineer. I have black eyes and black hair. I am tall and slim. I am happy to meet you!"
+},{
+  day:2, title:"Mon alphabet et mes chiffres", topic:"🔤 L'alphabet & les nombres", topicClass:"topic-red",
+  text:"L'alphabet français a vingt-six lettres. A comme avion, B comme ballon, C comme carotte, D comme dinosaure, E comme éléphant. Les nombres sont faciles : zéro, un, deux, trois, quatre, cinq, six, sept, huit, neuf, dix. Vingt, trente, quarante, cinquante, soixante, soixante-dix, quatre-vingts, quatre-vingt-dix, cent. J'ai vingt-huit ans. Mon numéro préféré est le sept.",
+  translation:"The French alphabet has 26 letters. A like airplane, B like balloon, C like carrot, D like dinosaur, E like elephant. The numbers are easy: zero, one, two, three, four, five, six, seven, eight, nine, ten. Twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, one hundred. I am 28 years old. My favorite number is seven."
+},{
+  day:3, title:"Ma famille", topic:"👨‍👩‍👧 La famille", topicClass:"topic-green",
+  text:"Dans ma famille, il y a cinq personnes. Mon père s'appelle Hassan et il a cinquante-sept ans. Il est ingénieur. Ma mère s'appelle Fatima et elle a cinquante-deux ans. Elle est professeure. Mon frère s'appelle Adam et il a vingt-deux ans. Il est étudiant. Ma sœur s'appelle Sara et elle a dix-huit ans. Elle est au lycée. J'aime beaucoup ma famille.",
+  translation:"In my family, there are five people. My father's name is Hassan and he is 57 years old. He is an engineer. My mother's name is Fatima and she is 52 years old. She is a teacher. My brother's name is Adam and he is 22 years old. He is a student. My sister's name is Sara and she is 18 years old. She is in high school. I love my family very much."
+},{
+  day:4, title:"Ma famille élargie", topic:"👨‍👩‍👧 La famille", topicClass:"topic-green",
+  text:"Mon grand-père s'appelle Mahmoud et il a quatre-vingts ans. Il est retraité. Ma grand-mère s'appelle Khadija et elle a soixante-quinze ans. Mon oncle s'appelle Karim et il a quarante-cinq ans. Il est médecin. Ma tante s'appelle Nadia et elle a quarante ans. Elle est avocate. Mon cousin s'appelle Omar et ma cousine s'appelle Layla. Nous sommes une grande famille !",
+  translation:"My grandfather's name is Mahmoud and he is 80 years old. He is retired. My grandmother's name is Khadija and she is 75 years old. My uncle's name is Karim and he is 45 years old. He is a doctor. My aunt's name is Nadia and she is 40 years old. She is a lawyer. My cousin's name is Omar and my female cousin's name is Layla. We are a big family!"
+},{
+  day:5, title:"Mon pays et ma nationalité", topic:"🌍 Pays & nationalité", topicClass:"topic-red",
+  text:"Je suis égyptien. J'habite en Égypte, exactement au Caire. Le Caire est une très grande ville. Mon père est égyptien et ma mère est égyptienne aussi. Les pays arabes sont nombreux : l'Égypte, le Maroc, l'Algérie, la Tunisie, le Liban, la Jordanie, le Qatar, les Émirats arabes unis, l'Arabie saoudite, le Koweït et beaucoup d'autres. Les habitants de l'Égypte s'appellent les Égyptiens.",
+  translation:"I am Egyptian. I live in Egypt, exactly in Cairo. Cairo is a very large city. My father is Egyptian and my mother is also Egyptian. There are many Arab countries: Egypt, Morocco, Algeria, Tunisia, Lebanon, Jordan, Qatar, the United Arab Emirates, Saudi Arabia, Kuwait and many others. The inhabitants of Egypt are called Egyptians."
+},{
+  day:6, title:"Où j'habite", topic:"🏠 Mon logement", topicClass:"topic-blue",
+  text:"J'habite en Égypte, exactement au Caire. Je vis dans le quartier de Maadi. C'est un beau quartier. Je réside dans cet appartement depuis cinq ans. Autour de ma maison, il y a beaucoup de choses. Il y a une mosquée derrière ma maison. Il y a une pharmacie à côté de ma maison. Ma maison est entre la pharmacie et le parc. Il y a un hôtel à droite et un restaurant à gauche.",
+  translation:"I live in Egypt, exactly in Cairo. I live in the Maadi neighborhood. It is a beautiful neighborhood. I have been living in this apartment for five years. Around my house, there are many things. There is a mosque behind my house. There is a pharmacy next to my house. My house is between the pharmacy and the park. There is a hotel on the right and a restaurant on the left."
+},{
+  day:7, title:"Les lieux en ville", topic:"🏙️ La ville", topicClass:"topic-gold",
+  text:"Dans ma ville, il y a beaucoup de lieux importants. Il y a l'hôtel, la librairie, la maison, le musée, le parc et la pharmacie. Il y a aussi le poste de police, le restaurant, la station d'essence, le terrain de jeux, l'hôpital et la mosquée. Pour les transports, il y a l'aéroport, l'arrêt d'autobus et la gare de train. Il y a aussi la boulangerie, la banque, le cinéma et l'école. J'aime me promener dans ma ville.",
+  translation:"In my city, there are many important places. There is the hotel, the bookstore, the house, the museum, the park and the pharmacy. There is also the police station, the restaurant, the gas station, the playground, the hospital and the mosque. For transport, there is the airport, the bus stop and the train station. There is also the bakery, the bank, the cinema and the school. I love to walk around my city."
+},{
+  day:8, title:"Les prépositions de lieu", topic:"📍 Les prépositions", topicClass:"topic-purple",
+  text:"La tortue est dans la boîte. La tortue est sur la boîte. La tortue est sous la boîte. La tortue est devant la boîte. La tortue est derrière la boîte. La tortue est à côté de la boîte. La tortue est entre les deux boîtes. Le livre est au milieu de la table. La banque est à gauche de la pharmacie. Le cinéma est à droite du parc. L'hôpital est au centre de la ville.",
+  translation:"The turtle is inside the box. The turtle is on top of the box. The turtle is under the box. The turtle is in front of the box. The turtle is behind the box. The turtle is next to the box. The turtle is between the two boxes. The book is in the middle of the table. The bank is to the left of the pharmacy. The cinema is to the right of the park. The hospital is in the center of the city."
+},{
+  day:9, title:"Les couleurs", topic:"🎨 Les couleurs", topicClass:"topic-red",
+  text:"J'aime beaucoup les couleurs. Le ciel est bleu. Les arbres sont verts. Les fleurs sont rouges, roses, jaunes et orange. Ma voiture est noire. Le lait est blanc. Mon chat est gris. Mes cheveux sont marron. J'ai les yeux noirs. La mer est bleue. Le soleil est jaune et orange. L'or est doré. L'argent est argenté. Le chocolat est marron. J'aime la couleur bleue — c'est la couleur de la France !",
+  translation:"I love colors very much. The sky is blue. The trees are green. The flowers are red, pink, yellow and orange. My car is black. Milk is white. My cat is gray. My hair is brown. I have black eyes. The sea is blue. The sun is yellow and orange. Gold is golden. Silver is silver. Chocolate is brown. I love the color blue — it is the color of France!"
+},{
+  day:10, title:"Les moments de la journée", topic:"⏰ Le temps", topicClass:"topic-blue",
+  text:"La journée a quatre moments importants. Le matin, je me réveille tôt. Je dis bonjour et bon matin à ma famille. L'après-midi, je travaille au bureau. Je dis bon après-midi à mes collègues. Le soir, je rentre à la maison. Je dis bonsoir à mes voisins. La nuit, je me couche tard. Je dis bonne nuit à ma famille. Hier, c'était lundi. Aujourd'hui, c'est mardi. Demain, ce sera mercredi.",
+  translation:"The day has four important moments. In the morning, I wake up early. I say good morning and good morning to my family. In the afternoon, I work at the office. I say good afternoon to my colleagues. In the evening, I come home. I say good evening to my neighbors. At night, I go to bed late. I say good night to my family. Yesterday was Monday. Today is Tuesday. Tomorrow will be Wednesday."
+},{
+  day:11, title:"Les jours et les mois", topic:"📅 Le calendrier", topicClass:"topic-gold",
+  text:"La semaine a sept jours : samedi, dimanche, lundi, mardi, mercredi, jeudi et vendredi. L'année a douze mois : janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre et décembre. Aujourd'hui, c'est lundi treize janvier deux mille vingt-six. Hier, c'était dimanche douze janvier. Demain, ce sera mardi quatorze janvier. Je suis né en mars. Mon mois préféré est juin.",
+  translation:"The week has seven days: Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday and Friday. The year has twelve months: January, February, March, April, May, June, July, August, September, October, November and December. Today is Monday, January 13th, 2026. Yesterday was Sunday, January 12th. Tomorrow will be Tuesday, January 14th. I was born in March. My favorite month is June."
+},{
+  day:12, title:"Ma date de naissance", topic:"🎂 Date de naissance", topicClass:"topic-green",
+  text:"Je suis né le vingt mars mille neuf cent quatre-vingt-dix-sept. Mon père est né le dix-sept septembre mille neuf cent soixante-treize. Ma mère est née le vingt juin mille neuf cent soixante-dix-huit. Mon frère est né le cinq février deux mille deux. Ma sœur est née le douze novembre deux mille cinq. Mon grand-père est né le premier janvier mille neuf cent quarante-cinq. J'ai vingt-huit ans. Mon père a cinquante-deux ans.",
+  translation:"I was born on March 20th, 1997. My father was born on September 17th, 1973. My mother was born on June 20th, 1978. My brother was born on February 5th, 2002. My sister was born on November 12th, 2005. My grandfather was born on January 1st, 1945. I am 28 years old. My father is 52 years old."
+},{
+  day:13, title:"Les parties du corps", topic:"🧍 Le corps", topicClass:"topic-red",
+  text:"Le corps humain a beaucoup de parties. La tête, le visage, les cheveux et la main. Les yeux, le nez, l'oreille et le sourcil. La bouche, la langue, le doigt et le pied. J'ai les yeux noirs et les cheveux marron. Ma mère a les yeux marron et les cheveux noirs. Mon père a les yeux noirs et les cheveux gris. Ma sœur a les yeux verts et les cheveux blonds. Nous sommes tous différents et c'est beau !",
+  translation:"The human body has many parts. The head, the face, the hair and the hand. The eyes, the nose, the ear and the eyebrow. The mouth, the tongue, the finger and the foot. I have black eyes and brown hair. My mother has brown eyes and black hair. My father has black eyes and gray hair. My sister has green eyes and blonde hair. We are all different and that is beautiful!"
+},{
+  day:14, title:"Les métiers — première partie", topic:"💼 Les métiers", topicClass:"topic-blue",
+  text:"Il y a beaucoup de métiers dans le monde. Un architecte construit des maisons. Un acteur joue dans des films. Un agriculteur travaille dans les champs. Un chauffeur de taxi conduit une voiture. Un coiffeur coupe les cheveux. Un cuisinier prépare les repas. Un dentiste soigne les dents. Un dessinateur dessine des plans. Un facteur distribue le courrier. Un ingénieur construit des ponts. Je suis ingénieur et j'aime mon métier !",
+  translation:"There are many professions in the world. An architect builds houses. An actor plays in films. A farmer works in the fields. A taxi driver drives a car. A hairdresser cuts hair. A cook prepares meals. A dentist takes care of teeth. A draftsman draws plans. A postman delivers mail. An engineer builds bridges. I am an engineer and I love my job!"
+},{
+  day:15, title:"Les métiers — deuxième partie", topic:"💼 Les métiers", topicClass:"topic-blue",
+  text:"Un médecin soigne les malades. Un pompier éteint les incendies. Un serveur travaille dans un restaurant. Un vendeur travaille dans un magasin. Un vétérinaire soigne les animaux. Un pharmacien vend des médicaments. Un professeur enseigne aux étudiants. Un avocat défend ses clients. Un juge applique la loi. Un infirmier aide les malades à l'hôpital. Un boulanger fait du pain. Un programmeur écrit du code. Ma mère est professeure et elle aime enseigner.",
+  translation:"A doctor treats sick people. A firefighter puts out fires. A waiter works in a restaurant. A salesperson works in a store. A veterinarian treats animals. A pharmacist sells medicines. A teacher teaches students. A lawyer defends clients. A judge applies the law. A nurse helps sick people in the hospital. A baker makes bread. A programmer writes code. My mother is a teacher and she loves teaching."
+},{
+  day:16, title:"Ma routine quotidienne", topic:"⏰ La routine", topicClass:"topic-gold",
+  text:"Le matin, je me réveille à sept heures. Je me douche à sept heures trente. Je me brosse les dents et je m'habille. À huit heures, je prends le petit déjeuner. Je mange des œufs et du pain. Je bois du café. À neuf heures, je vais au travail en taxi. L'après-midi, je travaille au bureau. Le soir, je retourne à la maison en voiture à dix-neuf heures. Je dîne avec ma famille à vingt heures. La nuit, je regarde la télévision et je me couche à vingt-deux heures.",
+  translation:"In the morning, I wake up at seven o'clock. I shower at seven thirty. I brush my teeth and get dressed. At eight o'clock, I have breakfast. I eat eggs and bread. I drink coffee. At nine o'clock, I go to work by taxi. In the afternoon, I work at the office. In the evening, I return home by car at seven pm. I have dinner with my family at eight pm. At night, I watch television and go to bed at ten pm."
+},{
+  day:17, title:"Les transports", topic:"🚗 Les transports", topicClass:"topic-red",
+  text:"Il y a beaucoup de moyens de transport. Il y a le train, le métro, le taxi, la voiture, l'autobus et la bicyclette. Il y a aussi l'avion, le bateau, le traversier, la motocyclette, l'hélicoptère et le camion. Je vais au travail en taxi. Je retourne à la maison en voiture. Je vais au parc à bicyclette. Je vais au cinéma avec mon ami à motocyclette. Je vais au restaurant à pied. Je vais à la mosquée avec mon père à pied. J'aime voyager en avion !",
+  translation:"There are many means of transport. There is the train, the metro, the taxi, the car, the bus and the bicycle. There is also the plane, the boat, the ferry, the motorcycle, the helicopter and the truck. I go to work by taxi. I return home by car. I go to the park by bicycle. I go to the cinema with my friend by motorcycle. I go to the restaurant on foot. I go to the mosque with my father on foot. I love to travel by plane!"
+},{
+  day:18, title:"Les appareils électroniques", topic:"💻 La technologie", topicClass:"topic-purple",
+  text:"Aujourd'hui, nous utilisons beaucoup d'appareils électroniques. J'ai un téléphone portable. J'ai aussi un ordinateur portable et une tablette numérique. Il y a une télévision dans le salon. J'utilise des écouteurs pour écouter de la musique. Mon chargeur est sur le bureau. Mon téléphone est derrière la télévision. Mon bureau est entre le bureau d'Ahmed et le bureau de Mohamed. La télévision est à gauche du bureau. L'ordinateur est à côté de la tablette numérique.",
+  translation:"Today, we use many electronic devices. I have a mobile phone. I also have a laptop and a digital tablet. There is a television in the living room. I use headphones to listen to music. My charger is on the desk. My phone is behind the television. My desk is between Ahmed's desk and Mohamed's desk. The television is to the left of the desk. The computer is next to the digital tablet."
+},{
+  day:19, title:"Les passe-temps", topic:"🎯 Les loisirs", topicClass:"topic-green",
+  text:"Dans mon temps libre, j'aime faire beaucoup de choses. J'aime lire un livre, écrire et dessiner. J'aime aussi faire du sport et nager. J'aime danser et chanter. J'aime cuisiner et jardiner. J'aime jouer à un jeu vidéo et faire un casse-tête. J'aime écouter de la musique et photographier. J'aime voyager et passer du temps avec mes amis. J'aime naviguer sur Internet. Je n'aime pas regarder la télévision pendant des heures. Mon passe-temps préféré est la lecture.",
+  translation:"In my free time, I like to do many things. I like to read a book, write and draw. I also like to play sports and swim. I like to dance and sing. I like to cook and garden. I like to play video games and do puzzles. I like to listen to music and take photos. I like to travel and spend time with my friends. I like to browse the Internet. I don't like watching television for hours. My favorite hobby is reading."
+},{
+  day:20, title:"J'aime et je n'aime pas", topic:"❤️ Les goûts", topicClass:"topic-red",
+  text:"J'aime lire, jouer, danser et chanter. J'aime beaucoup nager et faire du sport. Je n'aime pas pleurer. J'aime rire avec mes amis. Dans mon temps libre, j'aime faire du shopping, voyager et passer du temps avec mes amis. J'aime aussi photographier, regarder la télévision et naviguer sur Internet. J'aime jouer d'un instrument et lire un livre. J'aime faire du sport, faire un casse-tête, écouter de la musique, cuisiner et danser.",
+  translation:"I like to read, play, dance and sing. I really like to swim and do sports. I don't like to cry. I like to laugh with my friends. In my free time, I like to go shopping, travel and spend time with my friends. I also like to take photos, watch television and browse the Internet. I like to play an instrument and read a book. I like to do sports, do puzzles, listen to music, cook and dance."
+},{
+  day:21, title:"Les sentiments — J'ai...", topic:"😊 Les sentiments", topicClass:"topic-gold",
+  text:"Aujourd'hui, je me sens bien. J'ai faim, donc je veux manger. J'ai soif, donc je veux boire de l'eau. J'ai sommeil, donc je veux dormir. J'ai froid, donc je veux rentrer à la maison. J'ai chaud, donc je veux prendre une douche. J'ai peur, donc je veux voir ma mère. J'ai hâte parce que c'est vendredi ! J'ai raison : le français c'est facile ! Je suis fatigué, j'ai sommeil. Je suis malade, j'ai froid.",
+  translation:"Today, I feel good. I am hungry, so I want to eat. I am thirsty, so I want to drink water. I am sleepy, so I want to sleep. I am cold, so I want to go home. I am hot, so I want to take a shower. I am scared, so I want to see my mother. I can't wait because it's Friday! I am right: French is easy! I am tired, I am sleepy. I am sick, I am cold."
+},{
+  day:22, title:"Les sentiments — Je suis...", topic:"😊 Les sentiments", topicClass:"topic-gold",
+  text:"Comment te sens-tu maintenant ? Je suis heureux parce que j'apprends le français ! Je suis content de mes progrès. Parfois, je suis fatigué après le travail. Quelquefois, je suis triste quand il pleut. Je suis fâché quand quelqu'un est impoli. Je suis timide devant les nouvelles personnes — j'ai peur. Je suis malade aujourd'hui — j'ai froid et j'ai de la fièvre. Je suis amoureux de la langue française ! Je suis heureux, j'ai hâte.",
+  translation:"How are you feeling now? I am happy because I am learning French! I am pleased with my progress. Sometimes, I am tired after work. Sometimes, I am sad when it rains. I am angry when someone is rude. I am shy in front of new people — I am scared. I am sick today — I am cold and I have a fever. I am in love with the French language! I am happy, I can't wait."
+},{
+  day:23, title:"Les problèmes de santé", topic:"🏥 La santé", topicClass:"topic-red",
+  text:"Aujourd'hui, je suis malade. J'ai une rougeur sur la main. J'ai une toux depuis trois jours. J'ai une coupure sur le doigt. J'ai de la fièvre et un mal de tête. J'ai aussi un mal de dent et un mal de gorge. J'ai un mal de ventre et un nez bouché. Ma sœur a une toux. Mon père a mal au dos. Ma mère a mal au cœur. J'ai mal dormi. J'ai une piqûre de moustique sur le bras. J'ai un rhume et une grippe. Je vais voir le médecin.",
+  translation:"Today, I am sick. I have a rash on my hand. I have had a cough for three days. I have a cut on my finger. I have a fever and a headache. I also have a toothache and a sore throat. I have a stomachache and a stuffy nose. My sister has a cough. My father has a backache. My mother feels nauseous. I slept badly. I have a mosquito bite on my arm. I have a cold and the flu. I am going to see the doctor."
+},{
+  day:24, title:"Les fruits et les légumes", topic:"🍎 La nourriture", topicClass:"topic-green",
+  text:"J'aime beaucoup les fruits et les légumes. Comme fruits, j'aime les pommes, les poires, les bananes, les oranges et les mangues. J'aime aussi les fraises, les framboises, les kiwis, les cerises et les citrons. J'adore les pastèques et les raisins. Comme légumes, j'aime les tomates, les carottes, les concombres et les poivrons. J'aime aussi les brocolis, les champignons, les épinards, la laitue et le maïs. Je mange des fruits tous les jours — c'est bon pour la santé !",
+  translation:"I love fruits and vegetables very much. As fruits, I like apples, pears, bananas, oranges and mangoes. I also like strawberries, raspberries, kiwis, cherries and lemons. I love watermelons and grapes. As vegetables, I like tomatoes, carrots, cucumbers and peppers. I also like broccoli, mushrooms, spinach, lettuce and corn. I eat fruit every day — it is good for your health!"
+},{
+  day:25, title:"Les repas et les boissons", topic:"🍽️ Les repas", topicClass:"topic-gold",
+  text:"Je mange trois repas par jour et un goûter. Le matin, au petit-déjeuner, je mange des œufs, des frites et du pain. Je bois du café. À midi, au déjeuner, je prends du thé, du poulet, du riz et de la soupe. L'après-midi, au goûter, je bois du lait et je mange un yaourt. Le soir, au dîner, je bois du jus d'orange. Je prends du pain avec du fromage. Comme boissons, j'aime le café, le thé, l'eau, le lait et le jus d'orange. Je n'aime pas les boissons gazeuses.",
+  translation:"I eat three meals a day and a snack. In the morning, at breakfast, I eat eggs, fries and bread. I drink coffee. At noon, at lunch, I have tea, chicken, rice and soup. In the afternoon, at snack time, I drink milk and eat a yogurt. In the evening, at dinner, I drink orange juice. I have bread with cheese. As drinks, I like coffee, tea, water, milk and orange juice. I don't like carbonated drinks."
+},{
+  day:26, title:"La nature", topic:"🌿 La nature", topicClass:"topic-green",
+  text:"La nature est très belle. Sur la terre, il y a des montagnes, des plages, des déserts, des fleurs, des forêts et des arbres. Il y a de l'eau partout : la mer, une rivière, un lac. Dans le ciel, il y a un arc-en-ciel, des étoiles, la Lune, des nuages et le Soleil. Le Soleil brille le matin. La Lune brille la nuit. J'aime me promener en forêt. J'aime nager dans la mer. J'aime regarder les étoiles la nuit. La nature est un cadeau magnifique.",
+  translation:"Nature is very beautiful. On land, there are mountains, beaches, deserts, flowers, forests and trees. There is water everywhere: the sea, a river, a lake. In the sky, there is a rainbow, stars, the Moon, clouds and the Sun. The Sun shines in the morning. The Moon shines at night. I love to walk in the forest. I love to swim in the sea. I love to watch the stars at night. Nature is a magnificent gift."
+},{
+  day:27, title:"La courtoisie", topic:"🤝 La politesse", topicClass:"topic-blue",
+  text:"En France, la politesse est très importante. Pour dire bonjour, on dit : Bonjour ! Comment allez-vous ? Et on répond : Je vais bien, merci. Et vous ? Pour dire au revoir, on dit : Au revoir ! À bientôt ! À plus tard ! Pour remercier, on dit : Merci ! Merci beaucoup ! Je vous remercie beaucoup ! Et on répond : Je vous en prie. De rien. Pour s'excuser, on dit : Excuse-moi. Oups ! Désolé ! Et on répond : Ce n'est rien. Pardon.",
+  translation:"In France, politeness is very important. To say hello, you say: Hello! How are you? And the reply is: I am fine, thank you. And you? To say goodbye, you say: Goodbye! See you soon! See you later! To thank, you say: Thank you! Thank you very much! I thank you very much! And the reply is: You're welcome. Don't mention it. To apologize, you say: Excuse me. Oops! Sorry! And the reply is: It's nothing. Pardon."
+},{
+  day:28, title:"Le rang et les nombres ordinaux", topic:"🔢 Les ordinaux", topicClass:"topic-purple",
+  text:"Les nombres ordinaux sont utiles dans la vie quotidienne. Le premier et la première. Le deuxième, le troisième, le quatrième, le cinquième. Le sixième, le septième, le huitième, le neuvième, le dixième. Mon premier fils s'appelle Ahmed et il a huit ans. Ma première fille s'appelle Sara et elle a six ans. Mon deuxième fils s'appelle Omar. Ma deuxième fille s'appelle Layla. Je suis le premier de ma classe. Mon appartement est au troisième étage.",
+  translation:"Ordinal numbers are useful in daily life. The first (masculine) and the first (feminine). The second, the third, the fourth, the fifth. The sixth, the seventh, the eighth, the ninth, the tenth. My first son's name is Ahmed and he is 8 years old. My first daughter's name is Sara and she is 6 years old. My second son's name is Omar. My second daughter's name is Layla. I am first in my class. My apartment is on the third floor."
+},{
+  day:29, title:"Mes amis et mes voisins", topic:"👥 Les relations", topicClass:"topic-red",
+  text:"J'ai beaucoup d'amis. Mon ami s'appelle Karim et il a trente ans. Mon amie s'appelle Layla et elle a vingt-huit ans. Mon voisin s'appelle Mohamed et il a quarante ans. Ma voisine s'appelle Hana et elle a trente-cinq ans. Mon collègue s'appelle Ahmed et il a quarante-deux ans. Ma collègue s'appelle Sara et elle a vingt-cinq ans. Mon homme s'appelle Omar et il a trente ans. J'ai deux fils : mon premier fils s'appelle Ali et mon deuxième fils s'appelle Hassan. J'aime tous mes amis.",
+  translation:"I have many friends. My friend (male) is named Karim and he is 30 years old. My friend (female) is named Layla and she is 28 years old. My neighbor (male) is named Mohamed and he is 40 years old. My neighbor (female) is named Hana and she is 35 years old. My colleague (male) is named Ahmed and he is 42 years old. My colleague (female) is named Sara and she is 25 years old. My husband is named Omar and he is 30 years old. I have two sons: my first son is named Ali and my second son is named Hassan. I love all my friends."
+},{
+  day:30, title:"Ma présentation complète", topic:"⭐ Révision générale", topicClass:"topic-blue",
+  text:"Bonjour ! Je m'appelle Ahmed. J'ai vingt-huit ans. Je suis égyptien. Je suis né le vingt mars mille neuf cent quatre-vingt-dix-sept. J'habite en Égypte, exactement au Caire. Je suis ingénieur. J'ai les yeux noirs et les cheveux noirs. Dans ma famille, il y a cinq personnes. Mon père s'appelle Hassan et il est retraité. Ma mère s'appelle Fatima et elle est professeure. Le matin, je me réveille à sept heures et je vais au travail en taxi. Dans mon temps libre, j'aime lire, voyager et faire du sport. J'aime manger du poulet avec du riz. Je suis heureux et j'ai hâte de parler français tous les jours. Merci, Mme Sabria !",
+  translation:"Hello! My name is Ahmed. I am 28 years old. I am Egyptian. I was born on March 20th, 1997. I live in Egypt, exactly in Cairo. I am an engineer. I have black eyes and black hair. In my family, there are five people. My father's name is Hassan and he is retired. My mother's name is Fatima and she is a teacher. In the morning, I wake up at seven o'clock and go to work by taxi. In my free time, I like to read, travel and play sports. I like to eat chicken with rice. I am happy and I can't wait to speak French every day. Thank you, Mme Sabria!"
+}
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+var currentSpeed = 1;
+var selectedVoice = null;
+var voices = [];
+var doneDays = {};
+var utterances = {};
+var currentUtterance = null;
+var currentCardId = null;
+
+// ─── SPEECH SYNTHESIS SETUP ──────────────────────────────────────────────────
+function loadVoices() {
+  voices = window.speechSynthesis.getVoices();
+  var sel = document.getElementById('voiceSelect');
+  sel.innerHTML = '';
+  var frVoices = voices.filter(function(v){ return v.lang.startsWith('fr'); });
+  if (frVoices.length === 0) frVoices = voices; // fallback to all
+  frVoices.forEach(function(v, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = v.name + ' (' + v.lang + ')';
+    sel.appendChild(opt);
+  });
+  // Pick best French voice
+  selectedVoice = frVoices.find(function(v){
+    return v.lang === 'fr-FR' || v.lang === 'fr-CA' || v.lang.startsWith('fr');
+  }) || frVoices[0] || null;
+  if (!window.speechSynthesis) {
+    document.getElementById('noSpeech').style.display = 'block';
+  }
+}
+
+window.speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+function setVoice() {
+  var sel = document.getElementById('voiceSelect');
+  var frVoices = voices.filter(function(v){ return v.lang.startsWith('fr'); });
+  if (frVoices.length === 0) frVoices = voices;
+  selectedVoice = frVoices[parseInt(sel.value)] || null;
+}
+
+function setSpeed(s, btn) {
+  currentSpeed = s;
+  document.querySelectorAll('.speed-btn').forEach(function(b){ b.classList.remove('on'); });
+  btn.classList.add('on');
+  // If something is playing, restart it with new speed
+  if (currentUtterance && window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+// ─── BUILD UI ─────────────────────────────────────────────────────────────────
+function buildUI() {
+  var nav = document.getElementById('dayNav');
+  var main = document.getElementById('mainArea');
+  var noSpeech = document.getElementById('noSpeech');
+
+  days.forEach(function(d, idx) {
+    // NAV BUTTON
+    var btn = document.createElement('button');
+    btn.className = 'day-btn' + (idx === 0 ? ' on' : '');
+    btn.id = 'navbtn-' + d.day;
+    btn.textContent = 'Jour ' + d.day;
+    btn.onclick = (function(i){ return function(){ switchDay(i); }; })(idx);
+    nav.appendChild(btn);
+
+    // SHEET
+    var sheet = document.createElement('div');
+    sheet.className = 'day-sheet' + (idx === 0 ? ' on' : '');
+    sheet.id = 'day-' + d.day;
+
+    var topicColors = [d.topicClass];
+
+    sheet.innerHTML =
+      '<div class="day-head">' +
+        '<div class="day-head-left">' +
+          '<h2>' + d.title + '</h2>' +
+          '<p>Jour ' + d.day + ' sur 30 · Lisez à voix haute puis écoutez</p>' +
+        '</div>' +
+        '<div class="day-badge">JOUR ' + d.day + '</div>' +
+      '</div>' +
+      '<div class="para-card" id="card-' + d.day + '">' +
+        '<div class="para-top">' +
+          '<div class="para-topic ' + d.topicClass + '">' + d.topic + '</div>' +
+          '<div class="para-title">' + d.title + '</div>' +
+        '</div>' +
+        '<div class="para-text" id="text-' + d.day + '">' + wrapWords(d.text, d.day) + '</div>' +
+        '<div class="player" id="player-' + d.day + '">' +
+          '<button class="play-btn" id="playbtn-' + d.day + '" onclick="togglePlay(' + d.day + ')" title="Écouter">' +
+            '<svg viewBox="0 0 24 24"><path id="playicon-' + d.day + '" d="M8 5v14l11-7z"/></svg>' +
+          '</button>' +
+          '<div class="player-info">' +
+            '<div class="player-title">🔊 Écouter la prononciation</div>' +
+            '<div class="player-sub" id="playersub-' + d.day + '">Appuyez pour écouter</div>' +
+          '</div>' +
+          '<div class="prog-wrap">' +
+            '<div class="prog-bar"><div class="prog-inner" id="proginner-' + d.day + '"></div></div>' +
+            '<div class="prog-time" id="progtime-' + d.day + '">—</div>' +
+          '</div>' +
+          '<div class="player-actions">' +
+            '<button class="pact-btn" onclick="replayPlay(' + d.day + ')">↺ Replay</button>' +
+            '<button class="pact-btn" onclick="slowPlay(' + d.day + ')">🐢 Lent</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="trans-wrap">' +
+          '<button class="trans-btn" onclick="toggleTrans(' + d.day + ')">🇬🇧 Show English translation</button>' +
+          '<div class="translation" id="trans-' + d.day + '">' + d.translation + '</div>' +
+        '</div>' +
+        '<div class="mark-done-wrap">' +
+          '<button class="mark-done-btn" id="donebtn-' + d.day + '" onclick="markDone(' + d.day + ')">☐ Mark as read today</button>' +
+        '</div>' +
+      '</div>';
+
+    main.insertBefore(sheet, document.getElementById('noSpeech') || main.firstChild);
+    main.appendChild(sheet);
+  });
+}
+
+function wrapWords(text, dayId) {
+  var words = text.split(/(\s+)/);
+  var result = '';
+  var wordIndex = 0;
+  words.forEach(function(part) {
+    if (part.trim() === '') {
+      result += part;
+    } else {
+      result += '<span class="word" id="w-' + dayId + '-' + wordIndex + '">' + part + '</span>';
+      wordIndex++;
+    }
+  });
+  return result;
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function switchDay(idx) {
+  stopAll();
+  document.querySelectorAll('.day-sheet').forEach(function(s){ s.classList.remove('on'); });
+  document.querySelectorAll('.day-btn').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById('day-' + days[idx].day).classList.add('on');
+  document.getElementById('navbtn-' + days[idx].day).classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── PLAY / STOP ──────────────────────────────────────────────────────────────
+function stopAll() {
+  window.speechSynthesis.cancel();
+  if (currentCardId) {
+    var pb = document.getElementById('playbtn-' + currentCardId);
+    var pi = document.getElementById('playicon-' + currentCardId);
+    var ps = document.getElementById('playersub-' + currentCardId);
+    var pg = document.getElementById('proginner-' + currentCardId);
+    if (pb) pb.classList.remove('playing');
+    if (pi) pi.setAttribute('d', 'M8 5v14l11-7z');
+    if (ps) ps.textContent = 'Appuyez pour écouter';
+    if (pg) pg.style.width = '0%';
+    // Clear word highlights
+    document.querySelectorAll('.word.active').forEach(function(w){ w.classList.remove('active'); });
+  }
+  currentCardId = null;
+  currentUtterance = null;
+}
+
+function togglePlay(dayId) {
+  if (currentCardId === dayId && window.speechSynthesis.speaking) {
+    stopAll();
+    return;
+  }
+  stopAll();
+  speak(dayId, currentSpeed);
+}
+
+function replayPlay(dayId) {
+  stopAll();
+  speak(dayId, currentSpeed);
+}
+
+function slowPlay(dayId) {
+  stopAll();
+  speak(dayId, 0.6);
+}
+
+function speak(dayId, rate) {
+  if (!window.speechSynthesis) return;
+  var d = days.find(function(x){ return x.day === dayId; });
+  if (!d) return;
+
+  currentCardId = dayId;
+  var pb = document.getElementById('playbtn-' + dayId);
+  var pi = document.getElementById('playicon-' + dayId);
+  var ps = document.getElementById('playersub-' + dayId);
+  var pg = document.getElementById('proginner-' + dayId);
+  var pt = document.getElementById('progtime-' + dayId);
+
+  pb.classList.add('playing');
+  pi.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // pause icon
+  ps.textContent = 'En cours…';
+
+  var utter = new SpeechSynthesisUtterance(d.text);
+  utter.lang = 'fr-FR';
+  utter.rate = rate || currentSpeed;
+  utter.pitch = 1;
+  if (selectedVoice) utter.voice = selectedVoice;
+
+  currentUtterance = utter;
+
+  // Estimate duration for progress bar
+  var wordCount = d.text.split(/\s+/).length;
+  var estimatedDuration = (wordCount / (rate * 2.5)) * 1000; // rough ms
+  var startTime = Date.now();
+
+  var progInterval = setInterval(function() {
+    if (!window.speechSynthesis.speaking) { clearInterval(progInterval); return; }
+    var elapsed = Date.now() - startTime;
+    var pct = Math.min((elapsed / estimatedDuration) * 100, 95);
+    if (pg) pg.style.width = pct + '%';
+    var secLeft = Math.max(0, Math.round((estimatedDuration - elapsed) / 1000));
+    if (pt) pt.textContent = secLeft + 's restantes';
+  }, 100);
+
+  // Word-by-word highlighting via boundary events
+  var wordIdx = 0;
+  utter.onboundary = function(e) {
+    if (e.name === 'word') {
+      document.querySelectorAll('#text-' + dayId + ' .word').forEach(function(w){ w.classList.remove('active'); });
+      var wordEl = document.getElementById('w-' + dayId + '-' + wordIdx);
+      if (wordEl) { wordEl.classList.add('active'); wordEl.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+      wordIdx++;
+    }
+  };
+
+  utter.onend = function() {
+    clearInterval(progInterval);
+    stopAll();
+    if (pg) pg.style.width = '100%';
+    if (pt) pt.textContent = 'Terminé ✓';
+    if (ps) ps.textContent = 'Terminé ! Appuyez pour réécouter';
+    // Auto-suggest mark as done
+    var db = document.getElementById('donebtn-' + dayId);
+    if (db && !doneDays[dayId]) {
+      db.style.borderColor = 'var(--green)';
+      db.style.color = 'var(--green)';
+    }
+  };
+
+  utter.onerror = function() {
+    clearInterval(progInterval);
+    stopAll();
+    if (ps) ps.textContent = '⚠️ Erreur audio';
+  };
+
+  window.speechSynthesis.speak(utter);
+}
+
+// ─── TRANSLATION ──────────────────────────────────────────────────────────────
+function toggleTrans(dayId) {
+  var el = document.getElementById('trans-' + dayId);
+  var btn = el.previousElementSibling;
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '🙈 Hide translation' : '🇬🇧 Show English translation';
+}
+
+// ─── MARK DONE ────────────────────────────────────────────────────────────────
+function markDone(dayId) {
+  doneDays[dayId] = true;
+  var btn = document.getElementById('donebtn-' + dayId);
+  btn.textContent = '✅ Read today!';
+  btn.classList.add('done');
+  btn.disabled = true;
+  // Mark nav button
+  var navBtn = document.getElementById('navbtn-' + dayId);
+  if (navBtn) navBtn.classList.add('done');
+  // Update progress
+  updateProgress();
+}
+
+function updateProgress() {
+  var count = Object.keys(doneDays).length;
+  var pct = Math.round((count / 30) * 100);
+  document.getElementById('ovFill').style.width = pct + '%';
+  document.getElementById('ovNum').textContent = count + ' / 30';
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+buildUI();
+</script>
+</body>
+</html>

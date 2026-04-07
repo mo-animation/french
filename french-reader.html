@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecteur Français</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&family=Syne+Mono&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0b0d0f;
+  --surface: #131518;
+  --surface2: #1a1d21;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8e4dd;
+  --muted: #6b6760;
+  --accent: #4f9cf0;
+  --accent2: #f0914f;
+  --green: #4fbc7c;
+  --red: #e05a5a;
+  --yellow: #f5c842;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.flag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 0.35rem 1rem;
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+}
+h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+h1 i { font-style: italic; color: var(--accent); }
+.tagline {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.7rem;
+  font-weight: 500;
+}
+
+/* ── MAIN ── */
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 6rem;
+}
+
+.section-label {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── INPUT BOX ── */
+.input-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 2.5rem;
+}
+.input-box:focus-within {
+  border-color: rgba(79,156,240,0.4);
+  box-shadow: 0 0 0 4px rgba(79,156,240,0.06), 0 4px 24px rgba(0,0,0,0.3);
+}
+#paragraphInput {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.25rem;
+  line-height: 1.9;
+  padding: 1.5rem 1.6rem;
+  letter-spacing: 0.01em;
+}
+#paragraphInput::placeholder {
+  color: rgba(107,103,96,0.45);
+  font-style: italic;
+}
+.input-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1.2rem;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+}
+.char-count {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.footer-btns { display: flex; align-items: center; gap: 0.6rem; }
+
+#clearBtn {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+#clearBtn:hover { border-color: var(--red); color: var(--red); }
+
+#startBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(79,156,240,0.3);
+}
+#startBtn:hover { background: #6aaef5; transform: translateY(-1px); }
+#startBtn:active { transform: scale(0.97); }
+
+/* ── VOICE WARNING ── */
+.voice-warning {
+  display: none;
+  background: rgba(240,145,79,0.08);
+  border: 1px solid rgba(240,145,79,0.25);
+  border-radius: 4px;
+  padding: 0.7rem 1.1rem;
+  font-size: 0.82rem;
+  color: var(--accent2);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+.voice-warning.show { display: block; }
+
+/* ── SENTENCES SECTION ── */
+.sentences-section { display: none; }
+.sentences-section.show { display: block; }
+
+.sentences-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.sentence-count-badge {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  padding: 0.3rem 0.9rem;
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-left: 0.6rem;
+}
+
+/* Play All button */
+#playAllBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.3rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  box-shadow: 0 2px 12px rgba(79,188,124,0.25);
+}
+#playAllBtn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+#playAllBtn.pause-mode  { background: var(--yellow); color: #1a1a1a; box-shadow: 0 2px 12px rgba(245,200,66,0.3); }
+#playAllBtn.stop-mode   { background: var(--red);    box-shadow: 0 2px 12px rgba(224,90,90,0.25); }
+
+/* ── PROGRESS ── */
+.progress-wrap { display: none; margin-bottom: 1.2rem; }
+.progress-wrap.show { display: block; }
+.progress-track {
+  height: 3px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-label {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 0.4rem;
+  letter-spacing: 0.08em;
+}
+
+/* ── SENTENCE CARD ── */
+.sentence-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.sentence-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+  animation: slideIn 0.3s ease both;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.sentence-card.active {
+  border-color: rgba(79,156,240,0.5);
+  box-shadow: 0 0 0 1px rgba(79,156,240,0.15), 0 4px 20px rgba(79,156,240,0.1);
+  transform: translateX(4px);
+}
+.sentence-card.paused {
+  border-color: rgba(245,200,66,0.45);
+  box-shadow: 0 0 0 1px rgba(245,200,66,0.1);
+  transform: translateX(4px);
+}
+.sentence-card.done { border-color: rgba(79,188,124,0.3); opacity: 0.65; }
+
+.card-inner { display: flex; align-items: stretch; }
+
+.card-idx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  flex-shrink: 0;
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+}
+.sentence-card.active .card-idx  { background: rgba(79,156,240,0.08); color: var(--accent); }
+.sentence-card.paused .card-idx  { background: rgba(245,200,66,0.06); color: var(--yellow); }
+.sentence-card.done   .card-idx  { color: var(--green); }
+
+.card-text { flex: 1; padding: 0.95rem 1.2rem; min-width: 0; }
+
+/* Word-span text container */
+.sentence-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: var(--text);
+  word-break: break-word;
+}
+.sentence-card.active .sentence-text { color: rgba(232,228,221,0.85); }
+.sentence-card.paused .sentence-text { color: rgba(232,228,221,0.7); }
+.sentence-card.done   .sentence-text { color: var(--muted); }
+
+/* Individual word spans */
+.word {
+  display: inline;
+  border-radius: 3px;
+  padding: 0.05em 0.05em;
+  transition: background 0.1s, color 0.1s;
+  cursor: default;
+}
+.word.highlight {
+  background: rgba(245,200,66,0.28);
+  color: #fff;
+  border-radius: 3px;
+  padding: 0.05em 0.18em;
+  box-shadow: 0 0 0 1px rgba(245,200,66,0.35);
+}
+.word.spoken {
+  color: var(--muted);
+}
+
+/* ── CARD CONTROLS ── */
+.card-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem 0 0.4rem;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 0.8rem;
+}
+
+.speed-group {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.spd {
+  font-family: 'Syne Mono', monospace;
+  font-size: 0.58rem;
+  padding: 0.28rem 0.38rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.spd:hover { background: rgba(79,156,240,0.1); border-color: rgba(79,156,240,0.3); color: var(--accent); }
+.spd.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+/* bottom row: wave + tick + btns */
+.ctrl-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.mini-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 14px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.mini-wave.on { opacity: 1; }
+.mini-wave b {
+  display: block; width: 2.5px; border-radius: 2px;
+  background: var(--accent);
+  animation: wv 0.7s ease-in-out infinite;
+}
+.mini-wave b:nth-child(1){ height:4px; animation-delay:0s; }
+.mini-wave b:nth-child(2){ height:9px; animation-delay:0.1s; }
+.mini-wave b:nth-child(3){ height:13px; animation-delay:0.2s; }
+.mini-wave b:nth-child(4){ height:7px; animation-delay:0.1s; }
+.mini-wave b:nth-child(5){ height:4px; animation-delay:0.15s; }
+@keyframes wv { 0%,100%{transform:scaleY(0.35)} 50%{transform:scaleY(1.2)} }
+
+.done-tick { font-size: 0.78rem; color: var(--green); opacity: 0; transition: opacity 0.3s; min-width: 12px; }
+.sentence-card.done .done-tick { opacity: 1; }
+
+/* Play / Pause / Resume button */
+.play-btn {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.play-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.play-btn.playing { background: var(--accent); border-color: var(--accent); color: #fff; animation: pulse 1.2s ease infinite; }
+.play-btn.paused  { background: var(--yellow); border-color: var(--yellow); color: #1a1a1a; }
+@keyframes pulse {
+  0%,100%{ box-shadow: 0 0 0 0 rgba(79,156,240,0.4); }
+  50%    { box-shadow: 0 0 0 6px rgba(79,156,240,0); }
+}
+
+/* Pause button per card */
+.pause-btn {
+  width: 32px; height: 32px;
+  display: none;
+  align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.pause-btn:hover { background: var(--yellow); border-color: var(--yellow); color: #1a1a1a; }
+.pause-btn.visible { display: flex; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #2a2d32; border-radius: 3px; }
+
+@media (max-width: 640px) {
+  main { padding: 1.5rem 1rem 4rem; }
+  .card-inner { flex-direction: column; }
+  .card-idx { width: 100%; height: 28px; border-right: none; border-bottom: 1px solid var(--border); }
+  .card-controls { flex-direction: row; flex-wrap: wrap; padding: 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="flag-badge"><span>🇫🇷</span> &nbsp;Lecteur Français</div>
+  <h1>Read <i>French</i><br>Sentence by Sentence</h1>
+  <p class="tagline">Paste · Split · Highlight · Listen</p>
+</header>
+
+<main>
+  <div id="voiceWarning" class="voice-warning">
+    ⚠️ No French voice detected. Install a French voice in your OS/browser settings for authentic pronunciation.
+  </div>
+
+  <!-- INPUT -->
+  <div class="section-label">Your French Paragraph</div>
+  <div class="input-box">
+    <textarea id="paragraphInput"
+      placeholder="Collez votre paragraphe français ici… Par exemple : Le soleil se couche sur la Seine. Paris brille d'une lumière dorée. Les amoureux se promènent le long des quais."
+      spellcheck="true" lang="fr"
+      oninput="updateCount()"></textarea>
+    <div class="input-footer">
+      <span class="char-count" id="charCount">0 characters</span>
+      <div class="footer-btns">
+        <button id="clearBtn" onclick="clearAll()">Clear</button>
+        <button id="startBtn" onclick="splitParagraph()">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+          </svg>
+          Start
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SENTENCES -->
+  <div class="sentences-section" id="sentencesSection">
+
+    <div class="sentences-header">
+      <div style="display:flex;align-items:center;">
+        <div class="section-label" style="margin-bottom:0;">Sentences</div>
+        <span class="sentence-count-badge" id="sentenceCount">0</span>
+      </div>
+      <button id="playAllBtn" onclick="handlePlayAllBtn()">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+          <path id="playAllIcon" d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+        </svg>
+        <span id="playAllLabel">Play All</span>
+      </button>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel"></div>
+    </div>
+
+    <div class="sentence-list" id="sentenceList"></div>
+  </div>
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════
+// VOICES
+// ═══════════════════════════════════════════════════
+let frVoice = null;
+function loadVoices() {
+  const voices = speechSynthesis.getVoices();
+  frVoice =
+    voices.find(v => v.lang === 'fr-FR' && v.localService) ||
+    voices.find(v => v.lang === 'fr-FR') ||
+    voices.find(v => v.lang.startsWith('fr')) || null;
+  const warn = document.getElementById('voiceWarning');
+  if (voices.length > 0 && !frVoice) warn.classList.add('show');
+  else warn.classList.remove('show');
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+const SPEEDS = [0.25, 0.5, 0.75, 1, 1.5, 1.75, 2];
+
+let sentences    = [];   // [{text, rate, words:[]}]
+let playAllMode  = false;
+let playIdx      = -1;   // current sentence index in play-all
+
+// Per-active-sentence tracking
+let activeSentIdx  = -1;   // which sentence is active
+let isPaused       = false;
+let pausedWordIdx  = 0;    // word index to resume from
+let currentUtt     = null;
+
+// ═══════════════════════════════════════════════════
+// CHAR COUNT
+// ═══════════════════════════════════════════════════
+function updateCount() {
+  const len = document.getElementById('paragraphInput').value.length;
+  document.getElementById('charCount').textContent = len + ' character' + (len !== 1 ? 's' : '');
+}
+
+// ═══════════════════════════════════════════════════
+// SPLIT PARAGRAPH
+// ═══════════════════════════════════════════════════
+function splitParagraph() {
+  const raw = document.getElementById('paragraphInput').value.trim();
+  if (!raw) return;
+
+  const parts = raw
+    .split(/(?<=[.!?…؟])\s+/)
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
+
+  if (!parts.length) return;
+
+  hardStop();
+  sentences = parts.map(text => ({
+    text,
+    rate: 1,
+    words: tokenizeWords(text)
+  }));
+
+  renderSentences();
+
+  const sec = document.getElementById('sentencesSection');
+  sec.classList.add('show');
+  document.getElementById('sentenceCount').textContent =
+    sentences.length + ' sentence' + (sentences.length !== 1 ? 's' : '');
+
+  setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+}
+
+// ═══════════════════════════════════════════════════
+// WORD TOKENIZER
+// Splits text into {word, isSpace} tokens so we can
+// wrap every real word in a <span class="word">
+// ═══════════════════════════════════════════════════
+function tokenizeWords(text) {
+  // split keeping spaces/punctuation attached to words
+  return text.split(/(\s+)/).filter(t => t.length > 0);
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════
+function renderSentences() {
+  const list = document.getElementById('sentenceList');
+  list.innerHTML = '';
+
+  sentences.forEach((s, i) => {
+    const delay = Math.min(i * 0.04, 0.25);
+    const card = document.createElement('div');
+    card.className = 'sentence-card';
+    card.id = `sc-${i}`;
+    card.style.animationDelay = delay + 's';
+
+    // Build word-span HTML
+    let wordIdx = 0;
+    const wordsHtml = s.words.map(tok => {
+      if (/^\s+$/.test(tok)) return tok; // pure whitespace, keep as-is
+      const span = `<span class="word" data-widx="${wordIdx}" data-sidx="${i}">${escHtml(tok)}</span>`;
+      wordIdx++;
+      return span;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-idx">${String(i + 1).padStart(2, '0')}</div>
+        <div class="card-text">
+          <div class="sentence-text" id="st-${i}">${wordsHtml}</div>
+        </div>
+        <div class="card-controls">
+          <div class="speed-group" id="sg-${i}">
+            ${SPEEDS.map(sp =>
+              `<button class="spd${sp === s.rate ? ' active' : ''}"
+                onclick="setRate(${i}, ${sp})">${sp}×</button>`
+            ).join('')}
+          </div>
+          <div class="ctrl-row">
+            <div class="mini-wave" id="wave-${i}"><b></b><b></b><b></b><b></b><b></b></div>
+            <span class="done-tick" id="tick-${i}">✓</span>
+            <button class="pause-btn" id="pausebtn-${i}" onclick="pauseResume(${i})" title="Pause / Resume">
+              ${pauseIcon()}
+            </button>
+            <button class="play-btn" id="pb-${i}" onclick="toggleCard(${i})" title="Play">
+              ${playIcon()}
+            </button>
+          </div>
+        </div>
+      </div>`;
+
+    list.appendChild(card);
+  });
+}
+
+function setRate(idx, rate) {
+  sentences[idx].rate = rate;
+  document.querySelectorAll(`#sg-${idx} .spd`).forEach(btn => {
+    btn.classList.toggle('active', parseFloat(btn.textContent) === rate);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// SPEAK — core function
+// Speaks sentence[idx] starting from wordIndex,
+// highlights words via boundary event.
+// ═══════════════════════════════════════════════════
+function speakFrom(idx, startWordIdx, onEnd) {
+  speechSynthesis.cancel();
+  currentUtt = null;
+
+  const s = sentences[idx];
+  if (!s) { if (onEnd) onEnd(); return; }
+
+  // Get real word tokens (non-whitespace)
+  const wordTokens = s.words.filter(t => !/^\s+$/.test(t));
+  if (!wordTokens.length) { if (onEnd) onEnd(); return; }
+
+  // Build text from startWordIdx onwards
+  const wordsToSpeak = wordTokens.slice(startWordIdx);
+  const textToSpeak  = wordsToSpeak.join(' ');
+
+  // Reset highlights before startWordIdx to "spoken" state
+  clearWordHighlights(idx);
+  for (let wi = 0; wi < startWordIdx; wi++) {
+    const span = document.querySelector(`#st-${idx} .word[data-widx="${wi}"]`);
+    if (span) span.classList.add('spoken');
+  }
+
+  const utt = new SpeechSynthesisUtterance(textToSpeak);
+  if (frVoice) utt.voice = frVoice;
+  utt.lang  = 'fr-FR';
+  utt.rate  = s.rate;
+  utt.pitch = 1;
+
+  // Track which word within this sub-utterance we're on
+  let subWordIdx = 0;
+  pausedWordIdx  = startWordIdx; // keep updated for pause
+
+  utt.onboundary = (e) => {
+    if (e.name !== 'word') return;
+    // highlight current word
+    const absIdx = startWordIdx + subWordIdx;
+    highlightWord(idx, absIdx);
+    pausedWordIdx = absIdx; // save for pause
+    subWordIdx++;
+  };
+
+  utt.onend = () => {
+    clearWordHighlights(idx);
+    // mark all words spoken
+    wordTokens.forEach((_, wi) => {
+      const span = document.querySelector(`#st-${idx} .word[data-widx="${wi}"]`);
+      if (span) { span.classList.remove('highlight'); span.classList.add('spoken'); }
+    });
+    currentUtt = null;
+    if (onEnd) onEnd();
+  };
+
+  utt.onerror = (e) => {
+    if (e.error === 'interrupted' || e.error === 'canceled') return;
+    currentUtt = null;
+    if (onEnd) onEnd();
+  };
+
+  currentUtt = utt;
+  speechSynthesis.speak(utt);
+}
+
+// ═══════════════════════════════════════════════════
+// WORD HIGHLIGHT HELPERS
+// ═══════════════════════════════════════════════════
+function highlightWord(sentIdx, wordIdx) {
+  // remove previous highlight
+  const prev = document.querySelector(`#st-${sentIdx} .word.highlight`);
+  if (prev) { prev.classList.remove('highlight'); prev.classList.add('spoken'); }
+  // add new highlight
+  const cur = document.querySelector(`#st-${sentIdx} .word[data-widx="${wordIdx}"]`);
+  if (cur) { cur.classList.remove('spoken'); cur.classList.add('highlight'); }
+}
+
+function clearWordHighlights(sentIdx) {
+  document.querySelectorAll(`#st-${sentIdx} .word`).forEach(span => {
+    span.classList.remove('highlight', 'spoken');
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// CARD VISUAL STATE
+// ═══════════════════════════════════════════════════
+function setCardState(idx, state) {
+  // state: 'idle' | 'playing' | 'paused' | 'done'
+  const card     = document.getElementById(`sc-${idx}`);
+  const pb       = document.getElementById(`pb-${idx}`);
+  const pauseBtn = document.getElementById(`pausebtn-${idx}`);
+  const wave     = document.getElementById(`wave-${idx}`);
+  if (!card) return;
+
+  card.classList.remove('active', 'paused', 'done');
+  pb.classList.remove('playing', 'paused');
+  wave.classList.remove('on');
+  pauseBtn.classList.remove('visible');
+
+  if (state === 'playing') {
+    card.classList.add('active');
+    pb.classList.add('playing');
+    pb.innerHTML = stopIcon();
+    pb.title = 'Stop';
+    wave.classList.add('on');
+    pauseBtn.classList.add('visible');
+    pauseBtn.innerHTML = pauseIcon();
+    pauseBtn.title = 'Pause';
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } else if (state === 'paused') {
+    card.classList.add('paused');
+    pb.classList.add('paused');
+    pb.innerHTML = playIcon();
+    pb.title = 'Stop';
+    pauseBtn.classList.add('visible');
+    pauseBtn.innerHTML = resumeIcon();
+    pauseBtn.title = 'Resume';
+  } else if (state === 'done') {
+    card.classList.add('done');
+    pb.innerHTML = playIcon();
+    pb.title = 'Play again';
+  } else {
+    // idle
+    pb.innerHTML = playIcon();
+    pb.title = 'Play';
+  }
+}
+
+function resetAllCards() {
+  sentences.forEach((_, i) => setCardState(i, 'idle'));
+}
+
+// ═══════════════════════════════════════════════════
+// HARD STOP — cancels everything
+// ═══════════════════════════════════════════════════
+function hardStop() {
+  speechSynthesis.cancel();
+  currentUtt    = null;
+  isPaused      = false;
+  pausedWordIdx = 0;
+  activeSentIdx = -1;
+  playAllMode   = false;
+  playIdx       = -1;
+  resetAllCards();
+  updatePlayAllBtn('idle');
+  hideProgress();
+  // clear all highlights
+  sentences.forEach((_, i) => clearWordHighlights(i));
+}
+
+// ═══════════════════════════════════════════════════
+// TOGGLE SINGLE CARD
+// ═══════════════════════════════════════════════════
+function toggleCard(idx) {
+  // If this card is active (playing or paused), stop it
+  if (activeSentIdx === idx) {
+    hardStop();
+    return;
+  }
+  // Otherwise start fresh on this card
+  hardStop();
+  activeSentIdx = idx;
+  isPaused      = false;
+  pausedWordIdx = 0;
+  playAllMode   = false;
+
+  setCardState(idx, 'playing');
+  speakFrom(idx, 0, () => {
+    if (activeSentIdx === idx && !isPaused) {
+      setCardState(idx, 'done');
+      clearWordHighlights(idx);
+      activeSentIdx = -1;
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// PAUSE / RESUME
+// ═══════════════════════════════════════════════════
+function pauseResume(idx) {
+  if (activeSentIdx !== idx) return;
+
+  if (!isPaused) {
+    // ── PAUSE ──
+    // Save the current word index (already tracked by onboundary)
+    const savedWord = pausedWordIdx;
+    speechSynthesis.cancel(); // this fires onerror with 'interrupted', which we swallow
+    currentUtt = null;
+    isPaused   = true;
+    pausedWordIdx = savedWord; // restore after cancel clears it
+    setCardState(idx, 'paused');
+    if (playAllMode) updatePlayAllBtn('paused');
+  } else {
+    // ── RESUME ──
+    isPaused = false;
+    setCardState(idx, 'playing');
+    if (playAllMode) updatePlayAllBtn('playing');
+
+    const resumeFrom = pausedWordIdx;
+    speakFrom(idx, resumeFrom, () => {
+      if (isPaused) return; // another pause happened
+      setCardState(idx, 'done');
+      clearWordHighlights(idx);
+      if (playAllMode) {
+        activeSentIdx = -1;
+        playIdx++;
+        setTimeout(playNext, 200);
+      } else {
+        activeSentIdx = -1;
+      }
+    });
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// PLAY ALL
+// ═══════════════════════════════════════════════════
+function handlePlayAllBtn() {
+  if (playAllMode && !isPaused) {
+    // Currently playing → stop
+    hardStop();
+    return;
+  }
+  if (playAllMode && isPaused) {
+    // Currently paused → resume
+    pauseResume(activeSentIdx);
+    return;
+  }
+  // Start fresh play-all
+  hardStop();
+  playAllMode = true;
+  playIdx     = 0;
+  updatePlayAllBtn('playing');
+  showProgress(0);
+  playNext();
+}
+
+function playNext() {
+  if (!playAllMode || playIdx >= sentences.length) {
+    // Done
+    playAllMode = false;
+    playIdx     = -1;
+    activeSentIdx = -1;
+    updatePlayAllBtn('idle');
+    updateProgress(sentences.length, sentences.length);
+    return;
+  }
+
+  const idx = playIdx;
+  activeSentIdx = idx;
+  isPaused      = false;
+  pausedWordIdx = 0;
+  clearWordHighlights(idx);
+  setCardState(idx, 'playing');
+  updateProgress(idx + 1, sentences.length);
+
+  speakFrom(idx, 0, () => {
+    if (!playAllMode || isPaused) return;
+    setCardState(idx, 'done');
+    clearWordHighlights(idx);
+    activeSentIdx = -1;
+    playIdx++;
+    setTimeout(playNext, 200);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// PLAY ALL BUTTON STATE
+// ═══════════════════════════════════════════════════
+function updatePlayAllBtn(state) {
+  // state: 'idle' | 'playing' | 'paused'
+  const btn = document.getElementById('playAllBtn');
+  const lbl = document.getElementById('playAllLabel');
+  const ico = document.getElementById('playAllIcon');
+
+  btn.classList.remove('stop-mode', 'pause-mode');
+
+  if (state === 'playing') {
+    btn.classList.add('stop-mode');
+    // show pause icon + label
+    ico.setAttribute('d', 'M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z');
+    lbl.textContent = 'Stop';
+  } else if (state === 'paused') {
+    btn.classList.add('pause-mode');
+    ico.setAttribute('d', 'M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z');
+    lbl.textContent = 'Resume';
+  } else {
+    ico.setAttribute('d', 'M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z');
+    lbl.textContent = 'Play All';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// PROGRESS
+// ═══════════════════════════════════════════════════
+function showProgress() {
+  document.getElementById('progressWrap').classList.add('show');
+  updateProgress(0, sentences.length);
+}
+function hideProgress() {
+  document.getElementById('progressWrap').classList.remove('show');
+}
+function updateProgress(done, total) {
+  const pct = total ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${done} / ${total} sentences`;
+}
+
+// ═══════════════════════════════════════════════════
+// CLEAR
+// ═══════════════════════════════════════════════════
+function clearAll() {
+  hardStop();
+  document.getElementById('paragraphInput').value = '';
+  updateCount();
+  document.getElementById('sentencesSection').classList.remove('show');
+  document.getElementById('sentenceList').innerHTML = '';
+  sentences = [];
+}
+
+// ═══════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function playIcon() {
+  return `<svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>`;
+}
+function stopIcon() {
+  return `<svg width="9" height="9" viewBox="0 0 16 16" fill="currentColor"><path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z"/></svg>`;
+}
+function pauseIcon() {
+  return `<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/></svg>`;
+}
+function resumeIcon() {
+  return `<svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>`;
+}
+</script>
+</body>
+</html>

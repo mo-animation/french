@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Français A0 — Practice Sheets</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Literata:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --card: #ffffff;
+  --blue: #1a3a8f;
+  --red: #c8102e;
+  --gold: #c9a030;
+  --green: #1e6b45;
+  --ink: #18181b;
+  --muted: #71717a;
+  --warm: #ede8df;
+  --border: rgba(0,0,0,0.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);min-height:100vh;}
+
+/* HEADER */
+.header{background:var(--blue);padding:40px 24px 32px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.03) 40px,rgba(255,255,255,0.03) 80px);}
+.header-inner{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+.header-eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;}
+.header h1{font-family:'Syne',sans-serif;font-size:clamp(26px,6vw,46px);color:#fff;line-height:1.05;margin-bottom:12px;}
+.header h1 em{color:var(--gold);font-style:normal;}
+.header p{color:rgba(255,255,255,0.65);font-size:14px;line-height:1.7;max-width:500px;}
+.flag-stripe{height:4px;background:linear-gradient(90deg,#002395 33.3%,#fff 33.3% 66.6%,#ED2939 66.6%);}
+
+/* PROGRESS */
+.progress-wrap{background:var(--warm);padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--border);}
+.prog-label{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+.prog-track{flex:1;min-width:100px;height:7px;background:#ddd;border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--red));border-radius:99px;transition:width .5s ease;width:0%;}
+.prog-num{font-size:12px;font-weight:700;color:var(--blue);}
+
+/* TABS */
+.tabs-outer{background:var(--warm);border-bottom:2px solid var(--border);overflow-x:auto;}
+.tabs-inner{display:flex;gap:2px;padding:10px 16px;min-width:max-content;}
+.tab{padding:8px 15px;border:none;background:transparent;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap;}
+.tab:hover{background:rgba(26,58,143,.1);color:var(--blue);}
+.tab.on{background:var(--blue);color:#fff;}
+.tab .ct{background:rgba(255,255,255,.25);border-radius:99px;padding:1px 6px;font-size:10px;margin-left:4px;}
+
+/* MAIN */
+main{max-width:700px;margin:0 auto;padding:24px 16px 80px;}
+
+/* SHEET */
+.sheet{display:none;}
+.sheet.on{display:block;}
+
+/* SECTION HEAD */
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:2px solid var(--warm);}
+.sh-icon{width:46px;height:46px;background:var(--blue);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.sh-text h2{font-family:'Syne',sans-serif;font-size:20px;}
+.sh-text p{font-size:12px;color:var(--muted);margin-top:3px;}
+
+/* CARD */
+.card{background:var(--card);border-radius:18px;padding:22px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 16px rgba(0,0,0,.04);transition:transform .2s;}
+.card:hover{transform:translateY(-1px);}
+.ex-num{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+
+/* TAGS */
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-bottom:10px;}
+.t-speak{background:#e0e9ff;color:var(--blue);}
+.t-build{background:#fff3db;color:#8a5500;}
+.t-complete{background:#e0f5ec;color:var(--green);}
+.t-describe{background:#ffe0e4;color:var(--red);}
+.t-para{background:#f0e0ff;color:#6200c8;}
+
+/* PROMPT */
+.prompt{font-size:14px;font-weight:500;line-height:1.6;margin-bottom:14px;color:var(--ink);}
+.prompt b{color:var(--blue);}
+.prompt i{color:var(--red);font-style:normal;font-weight:600;}
+
+/* STARTERS BOX */
+.sbox{background:var(--bg);border-radius:10px;padding:12px 14px;margin-bottom:12px;border-left:3px solid var(--gold);}
+.sbox-label{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.spills{display:flex;flex-wrap:wrap;gap:7px;}
+.sp{background:var(--blue);color:#fff;border:none;border-radius:99px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.sp:hover{background:var(--red);transform:scale(1.05);}
+
+/* WORD BANK */
+.wbank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;}
+.wc{padding:5px 13px;border-radius:99px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid;transition:all .2s;font-family:'DM Sans',sans-serif;user-select:none;}
+.wb{border-color:var(--blue);color:var(--blue);background:#e8f0ff;}
+.wr{border-color:var(--red);color:var(--red);background:#ffe8ea;}
+.wg{border-color:var(--gold);color:#7a5500;background:#fff8e0;}
+.wn{border-color:var(--green);color:var(--green);background:#e4f5ec;}
+.wc:hover{opacity:.7;transform:scale(1.04);}
+.wc.used{opacity:.3;text-decoration:line-through;cursor:default;pointer-events:none;}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;}
+.step{display:flex;gap:11px;align-items:flex-start;}
+.sn{min-width:26px;height:26px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.sc{flex:1;}
+.sh2{font-size:11px;color:var(--muted);margin-bottom:5px;}
+.si{width:100%;border:1.5px solid #e0e0e0;border-radius:8px;padding:9px 13px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;background:var(--bg);}
+.si:focus{border-color:var(--blue);background:#fff;}
+
+/* TEXTAREA */
+.ta{width:100%;border:1.5px solid #e0e0e0;border-radius:10px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);resize:vertical;min-height:72px;outline:none;transition:border-color .2s;background:var(--bg);}
+.ta:focus{border-color:var(--blue);background:#fff;}
+.ta.tall{min-height:120px;}
+.ta.xtall{min-height:170px;}
+
+/* DIALOGUE */
+.dlg{display:flex;flex-direction:column;gap:9px;margin-bottom:12px;}
+.dl{display:flex;gap:9px;align-items:flex-start;}
+.dl.r{flex-direction:row-reverse;}
+.dav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.12);}
+.db{background:#e8f0ff;border-radius:14px 14px 14px 0;padding:9px 13px;font-size:13px;max-width:78%;line-height:1.5;}
+.dl.r .db{background:var(--blue);color:#fff;border-radius:14px 14px 0 14px;}
+.db.blank{background:var(--warm);border:2px dashed #ccc;color:var(--muted);font-style:italic;font-size:12px;}
+.dl.r .db.blank{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.65);}
+
+/* MCQ */
+.mcq{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.mcq-opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:all .2s;font-size:13px;}
+.mcq-opt:hover{border-color:var(--blue);background:#e8f0ff;}
+.mcq-opt.correct{border-color:var(--green);background:#e4f5ec;color:var(--green);}
+.mcq-opt.wrong{border-color:var(--red);background:#ffe8ea;color:var(--red);}
+.mcq-opt input{accent-color:var(--blue);}
+
+/* MATCH */
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.match-col{display:flex;flex-direction:column;gap:7px;}
+.mitem{padding:9px 13px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid #e0e0e0;transition:all .2s;text-align:center;}
+.mitem.left{background:#e8f0ff;border-color:var(--blue);color:var(--blue);}
+.mitem.right{background:#fff3db;border-color:var(--gold);color:#7a5500;}
+.mitem.selected{transform:scale(1.04);box-shadow:0 0 0 3px rgba(26,58,143,.3);}
+.mitem.matched{opacity:.4;pointer-events:none;text-decoration:line-through;}
+
+/* BUTTONS */
+.row{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
+.btn{padding:9px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--blue);color:#fff;}
+.btn-p:hover{background:#122c6e;}
+.btn-p:disabled{background:#2d7a4f;cursor:default;}
+.btn-s{background:transparent;color:var(--muted);border:1.5px solid #ddd;}
+.btn-s:hover{border-color:var(--muted);color:var(--ink);}
+
+/* REVEAL */
+.rev-btn{background:none;border:1.5px solid #ddd;border-radius:8px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);cursor:pointer;margin-top:10px;transition:all .2s;display:inline-flex;align-items:center;gap:5px;}
+.rev-btn:hover{border-color:var(--blue);color:var(--blue);}
+.ans{display:none;margin-top:10px;padding:13px 15px;background:linear-gradient(135deg,#eaf1ff,#f5f9ff);border-radius:10px;border-left:3px solid var(--blue);font-size:13px;line-height:1.8;color:var(--ink);}
+.ans.show{display:block;}
+.ans strong{color:var(--blue);}
+
+/* COMPLETE */
+.done-banner{background:linear-gradient(135deg,var(--blue),#0f2460);color:#fff;border-radius:18px;padding:28px;text-align:center;margin-top:24px;display:none;}
+.done-banner.show{display:block;}
+.done-banner h3{font-family:'Syne',sans-serif;font-size:22px;margin-bottom:8px;}
+.done-banner p{font-size:13px;opacity:.8;}
+
+/* MCQ feedback */
+.fb{font-size:12px;margin-top:6px;font-weight:600;display:none;}
+.fb.show{display:block;}
+.fb.ok{color:var(--green);}
+.fb.no{color:var(--red);}
+
+/* RESET BUTTON */
+.reset-btn{
+  display:block;
+  margin-top:14px;
+  width:100%;
+  padding:8px;
+  background:transparent;
+  border:1.5px dashed #ccc;
+  border-radius:10px;
+  font-family:'DM Sans',sans-serif;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:1px;
+  color:#aaa;
+  cursor:pointer;
+  transition:all .2s;
+  text-align:center;
+}
+.reset-btn:hover{
+  border-color:var(--red);
+  color:var(--red);
+  background:#fff0f1;
+}
+
+@media(max-width:480px){
+  .header{padding:28px 16px 24px;}
+  main{padding:16px 12px 60px;}
+  .card{padding:16px;}
+  .match-wrap{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="flag-stripe"></div>
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Niveau A0 · Mme Sabria × Dr. Mohamed Anwar</div>
+    <h1>Parle <em>Français</em><br>Practice Sheets</h1>
+    <p>90 exercises across 9 topics — build sentences, speak paragraphs, express yourself in French from day one.</p>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <span class="prog-label">Progress</span>
+  <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
+  <span class="prog-num" id="pc">0 / 0</span>
+</div>
+
+<div class="tabs-outer">
+  <div class="tabs-inner">
+    <button class="tab on"  onclick="showSheet('s1',this)">👤 Me présenter <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s2',this)">👨‍👩‍👧 Ma famille <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s3',this)">🌍 Mon pays <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s4',this)">🏙️ Ma ville <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s5',this)">⏰ Ma routine <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s6',this)">❤️ J'aime <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s7',this)">😊 Sentiments <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s8',this)">🗣️ Dialogues <span class="ct">10</span></button>
+    <button class="tab" onclick="showSheet('s9',this)">📝 Paragraphes <span class="ct">10</span></button>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 1 — ME PRÉSENTER (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet on" id="s1">
+<div class="sh"><div class="sh-icon">👤</div><div class="sh-text"><h2>Me présenter</h2><p>Introduce yourself with full sentences — not just words</p></div></div>
+
+<!-- 1 -->
+<div class="card">
+<div class="ex-num">Exercise 1 · 10</div>
+<span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Say these 3 essential sentences out loud. Fill them in with YOUR real info, then say the full sentence.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">Your name →</div><input class="si" placeholder="Je m'appelle __________ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Your age →</div><input class="si" placeholder="J'ai __________ ans ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><div class="sh2">Your nationality →</div><input class="si" placeholder="Je suis __________ ."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Je m'appelle Sara. J'ai 25 ans. Je suis égyptienne.</div>
+</div>
+
+<!-- 2 -->
+<div class="card">
+<div class="ex-num">Exercise 2 · 10</div>
+<span class="tag t-build">🔨 Build</span>
+<div class="prompt">Use the word chips to build a sentence introducing a friend. Tap chips to mark them used, then write the sentence.</div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">Il s'appelle</span><span class="wc wb" onclick="chip(this)">Elle s'appelle</span>
+  <span class="wc wr" onclick="chip(this)">et il a</span><span class="wc wr" onclick="chip(this)">et elle a</span>
+  <span class="wc wg" onclick="chip(this)">20 ans</span><span class="wc wg" onclick="chip(this)">35 ans</span><span class="wc wg" onclick="chip(this)">50 ans</span>
+  <span class="wc wn" onclick="chip(this)">Il est médecin</span><span class="wc wn" onclick="chip(this)">Elle est professeure</span><span class="wc wn" onclick="chip(this)">Il est ingénieur</span>
+</div>
+<textarea class="ta" placeholder="Write your sentence here..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Il s'appelle Karim et il a 35 ans. Il est ingénieur.</div>
+</div>
+
+<!-- 3 -->
+<div class="card">
+<div class="ex-num">Exercise 3 · 10</div>
+<span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Describe your physical appearance. Use: <b>J'ai les yeux...</b> / <b>J'ai les cheveux...</b></div>
+<div class="sbox"><div class="sbox-label">Colour words from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta3')">noirs</button><button class="sp" onclick="ins(this,'ta3')">marron</button>
+  <button class="sp" onclick="ins(this,'ta3')">bleus</button><button class="sp" onclick="ins(this,'ta3')">verts</button>
+  <button class="sp" onclick="ins(this,'ta3')">blonds</button><button class="sp" onclick="ins(this,'ta3')">roux</button>
+  <button class="sp" onclick="ins(this,'ta3')">gris</button>
+</div></div>
+<textarea class="ta" id="ta3" placeholder="J'ai les yeux ___. J'ai les cheveux ___."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> J'ai les yeux noirs. J'ai les cheveux marron.</div>
+</div>
+
+<!-- 4 -->
+<div class="card">
+<div class="ex-num">Exercise 4 · 10</div>
+<span class="tag t-build">🔨 Build</span>
+<div class="prompt">Write your birth date in French. Use the formula: <b>Je suis né(e) le [day] [month] [year].</b></div>
+<div class="sbox"><div class="sbox-label">Months from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta4')">janvier</button><button class="sp" onclick="ins(this,'ta4')">février</button>
+  <button class="sp" onclick="ins(this,'ta4')">mars</button><button class="sp" onclick="ins(this,'ta4')">avril</button>
+  <button class="sp" onclick="ins(this,'ta4')">mai</button><button class="sp" onclick="ins(this,'ta4')">juin</button>
+  <button class="sp" onclick="ins(this,'ta4')">juillet</button><button class="sp" onclick="ins(this,'ta4')">août</button>
+  <button class="sp" onclick="ins(this,'ta4')">septembre</button><button class="sp" onclick="ins(this,'ta4')">octobre</button>
+  <button class="sp" onclick="ins(this,'ta4')">novembre</button><button class="sp" onclick="ins(this,'ta4')">décembre</button>
+</div></div>
+<textarea class="ta" id="ta4" placeholder="Je suis né(e) le ___ ___ ___."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Je suis né(e) le vingt juin mille neuf cent quatre-vingt-dix-neuf.</div>
+</div>
+
+<!-- 5 -->
+<div class="card">
+<div class="ex-num">Exercise 5 · 10</div>
+<span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Choose the correct option for each sentence. Click the right answer.</div>
+<div style="margin-bottom:10px;">
+  <div style="font-size:13px;margin-bottom:8px;font-weight:500;">1. To say your name in French, you say:</div>
+  <div class="mcq" id="mcq1">
+    <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> J'ai Sara.</div>
+    <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> Je m'appelle Sara.</div>
+    <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> Je suis Sara ans.</div>
+  </div>
+  <div style="font-size:13px;margin-bottom:8px;font-weight:500;">2. To say your age:</div>
+  <div class="mcq" id="mcq2">
+    <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> Je suis 25 ans.</div>
+    <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> J'appelle 25 ans.</div>
+    <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> J'ai 25 ans.</div>
+  </div>
+  <div style="font-size:13px;margin-bottom:8px;font-weight:500;">3. A woman from Egypt says:</div>
+  <div class="mcq" id="mcq3">
+    <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> Je suis égyptien.</div>
+    <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> Je suis égyptienne.</div>
+    <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> Je suis Égypte.</div>
+  </div>
+</div>
+</div>
+
+<!-- 6 -->
+<div class="card">
+<div class="ex-num">Exercise 6 · 10</div>
+<span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Say today's date in French! Use: <b>Aujourd'hui, [day] [date] [month] [year].</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">What day is it today?</div><input class="si" placeholder="Aujourd'hui, c'est _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Write the full date sentence</div><input class="si" placeholder="Aujourd'hui, _____ _____ _____ deux mille vingt-six."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Aujourd'hui, mercredi dix-huit mars deux mille vingt-six.</div>
+</div>
+
+<!-- 7 -->
+<div class="card">
+<div class="ex-num">Exercise 7 · 10</div>
+<span class="tag t-build">🔨 Build</span>
+<div class="prompt">Introduce a classmate using <b>il/elle</b>. Build 4 sentences about an imaginary person.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Il / Elle s'appelle _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Il / Elle a _____ ans."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Il est / Elle est _____ (nationalité)."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><input class="si" placeholder="Il est / Elle est _____ (métier)."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Elle s'appelle Layla. Elle a 28 ans. Elle est marocaine. Elle est médecin.</div>
+</div>
+
+<!-- 8 -->
+<div class="card">
+<div class="ex-num">Exercise 8 · 10</div>
+<span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Write a sentence about the alphabet letter that starts your first name. Use: <b>[Lettre] comme [mot du livre].</b></div>
+<div class="sbox"><div class="sbox-label">Examples from the alphabet page</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta8')">A comme un avion</button>
+  <button class="sp" onclick="ins(this,'ta8')">B comme un ballon</button>
+  <button class="sp" onclick="ins(this,'ta8')">M comme un marteau</button>
+  <button class="sp" onclick="ins(this,'ta8')">S comme un serpent</button>
+</div></div>
+<textarea class="ta" id="ta8" placeholder="Mon prénom commence par ___ comme ___ . Je m'appelle ___ ."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Done!</button></div>
+</div>
+
+<!-- 9 -->
+<div class="card">
+<div class="ex-num">Exercise 9 · 10</div>
+<span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Count from 1 to 10 in French then say your phone number digit by digit. Example: <b>zéro - un - deux - trois...</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">Count 1–10 aloud (write them)</div><input class="si" placeholder="un, deux, trois, quatre..."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Say your phone number in French</div><input class="si" placeholder="Mon numéro est : zéro - ..."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+</div>
+
+<!-- 10 -->
+<div class="card">
+<div class="ex-num">Exercise 10 · 10</div>
+<span class="tag t-para">📝 Full Intro</span>
+<div class="prompt">Write your complete self-introduction (6–8 sentences) covering: name, age, nationality, birth date, appearance, job. Then say it OUT LOUD without reading — from memory.</div>
+<div class="sbox"><div class="sbox-label">Checklist — include all of these</div>
+<div class="spills">
+  <button class="sp">✓ Nom</button><button class="sp">✓ Âge</button><button class="sp">✓ Nationalité</button>
+  <button class="sp">✓ Date de naissance</button><button class="sp">✓ Apparence</button><button class="sp">✓ Métier</button>
+</div></div>
+<textarea class="ta xtall" placeholder="Je m'appelle... J'ai... ans. Je suis... Je suis né(e) le... J'ai les yeux... Je suis..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said from memory!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Je m'appelle Ahmed. J'ai 28 ans. Je suis égyptien. Je suis né le vingt mars mille neuf cent quatre-vingt-dix-sept. J'ai les yeux noirs et les cheveux noirs. Je suis ingénieur. J'habite au Caire.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 2 — MA FAMILLE (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s2">
+<div class="sh"><div class="sh-icon">👨‍👩‍👧</div><div class="sh-text"><h2>Ma famille</h2><p>Describe your family in real sentences</p></div></div>
+
+<!-- 1 -->
+<div class="card">
+<div class="ex-num">Exercise 1 · 10</div>
+<span class="tag t-build">🔨 Build</span>
+<div class="prompt">Write one sentence for each family member using: <b>[member] s'appelle ___ et il/elle a ___ ans.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">Mon père</div><input class="si" placeholder="Mon père s'appelle _____ et il a _____ ans."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Ma mère</div><input class="si" placeholder="Ma mère s'appelle _____ et elle a _____ ans."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><div class="sh2">Mon frère / ma sœur</div><input class="si" placeholder="Mon frère / Ma sœur s'appelle _____ ."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><div class="sh2">Mon grand-père / ma grand-mère</div><input class="si" placeholder="Mon grand-père / Ma grand-mère s'appelle _____ ."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Mon père s'appelle Hassan et il a 55 ans.<br>Ma mère s'appelle Fatima et elle a 50 ans.<br>Mon frère s'appelle Youssef et il a 20 ans.</div>
+</div>
+
+<!-- 2 -->
+<div class="card">
+<div class="ex-num">Exercise 2 · 10</div>
+<span class="tag t-build">🔨 Build</span>
+<div class="prompt">Add their jobs! Use: <b>Il est / Elle est + métier.</b></div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">médecin</span><span class="wc wb" onclick="chip(this)">professeur(e)</span>
+  <span class="wc wb" onclick="chip(this)">ingénieur(e)</span><span class="wc wb" onclick="chip(this)">avocat(e)</span>
+  <span class="wc wr" onclick="chip(this)">retraité(e)</span><span class="wc wr" onclick="chip(this)">femme au foyer</span>
+  <span class="wc wr" onclick="chip(this)">policier / policière</span><span class="wc wr" onclick="chip(this)">infirmier / infirmière</span>
+  <span class="wc wg" onclick="chip(this)">comptable</span><span class="wc wg" onclick="chip(this)">programmeur / programmeuse</span>
+</div>
+<textarea class="ta" placeholder="Mon père est... Ma mère est... Mon frère est..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Mon père est ingénieur. Ma mère est professeure. Mon frère est médecin.</div>
+</div>
+
+<!-- 3 -->
+<div class="card">
+<div class="ex-num">Exercise 3 · 10</div>
+<span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Write your family members' birth dates. Use: <b>[membre] est né(e) le ___ ___ ___.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Mon père est né le ___ ___ ___ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Ma mère est née le ___ ___ ___ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Mon / Ma ___ est né(e) le ___ ___ ___ ."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Mon père est né le dix-sept septembre mille neuf cent soixante-treize.<br>Ma mère est née le vingt juin mille neuf cent soixante-dix-huit.</div>
+</div>
+
+<!-- 4 -->
+<div class="card">
+<div class="ex-num">Exercise 4 · 10</div>
+<span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Describe a family member's appearance. Use: <b>Il/Elle a les yeux ___ et les cheveux ___.</b></div>
+<div class="sbox"><div class="sbox-label">Tap colour + body part starters</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta2e4')">Il a les yeux</button><button class="sp" onclick="ins(this,'ta2e4')">Elle a les yeux</button>
+  <button class="sp" onclick="ins(this,'ta2e4')">Il a les cheveux</button><button class="sp" onclick="ins(this,'ta2e4')">Elle a les cheveux</button>
+  <button class="sp" onclick="ins(this,'ta2e4')">noirs</button><button class="sp" onclick="ins(this,'ta2e4')">marron</button>
+  <button class="sp" onclick="ins(this,'ta2e4')">blonds</button><button class="sp" onclick="ins(this,'ta2e4')">bleus</button>
+</div></div>
+<textarea class="ta" id="ta2e4" placeholder="Write 2 sentences describing a family member..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Ma mère a les yeux marron et les cheveux noirs. Mon frère a les yeux noirs et les cheveux marron.</div>
+</div>
+
+<!-- 5 -->
+<div class="card">
+<div class="ex-num">Exercise 5 · 10</div>
+<span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">How many children does someone have? Use: <b>J'ai deux fils. / J'ai deux filles. / Je n'ai pas d'enfants.</b> Then describe them.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="J'ai _____ fils / fille(s). / Je n'ai pas d'enfants."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Mon premier fils / Ma première fille s'appelle _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Il / Elle a _____ ans."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said aloud!</button></div>
+</div>
+
+<!-- 6 -->
+<div class="card">
+<div class="ex-num">Exercise 6 · 10</div>
+<span class="tag t-build">🔨 Build</span>
+<div class="prompt">Talk about someone who is NOT family. Use the people from the book: <b>Mon ami / Mon voisin / Mon collègue s'appelle...</b></div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">Mon ami</span><span class="wc wb" onclick="chip(this)">Mon amie</span>
+  <span class="wc wr" onclick="chip(this)">Mon voisin</span><span class="wc wr" onclick="chip(this)">Ma voisine</span>
+  <span class="wc wg" onclick="chip(this)">Mon collègue</span><span class="wc wg" onclick="chip(this)">Ma collègue</span>
+</div>
+<textarea class="ta" placeholder="Mon ami s'appelle... et il a... ans. Il est..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Mon voisin s'appelle Omar et il a 40 ans. Il est policier.</div>
+</div>
+
+<!-- 7 -->
+<div class="card">
+<div class="ex-num">Exercise 7 · 10</div>
+<span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Choose the correct word — <b>mon</b> or <b>ma</b>. Pick the right answer.</div>
+<div class="mcq">
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> <b>Mon</b> père (father)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> <b>Ma</b> père (father)</div>
+</div>
+<div class="mcq">
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> <b>Mon</b> mère (mother)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> <b>Ma</b> mère (mother)</div>
+</div>
+<div class="mcq">
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> <b>Mon</b> oncle (uncle)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> <b>Ma</b> oncle (uncle)</div>
+</div>
+<div class="mcq">
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> <b>Mon</b> cousine (female cousin)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> <b>Ma</b> cousine (female cousin)</div>
+</div>
+</div>
+
+<!-- 8 -->
+<div class="card">
+<div class="ex-num">Exercise 8 · 10</div>
+<span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Describe your grandparents! Use ordinal numbers: <b>Mon grand-père est né le... Il a... ans.</b></div>
+<textarea class="ta" placeholder="Mon grand-père s'appelle... Il a... ans. Il est né le... Ma grand-mère s'appelle... Elle a... ans."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Mon grand-père s'appelle Mahmoud. Il a 80 ans. Il est retraité. Ma grand-mère s'appelle Khadija. Elle a 75 ans.</div>
+</div>
+
+<!-- 9 -->
+<div class="card">
+<div class="ex-num">Exercise 9 · 10</div>
+<span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">How many people are in your family? Use: <b>Dans ma famille, il y a ___ personnes.</b> Then list them.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Dans ma famille, il y a _____ personnes."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Il y a mon père, ma mère, ..."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="La plus grande famille, c'est _____ (who's oldest?)."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Done!</button></div>
+</div>
+
+<!-- 10 -->
+<div class="card">
+<div class="ex-num">Exercise 10 · 10</div>
+<span class="tag t-para">📝 Family Paragraph</span>
+<div class="prompt">Write a full paragraph (6–8 sentences) about your family. Include names, ages, jobs, and appearance. Then say it out loud.</div>
+<textarea class="ta xtall" placeholder="Dans ma famille, il y a... Mon père s'appelle... et il a... ans. Il est... Ma mère..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it from memory!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Dans ma famille, il y a cinq personnes. Mon père s'appelle Tarek et il a 57 ans. Il est ingénieur. Ma mère s'appelle Hana et elle a 52 ans. Elle est professeure. J'ai un frère : il s'appelle Adam et il a 22 ans. Il est étudiant. J'ai aussi une sœur : elle s'appelle Sara et elle a 18 ans.</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 3 — MON PAYS (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s3">
+<div class="sh"><div class="sh-icon">🌍</div><div class="sh-text"><h2>Mon pays &amp; ma nationalité</h2><p>Talk about where you're from with full sentences</p></div></div>
+
+<!-- 1 -->
+<div class="card"><div class="ex-num">Exercise 1 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Use all 3 ways the book teaches to say where you live:</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Je vis en _____, exactement à _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="J'habite en _____, exactement à _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Je réside en _____, exactement à _____ ."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Je vis en Égypte, exactement au Caire.<br>J'habite en Égypte, exactement au Caire.<br>Je réside en Égypte, exactement au Caire.</div></div>
+
+<!-- 2 -->
+<div class="card"><div class="ex-num">Exercise 2 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Say your nationality in both masculine AND feminine form. Use the Arab countries page.</div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">égyptien / égyptienne</span><span class="wc wb" onclick="chip(this)">marocain / marocaine</span>
+  <span class="wc wr" onclick="chip(this)">algérien / algérienne</span><span class="wc wr" onclick="chip(this)">libanais / libanaise</span>
+  <span class="wc wg" onclick="chip(this)">tunisien / tunisienne</span><span class="wc wg" onclick="chip(this)">jordanien / jordanienne</span>
+  <span class="wc wn" onclick="chip(this)">saoudien / saoudienne</span><span class="wc wn" onclick="chip(this)">irakien / irakienne</span>
+</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Je suis _____ (masculine form)."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Si j'étais une femme: Je suis _____ (feminine form)."></div></div>
+</div></div>
+
+<!-- 3 -->
+<div class="card"><div class="ex-num">Exercise 3 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Talk about your parents' nationality. Use: <b>Mon père est ___ / Ma mère est ___.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Mon père est _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Ma mère est _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Nous sommes tous _____ (same nationality)."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Mon père est égyptien. Ma mère est égyptienne. Nous sommes tous égyptiens.</div></div>
+
+<!-- 4 -->
+<div class="card"><div class="ex-num">Exercise 4 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Name 5 world countries in French from the book and one fact about each. Use: <b>___ est un pays ___.</b></div>
+<div class="sbox"><div class="sbox-label">Countries from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta3e4')">la France</button><button class="sp" onclick="ins(this,'ta3e4')">l'Allemagne</button>
+  <button class="sp" onclick="ins(this,'ta3e4')">l'Italie</button><button class="sp" onclick="ins(this,'ta3e4')">l'Espagne</button>
+  <button class="sp" onclick="ins(this,'ta3e4')">le Japon</button><button class="sp" onclick="ins(this,'ta3e4')">le Brésil</button>
+  <button class="sp" onclick="ins(this,'ta3e4')">la Chine</button><button class="sp" onclick="ins(this,'ta3e4')">les États-Unis</button>
+  <button class="sp" onclick="ins(this,'ta3e4')">la Russie</button><button class="sp" onclick="ins(this,'ta3e4')">l'Angleterre</button>
+</div></div>
+<textarea class="ta" id="ta3e4" placeholder="Write 5 sentences, one per country..."></textarea></div>
+
+<!-- 5 -->
+<div class="card"><div class="ex-num">Exercise 5 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Match the country to its nationality (masculine). Click a left item then a right item to match.</div>
+<div class="match-wrap">
+  <div class="match-col" id="ml1">
+    <div class="mitem left" onclick="matchClick(this)">l'Égypte</div>
+    <div class="mitem left" onclick="matchClick(this)">le Maroc</div>
+    <div class="mitem left" onclick="matchClick(this)">la France</div>
+    <div class="mitem left" onclick="matchClick(this)">le Japon</div>
+    <div class="mitem left" onclick="matchClick(this)">l'Italie</div>
+  </div>
+  <div class="match-col" id="mr1">
+    <div class="mitem right" onclick="matchClick(this)" data-match="le Maroc">marocain</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="la France">français</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="l'Italie">italien</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="l'Égypte">égyptien</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="le Japon">japonais</div>
+  </div>
+</div></div>
+
+<!-- 6 -->
+<div class="card"><div class="ex-num">Exercise 6 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Say these 3 sentences about yourself in Arabic countries context, then say them aloud in French:</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">Your country</div><input class="si" placeholder="J'habite en / au _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Your city</div><input class="si" placeholder="J'habite exactement à _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><div class="sh2">A neighboring country</div><input class="si" placeholder="Le pays voisin est _____ ."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div></div>
+
+<!-- 7 -->
+<div class="card"><div class="ex-num">Exercise 7 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Someone lives in a different country from where they're from. Build the sentences like in the book's example (person C from Egypt living in Saudi Arabia).</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Je suis _____ (nationality) ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Mais je vis en / au _____ , exactement à _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="J'habite à _____ depuis _____ ans."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Je suis égyptien. Mais je vis en Arabie saoudite, exactement à Riyad. J'habite à Riyad depuis 5 ans.</div></div>
+
+<!-- 8 -->
+<div class="card"><div class="ex-num">Exercise 8 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Pick any Arab country from the book and write 2 sentences about it using <b>la / le / l' / les</b>.</div>
+<div class="sbox"><div class="sbox-label">Arab countries — pick one</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta3e8')">le Liban</button><button class="sp" onclick="ins(this,'ta3e8')">la Jordanie</button>
+  <button class="sp" onclick="ins(this,'ta3e8')">le Qatar</button><button class="sp" onclick="ins(this,'ta3e8')">le Koweït</button>
+  <button class="sp" onclick="ins(this,'ta3e8')">la Tunisie</button><button class="sp" onclick="ins(this,'ta3e8')">la Libye</button>
+  <button class="sp" onclick="ins(this,'ta3e8')">Oman</button><button class="sp" onclick="ins(this,'ta3e8')">le Yémen</button>
+</div></div>
+<textarea class="ta" id="ta3e8" placeholder="_____ est un pays arabe. Les habitants s'appellent _____s."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Le Liban est un pays arabe. Les habitants s'appellent les Libanais.</div></div>
+
+<!-- 9 -->
+<div class="card"><div class="ex-num">Exercise 9 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Someone asks you: <b>«Tu es de quelle nationalité ?»</b> Answer in 3 sentences.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Tu es de quelle nationalité ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your answer here ↓</div></div>
+</div>
+<textarea class="ta" placeholder="Je suis _____ . Mon père est _____ et ma mère est _____ ."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong> Je suis égyptienne. Mon père est égyptien et ma mère est égyptienne aussi. Nous habitons en Égypte, au Caire.</div></div>
+
+<!-- 10 -->
+<div class="card"><div class="ex-num">Exercise 10 · 10</div><span class="tag t-para">📝 Full Paragraph</span>
+<div class="prompt">Write a full paragraph about your identity: nationality, country, city, family origins. 5–7 sentences. Say it aloud after.</div>
+<textarea class="ta xtall" placeholder="Je m'appelle... Je suis... J'habite en... exactement à... Mon père est... Ma mère est..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Je m'appelle Nour. Je suis marocaine. J'habite au Maroc, exactement à Casablanca. Mon père est marocain et ma mère est algérienne. J'aime beaucoup mon pays. Le Maroc est un beau pays.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 4 — MA VILLE (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s4">
+<div class="sh"><div class="sh-icon">🏙️</div><div class="sh-text"><h2>Ma ville &amp; ma maison</h2><p>Describe places and positions with prepositions</p></div></div>
+
+<!-- 1 -->
+<div class="card"><div class="ex-num">Exercise 1 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Use <b>Il y a + lieu + préposition + ma maison</b> to describe your neighborhood.</div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">Il y a</span>
+  <span class="wc wr" onclick="chip(this)">devant ma maison</span><span class="wc wr" onclick="chip(this)">derrière ma maison</span>
+  <span class="wc wr" onclick="chip(this)">à côté de ma maison</span><span class="wc wr" onclick="chip(this)">à gauche de ma maison</span>
+  <span class="wc wg" onclick="chip(this)">la mosquée</span><span class="wc wg" onclick="chip(this)">la pharmacie</span>
+  <span class="wc wg" onclick="chip(this)">le parc</span><span class="wc wg" onclick="chip(this)">l'école</span>
+  <span class="wc wn" onclick="chip(this)">le restaurant</span><span class="wc wn" onclick="chip(this)">la banque</span>
+</div>
+<textarea class="ta" placeholder="Write 4 sentences about what's around your home..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Il y a une pharmacie à côté de ma maison.<br>Il y a une mosquée derrière ma maison.<br>Il y a un parc à gauche de ma maison.<br>Il y a un restaurant devant ma maison.</div></div>
+
+<!-- 2 -->
+<div class="card"><div class="ex-num">Exercise 2 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Use the prepositions from the book to place objects in your room.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">Your phone</div><input class="si" placeholder="Mon téléphone est _____ le bureau."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Your charger</div><input class="si" placeholder="Mon chargeur est _____ la tablette."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><div class="sh2">Your laptop</div><input class="si" placeholder="Mon ordinateur portable est _____ le bureau."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><div class="sh2">Your bag</div><input class="si" placeholder="Mon sac est _____ la chaise."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Mon téléphone est sur le bureau.<br>Mon chargeur est à côté de la tablette.<br>Mon ordinateur portable est dans le sac.<br>Mon sac est devant la chaise.</div></div>
+
+<!-- 3 -->
+<div class="card"><div class="ex-num">Exercise 3 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">From the book's example: your home is between two places. Use: <b>Ma maison est entre ___ et ___.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Ma maison est entre _____ et _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Il y a _____ à droite de ma maison."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Il y a _____ à gauche de ma maison."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Ma maison est entre la pharmacie et le parc.<br>Il y a l'hôtel à droite de ma maison.<br>Il y a le parc à gauche de ma maison.</div></div>
+
+<!-- 4 -->
+<div class="card"><div class="ex-num">Exercise 4 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Match city places with their prepositions. Write a sentence for each.</div>
+<div class="sbox"><div class="sbox-label">City places from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta4e4')">l'hôtel</button><button class="sp" onclick="ins(this,'ta4e4')">la librairie</button>
+  <button class="sp" onclick="ins(this,'ta4e4')">le musée</button><button class="sp" onclick="ins(this,'ta4e4')">le cinéma</button>
+  <button class="sp" onclick="ins(this,'ta4e4')">l'aéroport</button><button class="sp" onclick="ins(this,'ta4e4')">la boulangerie</button>
+  <button class="sp" onclick="ins(this,'ta4e4')">l'hôpital</button><button class="sp" onclick="ins(this,'ta4e4')">l'école</button>
+</div></div>
+<textarea class="ta" id="ta4e4" placeholder="Write 4 sentences placing these around your neighborhood..."></textarea></div>
+
+<!-- 5 -->
+<div class="card"><div class="ex-num">Exercise 5 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Describe where you work or study. Use: <b>Je vais à / au / à la ___ . C'est ___ de ma maison.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Je vais à / au / à la _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="C'est à côté de / devant / derrière _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Je vais là-bas en / à _____ (transport)."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div></div>
+
+<!-- 6 -->
+<div class="card"><div class="ex-num">Exercise 6 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">The tortoise exercise from the book! Describe the turtle's position. Use: <b>dans / sur / sous / devant / derrière / à côté de.</b></div>
+<div class="mcq">
+  <div style="font-size:13px;margin-bottom:8px;font-weight:500;">The turtle is INSIDE the box → La tortue est ___</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> dans la boîte</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> sur la boîte</div>
+</div>
+<div class="mcq">
+  <div style="font-size:13px;margin-bottom:8px;font-weight:500;">The turtle is ON TOP of the box → La tortue est ___</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> sous la boîte</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> sur la boîte</div>
+</div>
+<div class="mcq">
+  <div style="font-size:13px;margin-bottom:8px;font-weight:500;">The turtle is UNDER the box → La tortue est ___</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio"> sous la boîte</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio"> devant la boîte</div>
+</div></div>
+
+<!-- 7 -->
+<div class="card"><div class="ex-num">Exercise 7 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">You're giving directions. Build 4 sentences using directions from the book.</div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">à gauche</span><span class="wc wb" onclick="chip(this)">à droite</span><span class="wc wb" onclick="chip(this)">au centre</span>
+  <span class="wc wr" onclick="chip(this)">La banque est</span><span class="wc wr" onclick="chip(this)">Le cinéma est</span><span class="wc wr" onclick="chip(this)">L'hôpital est</span>
+  <span class="wc wg" onclick="chip(this)">de la pharmacie</span><span class="wc wg" onclick="chip(this)">du parc</span><span class="wc wg" onclick="chip(this)">de la mairie</span>
+</div>
+<textarea class="ta" placeholder="La banque est à gauche de la pharmacie. ..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> La banque est à gauche de la pharmacie. Le cinéma est à droite du parc. L'hôpital est au centre de la ville.</div></div>
+
+<!-- 8 -->
+<div class="card"><div class="ex-num">Exercise 8 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">List 5 places you visit regularly. Use: <b>Je vais souvent à / au / à la ___.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Je vais souvent à / au _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Je vais souvent à / au _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Je vais souvent à / au _____ ."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><input class="si" placeholder="Je vais rarement à / au _____ ."></div></div>
+  <div class="step"><div class="sn">5</div><div class="sc"><input class="si" placeholder="Je ne vais jamais à / au _____ ."></div></div>
+</div></div>
+
+<!-- 9 -->
+<div class="card"><div class="ex-num">Exercise 9 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Describe your ideal city. What places does it have? Use <b>Dans ma ville idéale, il y a...</b></div>
+<textarea class="ta" placeholder="Dans ma ville idéale, il y a un grand parc, une belle mosquée, ..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong> Dans ma ville idéale, il y a un grand parc devant ma maison. Il y a une pharmacie à côté et un restaurant à droite. Il y a aussi un cinéma et un musée au centre de la ville.</div></div>
+
+<!-- 10 -->
+<div class="card"><div class="ex-num">Exercise 10 · 10</div><span class="tag t-para">📝 Full Description</span>
+<div class="prompt">Write a full paragraph (7–8 sentences) describing your neighborhood using at least 5 different prepositions of place. Say it aloud.</div>
+<textarea class="ta xtall" placeholder="J'habite à... Autour de ma maison, il y a... devant... derrière... à côté de... entre... à gauche..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>J'habite au Caire, dans le quartier de Maadi. Autour de ma maison, il y a beaucoup de choses. Il y a une mosquée derrière ma maison. Il y a une pharmacie à côté de ma maison. Il y a un parc à gauche de ma maison. Ma maison est entre la pharmacie et le parc. Il y a un restaurant devant et un hôtel à droite de la pharmacie. J'aime beaucoup mon quartier !</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 5 — MA ROUTINE (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s5">
+<div class="sh"><div class="sh-icon">⏰</div><div class="sh-text"><h2>Ma routine quotidienne</h2><p>Describe your day from morning to night</p></div></div>
+
+<!-- 1 -->
+<div class="card"><div class="ex-num">Exercise 1 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Fill in your daily schedule. Use <b>Le matin / L'après-midi / Le soir / La nuit + je + verb.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Le matin, je me réveille à _____ heures."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Le matin, je me douche et je _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="L'après-midi, je vais au travail à _____ heures."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><input class="si" placeholder="Le soir, je retourne à la maison à _____ heures."></div></div>
+  <div class="step"><div class="sn">5</div><div class="sc"><input class="si" placeholder="La nuit, je me couche à _____ heures."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Le matin, je me réveille à 7 heures.<br>Le matin, je me douche et je prends le petit déjeuner.<br>L'après-midi, je vais au travail à 13 heures.<br>Le soir, je retourne à la maison à 19 heures.<br>La nuit, je me couche à 22 heures.</div></div>
+
+<!-- 2 -->
+<div class="card"><div class="ex-num">Exercise 2 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Put these daily actions in the right ORDER (morning → night). Write the number 1–8 next to each.</div>
+<div class="sbox"><div class="sbox-label">Reorder these actions from the book</div>
+<div class="spills" style="flex-direction:column;align-items:flex-start;">
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je me couche.</button>
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je me réveille.</button>
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je dîne.</button>
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je vais au travail.</button>
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je me douche.</button>
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je prends le petit déjeuner.</button>
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je retourne à la maison.</button>
+  <button class="sp" style="width:100%;text-align:left;border-radius:8px;" onclick="ins(this,'ta5e2')">__ Je regarde la télé.</button>
+</div></div>
+<textarea class="ta" id="ta5e2" placeholder="Write the correct order here: 1. Je me réveille. 2. ..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See answer</button>
+<div class="ans"><strong>Correct order:</strong><br>1. Je me réveille. 2. Je me douche. 3. Je prends le petit déjeuner. 4. Je vais au travail. 5. Je retourne à la maison. 6. Je dîne. 7. Je regarde la télé. 8. Je me couche.</div></div>
+
+<!-- 3 -->
+<div class="card"><div class="ex-num">Exercise 3 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Write how you get to 4 different places. Use: <b>Je vais à/au ___ en / à ___.</b></div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">Je vais au travail</span><span class="wc wb" onclick="chip(this)">Je vais à l'école</span>
+  <span class="wc wb" onclick="chip(this)">Je vais au parc</span><span class="wc wb" onclick="chip(this)">Je vais au restaurant</span>
+  <span class="wc wb" onclick="chip(this)">Je vais à la mosquée</span>
+  <span class="wc wr" onclick="chip(this)">en voiture</span><span class="wc wr" onclick="chip(this)">en taxi</span>
+  <span class="wc wr" onclick="chip(this)">à pied</span><span class="wc wr" onclick="chip(this)">à bicyclette</span>
+  <span class="wc wr" onclick="chip(this)">à motocyclette</span><span class="wc wr" onclick="chip(this)">en autobus</span>
+</div>
+<textarea class="ta" placeholder="Je vais au travail en taxi. Je vais au parc à pied..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Je vais au travail en taxi. Je retourne à la maison en voiture. Je vais au parc à bicyclette. Je vais à la mosquée avec mon père à pied.</div></div>
+
+<!-- 4 -->
+<div class="card"><div class="ex-num">Exercise 4 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Describe your morning routine with specific times. Use the times from the book: <b>à 7 heures / à 8 heures...</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Le matin, je me réveille à _____ heures."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="À _____ heures, je me douche."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="À _____ heures, je prends le petit déjeuner."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><input class="si" placeholder="À _____ heures, je m'habille."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it aloud!</button></div></div>
+
+<!-- 5 -->
+<div class="card"><div class="ex-num">Exercise 5 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">What do you eat and drink for each meal? Build sentences from the book's food vocabulary.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">Le petit-déjeuner</div><input class="si" placeholder="Le matin, je mange _____ et je bois _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Le déjeuner</div><input class="si" placeholder="Au déjeuner, je prends _____ avec _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><div class="sh2">Le dîner</div><input class="si" placeholder="Le soir, au dîner, je mange _____ ."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Le matin, je mange des œufs et du pain et je bois du café.<br>Au déjeuner, je prends du poulet avec du riz.<br>Le soir, au dîner, je mange de la soupe et du pain avec du fromage.</div></div>
+
+<!-- 6 -->
+<div class="card"><div class="ex-num">Exercise 6 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Choose the right preposition of transport. Click the correct answer.</div>
+<div style="font-size:13px;margin-bottom:8px;font-weight:500;">1. Je vais au cinéma ___ motocyclette.</div>
+<div class="mcq"><div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">à motocyclette</div><div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">en motocyclette</div></div>
+<div style="font-size:13px;margin-bottom:8px;font-weight:500;">2. Je vais au travail ___ taxi.</div>
+<div class="mcq"><div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">à taxi</div><div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">en taxi</div></div>
+<div style="font-size:13px;margin-bottom:8px;font-weight:500;">3. Je vais au parc ___ pied.</div>
+<div class="mcq"><div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">à pied</div><div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">en pied</div></div></div>
+
+<!-- 7 -->
+<div class="card"><div class="ex-num">Exercise 7 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Describe someone else's routine. Use <b>Il/Elle + verb</b> to describe a family member's day.</div>
+<textarea class="ta" placeholder="Mon père se réveille à... Il va au travail en... Le soir, il..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Mon père se réveille à 6 heures. Il va au travail en voiture à 8 heures. Le soir, il retourne à la maison à 18 heures. Il dîne avec la famille à 20 heures. Il se couche à 23 heures.</div></div>
+
+<!-- 8 -->
+<div class="card"><div class="ex-num">Exercise 8 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">What sport or hobby do you do and when? Use: <b>Je fais du sport à ___ heures. J'aime ___.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="L'après-midi / Le matin, je fais du sport à _____ heures."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Je vais au _____ en / à _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="J'aime beaucoup _____ ."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div></div>
+
+<!-- 9 -->
+<div class="card"><div class="ex-num">Exercise 9 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Write 5 verbs from the book's verbs page that describe your routine, then make a sentence with each.</div>
+<div class="sbox"><div class="sbox-label">Verbs from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta5e9')">Je me réveille</button><button class="sp" onclick="ins(this,'ta5e9')">Je me douche</button>
+  <button class="sp" onclick="ins(this,'ta5e9')">Je mange</button><button class="sp" onclick="ins(this,'ta5e9')">Je bois</button>
+  <button class="sp" onclick="ins(this,'ta5e9')">Je marche</button><button class="sp" onclick="ins(this,'ta5e9')">Je cours</button>
+  <button class="sp" onclick="ins(this,'ta5e9')">Je lis</button><button class="sp" onclick="ins(this,'ta5e9')">J'écris</button>
+  <button class="sp" onclick="ins(this,'ta5e9')">Je dors</button><button class="sp" onclick="ins(this,'ta5e9')">Je me couche</button>
+</div></div>
+<textarea class="ta" id="ta5e9" placeholder="Write 5 sentences with 5 different verbs..."></textarea></div>
+
+<!-- 10 -->
+<div class="card"><div class="ex-num">Exercise 10 · 10</div><span class="tag t-para">📝 Full Routine</span>
+<div class="prompt">Write your COMPLETE daily routine (8–10 sentences), including times, transport, meals and activities. Then say it aloud naturally — as if telling a friend.</div>
+<textarea class="ta xtall" placeholder="Le matin, je me réveille à... Je me douche... L'après-midi... Je vais... en... Le soir... La nuit..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Told it to a friend!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Le matin, je me réveille à 7 heures. Je me douche à 7h30 et je prends le petit déjeuner à 8 heures. Je mange des œufs et je bois du café. Je m'habille et je vais au travail en taxi à 9 heures. L'après-midi, je déjeune au restaurant. Je prends du poulet avec du riz. Le soir, je retourne à la maison en voiture à 19 heures. Je fais du sport à 20 heures. Je dîne avec ma famille et je regarde la télé. La nuit, je me couche à 23 heures.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 6 — J'AIME (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s6">
+<div class="sh"><div class="sh-icon">❤️</div><div class="sh-text"><h2>J'aime… Dans mon temps libre</h2><p>Talk about hobbies, food and what you love</p></div></div>
+
+<!-- 1 -->
+<div class="card"><div class="ex-num">Exercise 1 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Write 5 things you love using <b>J'aime + verb infinitive</b> from the book's passe-temps page.</div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">lire</span><span class="wc wb" onclick="chip(this)">danser</span><span class="wc wb" onclick="chip(this)">cuisiner</span>
+  <span class="wc wb" onclick="chip(this)">voyager</span><span class="wc wb" onclick="chip(this)">nager</span><span class="wc wb" onclick="chip(this)">dessiner</span>
+  <span class="wc wr" onclick="chip(this)">faire du sport</span><span class="wc wr" onclick="chip(this)">écouter de la musique</span>
+  <span class="wc wr" onclick="chip(this)">regarder la télévision</span><span class="wc wr" onclick="chip(this)">jouer à un jeu vidéo</span>
+  <span class="wc wg" onclick="chip(this)">photographier</span><span class="wc wg" onclick="chip(this)">naviguer sur Internet</span>
+  <span class="wc wg" onclick="chip(this)">passer du temps avec mes amis</span>
+</div>
+<textarea class="ta" placeholder="J'aime lire. J'aime..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> J'aime lire, voyager et cuisiner. J'aime aussi écouter de la musique et faire du sport.</div></div>
+
+<!-- 2 -->
+<div class="card"><div class="ex-num">Exercise 2 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Complete these sentences with the correct form from the book.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">In my free time (use the book's full phrase)</div><input class="si" placeholder="Dans mon temps libre, j'aime _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">A hobby you dislike</div><input class="si" placeholder="Je n'aime pas _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><div class="sh2">Something you love a lot</div><input class="si" placeholder="J'aime beaucoup _____ ."></div></div>
+</div></div>
+
+<!-- 3 -->
+<div class="card"><div class="ex-num">Exercise 3 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Describe your 3 favourite fruits and 3 favourite vegetables using words from the book.</div>
+<div class="sbox"><div class="sbox-label">Fruits &amp; légumes</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta6e3')">une pomme</button><button class="sp" onclick="ins(this,'ta6e3')">une banane</button>
+  <button class="sp" onclick="ins(this,'ta6e3')">une mangue</button><button class="sp" onclick="ins(this,'ta6e3')">une orange</button>
+  <button class="sp" onclick="ins(this,'ta6e3')">une pastèque</button><button class="sp" onclick="ins(this,'ta6e3')">des raisins</button>
+  <button class="sp" onclick="ins(this,'ta6e3')">une tomate</button><button class="sp" onclick="ins(this,'ta6e3')">une carotte</button>
+  <button class="sp" onclick="ins(this,'ta6e3')">une pomme de terre</button><button class="sp" onclick="ins(this,'ta6e3')">un concombre</button>
+</div></div>
+<textarea class="ta" id="ta6e3" placeholder="J'aime les pommes, les bananes et les mangues. J'aime aussi les tomates..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> J'aime les pommes, les mangues et les pastèques. Comme légumes, j'aime les tomates, les carottes et les concombres.</div></div>
+
+<!-- 4 -->
+<div class="card"><div class="ex-num">Exercise 4 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Describe what you eat at each meal. Use all 4 meals from the book.</div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><div class="sh2">Le petit-déjeuner</div><input class="si" placeholder="Le matin, je bois _____ et je mange _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><div class="sh2">Le déjeuner</div><input class="si" placeholder="Au déjeuner, j'aime manger _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><div class="sh2">Le goûter</div><input class="si" placeholder="Au goûter, je bois _____ et je mange _____ ."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><div class="sh2">Le dîner</div><input class="si" placeholder="Le soir, au dîner, je prends _____ ."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Le matin, je bois du café et je mange du pain.<br>Au déjeuner, j'aime manger du poulet avec du riz.<br>Au goûter, je bois du lait et je mange un yaourt.<br>Le soir, je prends du jus d'orange avec du pain et du fromage.</div></div>
+
+<!-- 5 -->
+<div class="card"><div class="ex-num">Exercise 5 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">What do you love about weekends? Use: <b>Le weekend, j'aime... avec...</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Le weekend, j'aime _____ avec _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="J'aime aussi _____ le weekend."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Le weekend, je n'aime pas _____ ."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div></div>
+
+<!-- 6 -->
+<div class="card"><div class="ex-num">Exercise 6 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Match the food to the meal. Which meal do you eat it at?</div>
+<div class="mcq">
+  <div style="font-size:13px;font-weight:500;margin-bottom:6px;">Du café → typically at:</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">le petit-déjeuner</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">le dîner</div>
+</div>
+<div class="mcq">
+  <div style="font-size:13px;font-weight:500;margin-bottom:6px;">Du poulet avec du riz → typically at:</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">le petit-déjeuner</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">le déjeuner</div>
+</div>
+<div class="mcq">
+  <div style="font-size:13px;font-weight:500;margin-bottom:6px;">Du lait et un yaourt → typically at:</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">le déjeuner</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">le goûter</div>
+</div></div>
+
+<!-- 7 -->
+<div class="card"><div class="ex-num">Exercise 7 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Write about a friend's hobbies. Use <b>Mon ami(e) aime... Il/Elle n'aime pas...</b></div>
+<textarea class="ta" placeholder="Mon ami(e) s'appelle... Dans son temps libre, il/elle aime... Il/Elle n'aime pas..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> Mon ami s'appelle Omar. Dans son temps libre, il aime faire du sport et écouter de la musique. Il n'aime pas regarder la télévision. Il aime aussi voyager.</div></div>
+
+<!-- 8 -->
+<div class="card"><div class="ex-num">Exercise 8 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Name 5 drinks from the book and say whether you like each one.</div>
+<div class="sbox"><div class="sbox-label">Drinks from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta6e8')">du lait</button><button class="sp" onclick="ins(this,'ta6e8')">du café</button>
+  <button class="sp" onclick="ins(this,'ta6e8')">du thé</button><button class="sp" onclick="ins(this,'ta6e8')">de l'eau</button>
+  <button class="sp" onclick="ins(this,'ta6e8')">du jus d'orange</button><button class="sp" onclick="ins(this,'ta6e8')">du lait au chocolat</button>
+  <button class="sp" onclick="ins(this,'ta6e8')">une boisson gazeuse</button>
+</div></div>
+<textarea class="ta" id="ta6e8" placeholder="J'aime le café. Je n'aime pas le lait. J'adore..."></textarea></div>
+
+<!-- 9 -->
+<div class="card"><div class="ex-num">Exercise 9 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Compare your hobbies with a family member's. Use: <b>J'aime ___ mais mon/ma ___ aime ___.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="J'aime _____ mais mon père aime _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Ma mère aime _____ mais moi je n'aime pas _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Nous aimons tous les deux _____ ."></div></div>
+</div>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div></div>
+
+<!-- 10 -->
+<div class="card"><div class="ex-num">Exercise 10 · 10</div><span class="tag t-para">📝 Full Paragraph</span>
+<div class="prompt">Write a full paragraph about your tastes: hobbies, food you love and dislike, weekend activities. 7–8 sentences. Say it aloud.</div>
+<textarea class="ta xtall" placeholder="Dans mon temps libre, j'aime... J'adore aussi... Je n'aime pas... Comme nourriture, j'aime..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Dans mon temps libre, j'aime lire un livre et écouter de la musique. J'adore aussi voyager et photographier. Je n'aime pas jouer aux jeux vidéo. Comme nourriture, j'aime le poulet avec du riz et les fruits. J'adore les mangues et les pastèques. Je n'aime pas le fromage. Le weekend, j'aime passer du temps avec mes amis et cuisiner.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 7 — SENTIMENTS (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s7">
+<div class="sh"><div class="sh-icon">😊</div><div class="sh-text"><h2>Sentiments &amp; sensations</h2><p>Express how you feel and react</p></div></div>
+
+<!-- 1 -->
+<div class="card"><div class="ex-num">Exercise 1 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Connect each feeling with its natural reaction. Use: <b>J'ai ___, je veux ___.</b></div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">J'ai faim</span><span class="wc wb" onclick="chip(this)">J'ai soif</span>
+  <span class="wc wb" onclick="chip(this)">J'ai sommeil</span><span class="wc wb" onclick="chip(this)">J'ai froid</span>
+  <span class="wc wb" onclick="chip(this)">J'ai chaud</span><span class="wc wb" onclick="chip(this)">J'ai peur</span>
+  <span class="wc wr" onclick="chip(this)">je veux manger</span><span class="wc wr" onclick="chip(this)">je veux boire</span>
+  <span class="wc wr" onclick="chip(this)">je veux dormir</span><span class="wc wr" onclick="chip(this)">je veux rentrer à la maison</span>
+  <span class="wc wr" onclick="chip(this)">je veux prendre une douche</span><span class="wc wr" onclick="chip(this)">je veux voir ma mère</span>
+</div>
+<textarea class="ta" placeholder="J'ai faim, je veux manger. J'ai soif..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See all answers</button>
+<div class="ans"><strong>Example:</strong><br>J'ai faim, je veux manger. J'ai soif, je veux boire. J'ai sommeil, je veux dormir. J'ai froid, je veux rentrer à la maison. J'ai chaud, je veux prendre une douche. J'ai peur, je veux voir ma mère.</div></div>
+
+<!-- 2 -->
+<div class="card"><div class="ex-num">Exercise 2 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Choose the right word: <b>Je suis</b> or <b>J'ai</b>? Pick the correct one.</div>
+<div class="mcq">
+  <div style="font-size:13px;font-weight:500;margin-bottom:6px;">___ heureux. (I am happy)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">Je suis heureux.</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">J'ai heureux.</div>
+</div>
+<div class="mcq">
+  <div style="font-size:13px;font-weight:500;margin-bottom:6px;">___ faim. (I am hungry)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">Je suis faim.</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">J'ai faim.</div>
+</div>
+<div class="mcq">
+  <div style="font-size:13px;font-weight:500;margin-bottom:6px;">___ triste. (I am sad)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">Je suis triste.</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">J'ai triste.</div>
+</div>
+<div class="mcq">
+  <div style="font-size:13px;font-weight:500;margin-bottom:6px;">___ peur. (I am scared)</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'wrong')"><input type="radio">Je suis peur.</div>
+  <div class="mcq-opt" onclick="mcqCheck(this,'correct')"><input type="radio">J'ai peur.</div>
+</div></div>
+
+<!-- 3 -->
+<div class="card"><div class="ex-num">Exercise 3 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Describe health problems for these family members. Use: <b>[member] a ___ / [member] a mal au/à la ___.</b></div>
+<div class="steps">
+  <div class="step"><div class="sn">1</div><div class="sc"><input class="si" placeholder="Je suis malade. J'ai _____ ."></div></div>
+  <div class="step"><div class="sn">2</div><div class="sc"><input class="si" placeholder="Mon père a _____ ."></div></div>
+  <div class="step"><div class="sn">3</div><div class="sc"><input class="si" placeholder="Ma sœur a mal au / à la _____ ."></div></div>
+  <div class="step"><div class="sn">4</div><div class="sc"><input class="si" placeholder="Ma mère a mal au dos. Elle a aussi _____ ."></div></div>
+</div>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong><br>Je suis malade. J'ai de la fièvre et un mal de tête.<br>Mon père a mal au dos.<br>Ma sœur a une toux et un mal de gorge.<br>Ma mère a mal au dos. Elle a aussi un nez bouché.</div></div>
+
+<!-- 4 -->
+<div class="card"><div class="ex-num">Exercise 4 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Answer: <b>Comment te sens-tu maintenant?</b> Combine 2 feelings + 1 explanation.</div>
+<div class="sbox"><div class="sbox-label">Feeling combinations from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta7e4')">Je suis fatigué, j'ai sommeil.</button>
+  <button class="sp" onclick="ins(this,'ta7e4')">Je suis malade, j'ai froid.</button>
+  <button class="sp" onclick="ins(this,'ta7e4')">Je suis heureux, j'ai hâte.</button>
+  <button class="sp" onclick="ins(this,'ta7e4')">Je suis timide, j'ai peur.</button>
+</div></div>
+<textarea class="ta" id="ta7e4" placeholder="Maintenant, je suis... J'ai... Je veux..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div></div>
+
+<!-- 5 -->
+<div class="card"><div class="ex-num">Exercise 5 · 10</div><span class="tag t-build">🔨 Build</span>
+<div class="prompt">Use body parts + health problems together. Use: <b>J'ai une rougeur sur + body part.</b></div>
+<div class="wbank">
+  <span class="wc wb" onclick="chip(this)">J'ai une rougeur sur</span>
+  <span class="wc wb" onclick="chip(this)">J'ai mal à</span>
+  <span class="wc wr" onclick="chip(this)">la main</span><span class="wc wr" onclick="chip(this)">le visage</span>
+  <span class="wc wr" onclick="chip(this)">la tête</span><span class="wc wr" onclick="chip(this)">le ventre</span>
+  <span class="wc wr" onclick="chip(this)">le dos</span><span class="wc wr" onclick="chip(this)">le pied</span>
+  <span class="wc wg" onclick="chip(this)">une coupure</span><span class="wc wg" onclick="chip(this)">une piqûre</span>
+</div>
+<textarea class="ta" placeholder="J'ai une rougeur sur la main. J'ai mal à..."></textarea>
+<button class="rev-btn" onclick="rev(this)">👁 See example</button>
+<div class="ans"><strong>Example:</strong> J'ai une rougeur sur la main. J'ai mal à la tête et au ventre. J'ai une coupure sur le doigt.</div></div>
+
+<!-- 6 -->
+<div class="card"><div class="ex-num">Exercise 6 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">List all 8 feelings from the book (J'ai...) and make one sentence with each.</div>
+<div class="sbox"><div class="sbox-label">J'ai... feelings</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta7e6')">J'ai chaud,</button><button class="sp" onclick="ins(this,'ta7e6')">J'ai faim,</button>
+  <button class="sp" onclick="ins(this,'ta7e6')">J'ai froid,</button><button class="sp" onclick="ins(this,'ta7e6')">J'ai hâte,</button>
+  <button class="sp" onclick="ins(this,'ta7e6')">J'ai peur,</button><button class="sp" onclick="ins(this,'ta7e6')">J'ai raison,</button>
+  <button class="sp" onclick="ins(this,'ta7e6')">J'ai soif,</button><button class="sp" onclick="ins(this,'ta7e6')">J'ai sommeil,</button>
+</div></div>
+<textarea class="ta tall" id="ta7e6" placeholder="J'ai chaud, je veux... J'ai faim, je veux..."></textarea></div>
+
+<!-- 7 -->
+<div class="card"><div class="ex-num">Exercise 7 · 10</div><span class="tag t-complete">✅ Complete</span>
+<div class="prompt">Match the feeling to the correct expression. Click left then right.</div>
+<div class="match-wrap">
+  <div class="match-col">
+    <div class="mitem left" onclick="matchClick(this)">happy</div>
+    <div class="mitem left" onclick="matchClick(this)">angry</div>
+    <div class="mitem left" onclick="matchClick(this)">sad</div>
+    <div class="mitem left" onclick="matchClick(this)">sick</div>
+    <div class="mitem left" onclick="matchClick(this)">in love</div>
+  </div>
+  <div class="match-col">
+    <div class="mitem right" onclick="matchClick(this)" data-match="angry">je suis fâché</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="in love">je suis amoureux</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="sad">je suis triste</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="happy">je suis heureux</div>
+    <div class="mitem right" onclick="matchClick(this)" data-match="sick">je suis malade</div>
+  </div>
+</div></div>
+
+<!-- 8 -->
+<div class="card"><div class="ex-num">Exercise 8 · 10</div><span class="tag t-speak">🎙 Speak</span>
+<div class="prompt">Describe a bad day. Use at least 4 different feelings/sensations.</div>
+<textarea class="ta" placeholder="Aujourd'hui, je suis... J'ai... Ma tête... Je veux..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong> Aujourd'hui, je suis fatigué et un peu malade. J'ai mal à la tête et j'ai froid. J'ai sommeil, je veux dormir. Je suis triste parce que je ne peux pas aller au travail.</div></div>
+
+<!-- 9 -->
+<div class="card"><div class="ex-num">Exercise 9 · 10</div><span class="tag t-describe">✏️ Describe</span>
+<div class="prompt">Describe a great day using positive feelings. Use at least 4 positive expressions from the book.</div>
+<div class="sbox"><div class="sbox-label">Positive feelings</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta7e9')">Je suis heureux / heureuse</button>
+  <button class="sp" onclick="ins(this,'ta7e9')">Je suis content(e)</button>
+  <button class="sp" onclick="ins(this,'ta7e9')">J'ai hâte</button>
+  <button class="sp" onclick="ins(this,'ta7e9')">J'ai raison</button>
+  <button class="sp" onclick="ins(this,'ta7e9')">Je suis amoureux / amoureuse</button>
+</div></div>
+<textarea class="ta" id="ta7e9" placeholder="Aujourd'hui, je suis très heureux(se). J'ai hâte parce que..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Done!</button></div></div>
+
+<!-- 10 -->
+<div class="card"><div class="ex-num">Exercise 10 · 10</div><span class="tag t-para">📝 Full Paragraph</span>
+<div class="prompt">Describe how you feel today — your physical sensations, emotions, and what you want to do. 6–8 sentences. Say it aloud.</div>
+<textarea class="ta xtall" placeholder="Aujourd'hui, je suis... J'ai... J'ai aussi... Je veux... Parce que..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Aujourd'hui, je suis heureux et plein d'énergie. Je suis content parce que c'est vendredi. J'ai un peu faim — je veux manger quelque chose. J'ai aussi hâte parce que ce soir, je dîne avec ma famille. Je n'ai pas mal à la tête aujourd'hui. Je suis en bonne santé. J'ai envie de faire du sport l'après-midi.</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 8 — DIALOGUES (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s8">
+<div class="sh"><div class="sh-icon">🗣️</div><div class="sh-text"><h2>Mini-dialogues</h2><p>Practice real conversations out loud</p></div></div>
+
+<!-- 1 -->
+<div class="card"><div class="ex-num">Exercise 1 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">Complete and say aloud this first meeting. You are Person B.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Bonjour ! Comment allez-vous ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your reply (Je vais...)</div></div>
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Je m'appelle Marc. Et vous ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your reply (Je m'appelle...)</div></div>
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Vous êtes de quelle nationalité ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your reply (Je suis...)</div></div>
+</div>
+<textarea class="ta" placeholder="Write all of Person B's lines..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model B lines:</strong><br>Je vais bien, merci. Et vous ?<br>Je m'appelle Layla. J'ai 24 ans.<br>Je suis égyptienne. J'habite au Caire.</div></div>
+
+<!-- 2 -->
+<div class="card"><div class="ex-num">Exercise 2 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">A farewell conversation. Write both sides and practice saying it.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Au revoir ! À bientôt !</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your reply</div></div>
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Merci beaucoup pour tout !</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your reply</div></div>
+</div>
+<div class="sbox"><div class="sbox-label">Courtesy phrases from the book</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta8e2')">Au revoir !</button><button class="sp" onclick="ins(this,'ta8e2')">À plus tard !</button>
+  <button class="sp" onclick="ins(this,'ta8e2')">Je vous en prie.</button><button class="sp" onclick="ins(this,'ta8e2')">De rien.</button>
+  <button class="sp" onclick="ins(this,'ta8e2')">Bonne journée !</button>
+</div></div>
+<textarea class="ta" id="ta8e2" placeholder="Write your responses..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div></div>
+
+<!-- 3 -->
+<div class="card"><div class="ex-num">Exercise 3 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">Someone bumps into you. Write the apology dialogue using S'excuser phrases from the book.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👦</div><div class="db">Oups ! Excuse-moi ! Désolé !</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your forgiving reply</div></div>
+</div>
+<div class="sbox"><div class="sbox-label">Responses</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta8e3')">Ce n'est rien.</button><button class="sp" onclick="ins(this,'ta8e3')">Pardon.</button>
+  <button class="sp" onclick="ins(this,'ta8e3')">Pas de problème.</button>
+</div></div>
+<textarea class="ta" id="ta8e3" placeholder="Your reply + extend the conversation..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div></div>
+
+<!-- 4 -->
+<div class="card"><div class="ex-num">Exercise 4 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">Someone asks about your family. Answer in 5 sentences.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👩</div><div class="db">Tu as une grande famille ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your answer ↓</div></div>
+</div>
+<textarea class="ta" placeholder="Oui ! Dans ma famille, il y a... Mon père s'appelle..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong> Oui ! Dans ma famille, il y a cinq personnes. Mon père s'appelle Hassan et il a 57 ans. Ma mère s'appelle Fatima et elle a 52 ans. J'ai un frère et une sœur. Nous habitons tous ensemble au Caire.</div></div>
+
+<!-- 5 -->
+<div class="card"><div class="ex-num">Exercise 5 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">Someone asks about your hobbies. Answer naturally in 4 sentences.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Qu'est-ce que tu aimes faire dans ton temps libre ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your answer ↓</div></div>
+</div>
+<textarea class="ta" placeholder="Dans mon temps libre, j'aime... J'aime aussi... Je n'aime pas..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong> Dans mon temps libre, j'aime lire et faire du sport. J'aime aussi cuisiner et écouter de la musique. Je n'aime pas regarder la télévision. Le weekend, j'aime passer du temps avec mes amis.</div></div>
+
+<!-- 6 -->
+<div class="card"><div class="ex-num">Exercise 6 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">Someone asks how you're feeling today. Answer with 3–4 sentences using feelings from the book.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👩</div><div class="db">Comment te sens-tu aujourd'hui ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your answer ↓</div></div>
+</div>
+<textarea class="ta" placeholder="Aujourd'hui, je suis... J'ai... Je veux..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div></div>
+
+<!-- 7 -->
+<div class="card"><div class="ex-num">Exercise 7 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">Someone asks where you live. Give a full 3-sentence answer.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Où est-ce que tu habites ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your answer ↓</div></div>
+</div>
+<textarea class="ta" placeholder="J'habite en... exactement à... Il y a... autour de ma maison."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong> J'habite en Égypte, exactement au Caire. Mon quartier est très agréable. Il y a une mosquée derrière ma maison et un parc à côté.</div></div>
+
+<!-- 8 -->
+<div class="card"><div class="ex-num">Exercise 8 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">A morning greeting. Write the full exchange: greeting, how you are, what you're doing today.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👩</div><div class="db">Bonjour ! Comment allez-vous ce matin ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your reply</div></div>
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👩</div><div class="db">Qu'est-ce que vous faites aujourd'hui ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your reply</div></div>
+</div>
+<textarea class="ta" placeholder="Bonjour ! Je vais bien, merci. Aujourd'hui, je vais au..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div></div>
+
+<!-- 9 -->
+<div class="card"><div class="ex-num">Exercise 9 · 10</div><span class="tag t-speak">🎙 Dialogue</span>
+<div class="prompt">You're sick and calling a friend. Write what you say about your health problems.</div>
+<div class="dlg">
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Ça va ? Tu n'as pas l'air bien...</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">Your answer (Je suis malade...)</div></div>
+  <div class="dl"><div class="dav" style="background:#e8f0ff">👨</div><div class="db">Qu'est-ce que tu as exactement ?</div></div>
+  <div class="dl r"><div class="dav" style="background:#ffe8ea">🙋</div><div class="db blank">List your symptoms</div></div>
+</div>
+<textarea class="ta" placeholder="Je suis malade. J'ai de la fièvre et... J'ai aussi mal au/à la..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Practiced aloud!</button></div></div>
+
+<!-- 10 -->
+<div class="card"><div class="ex-num">Exercise 10 · 10</div><span class="tag t-para">📝 Full Dialogue</span>
+<div class="prompt">Write a COMPLETE dialogue (10+ lines) between two people meeting for the first time — covering name, age, nationality, job, family, hobbies. Then act it out aloud alone (both roles).</div>
+<textarea class="ta xtall" placeholder="Person A: Bonjour !...\nPerson B: Bonjour !...\nPerson A: Comment vous appelez-vous ?..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Acted it out!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model dialogue:</strong><br>A: Bonjour ! Comment allez-vous ?<br>B: Je vais bien, merci. Et vous ?<br>A: Très bien ! Je m'appelle Marc. Et vous ?<br>B: Je m'appelle Layla. J'ai 26 ans.<br>A: Vous êtes de quelle nationalité ?<br>B: Je suis égyptienne. J'habite au Caire. Et vous ?<br>A: Je suis français. J'habite à Paris. Quelle est votre profession ?<br>B: Je suis médecin. Et vous ?<br>A: Je suis professeur. Vous avez une grande famille ?<br>B: Oui ! J'ai un frère et une sœur. Mon père est ingénieur.<br>A: Qu'est-ce que vous aimez faire ?<br>B: J'aime lire et voyager. Et vous ?<br>A: J'aime cuisiner et faire du sport. Au revoir, Layla !<br>B: Au revoir, Marc ! À bientôt !</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHEET 9 — PARAGRAPHES (10 exercises)
+════════════════════════════════════════════ -->
+<div class="sheet" id="s9">
+<div class="sh"><div class="sh-icon">📝</div><div class="sh-text"><h2>Grands paragraphes</h2><p>Build complete texts — then speak from memory</p></div></div>
+
+<!-- 1 -->
+<div class="card"><div class="ex-num">Exercise 1 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Write your full self-introduction (8–10 sentences). Cover: name, age, nationality, city, job, appearance, family. Then say it aloud WITHOUT reading.</div>
+<div class="sbox"><div class="sbox-label">Checklist</div>
+<div class="spills">
+  <button class="sp">✓ Nom &amp; âge</button><button class="sp">✓ Nationalité</button><button class="sp">✓ Ville</button>
+  <button class="sp">✓ Métier</button><button class="sp">✓ Apparence</button><button class="sp">✓ Famille</button>
+</div></div>
+<textarea class="ta xtall" placeholder="Je m'appelle... J'ai... ans. Je suis... J'habite..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said from memory!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Je m'appelle Ahmed. J'ai 28 ans. Je suis égyptien. Je suis né le vingt mars mil neuf cent quatre-vingt-dix-sept. J'habite en Égypte, exactement au Caire. Je suis ingénieur. J'ai les yeux noirs et les cheveux noirs. Dans ma famille, il y a quatre personnes : mon père, ma mère, ma sœur et moi. Mon père s'appelle Hassan et il est retraité. Ma mère s'appelle Fatima et elle est professeure.</div></div>
+
+<!-- 2 -->
+<div class="card"><div class="ex-num">Exercise 2 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Write a paragraph about your daily routine (8–10 sentences) using time words and transport. Speak it aloud after.</div>
+<textarea class="ta xtall" placeholder="Le matin, je me réveille à... Je me douche... L'après-midi..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Le matin, je me réveille à 7 heures. Je me douche à 7h30 et je prends le petit déjeuner à 8 heures. Je mange des œufs et du pain. Je bois du café. Je m'habille et je vais au travail en taxi à 9 heures. L'après-midi, je déjeune — j'aime manger du poulet avec du riz. Le soir, je retourne à la maison en voiture à 19 heures. Je fais du sport à 20 heures et je dîne avec ma famille. La nuit, je regarde la télé et je me couche à 23 heures.</div></div>
+
+<!-- 3 -->
+<div class="card"><div class="ex-num">Exercise 3 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Describe your neighborhood using at least 5 prepositions of place. 6–8 sentences.</div>
+<textarea class="ta xtall" placeholder="J'habite à... Autour de ma maison il y a... devant... derrière... à côté de... entre..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>J'habite au Caire, dans le quartier de Zamalek. C'est un très beau quartier. Il y a une mosquée derrière ma maison. À côté de ma maison, il y a une pharmacie. Ma maison est entre la pharmacie et le parc. Il y a un hôtel à droite de la pharmacie. Il y a aussi un restaurant devant ma maison. J'aime beaucoup mon quartier !</div></div>
+
+<!-- 4 -->
+<div class="card"><div class="ex-num">Exercise 4 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Write about your tastes: hobbies you love, food you eat, activities you do in your free time. 7–8 sentences.</div>
+<textarea class="ta xtall" placeholder="Dans mon temps libre, j'aime... J'adore aussi... Je n'aime pas... Comme nourriture..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Dans mon temps libre, j'aime lire un livre et écouter de la musique. J'adore aussi voyager et photographier. Je n'aime pas jouer aux jeux vidéo. Comme nourriture, j'aime le poulet avec du riz. J'adore les mangues et les oranges. Je n'aime pas beaucoup les légumes, mais j'aime les tomates. Le weekend, j'aime cuisiner et passer du temps avec mes amis.</div></div>
+
+<!-- 5 -->
+<div class="card"><div class="ex-num">Exercise 5 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Write about your ideal day from morning to night. Include meals, activities, transport, and where you go.</div>
+<div class="sbox"><div class="sbox-label">Time markers to use</div>
+<div class="spills">
+  <button class="sp" onclick="ins(this,'ta9e5')">Le matin,</button><button class="sp" onclick="ins(this,'ta9e5')">L'après-midi,</button>
+  <button class="sp" onclick="ins(this,'ta9e5')">Le soir,</button><button class="sp" onclick="ins(this,'ta9e5')">La nuit,</button>
+  <button class="sp" onclick="ins(this,'ta9e5')">Puis,</button><button class="sp" onclick="ins(this,'ta9e5')">Ensuite,</button>
+  <button class="sp" onclick="ins(this,'ta9e5')">Après,</button>
+</div></div>
+<textarea class="ta xtall" id="ta9e5" placeholder="Le matin, je..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Le matin, je me réveille tard — à 9 heures. Je prends un long petit déjeuner avec du café et des œufs. Puis, je me promène dans le parc à pied. L'après-midi, je vais au restaurant avec mes amis. J'aime manger du poulet avec du riz et boire du jus d'orange. Ensuite, je vais au cinéma à bicyclette. Le soir, je rentre à la maison en taxi. Après, je cuisine le dîner et j'écoute de la musique. La nuit, je lis un livre et je me couche à minuit.</div></div>
+
+<!-- 6 -->
+<div class="card"><div class="ex-num">Exercise 6 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Write about a family member in detail: their name, age, job, nationality, appearance, routine and hobbies. 8 sentences.</div>
+<textarea class="ta xtall" placeholder="Mon/Ma _____ s'appelle... Il/Elle a... ans. Il/Elle est... Il/Elle est né(e) le..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Mon père s'appelle Hassan. Il a 57 ans. Il est égyptien et il est né le quinze août mille neuf cent soixante-sept. Il est ingénieur. Il a les yeux noirs et les cheveux gris. Le matin, il se réveille tôt — à 6 heures. Il va au travail en voiture. Le soir, il aime regarder la télévision et lire le journal. Il n'aime pas le sport mais il aime cuisiner.</div></div>
+
+<!-- 7 -->
+<div class="card"><div class="ex-num">Exercise 7 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Describe a sick day at home — what you feel, what you have, what you want and can't do. 7 sentences.</div>
+<textarea class="ta xtall" placeholder="Aujourd'hui je suis malade. Je suis... J'ai... Je ne peux pas... Je veux..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Aujourd'hui, je suis malade. Je suis très fatigué et je suis triste. J'ai de la fièvre et un mal de tête. J'ai aussi un nez bouché et une toux. Je veux dormir toute la journée. Je ne veux pas aller au travail. Ma mère est à côté de moi et je suis content parce qu'elle est là.</div></div>
+
+<!-- 8 -->
+<div class="card"><div class="ex-num">Exercise 8 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Describe your country and city to a foreigner. Use nationality, location, neighbors. 6–7 sentences.</div>
+<textarea class="ta xtall" placeholder="Mon pays s'appelle... Je suis... J'habite exactement à... Mon pays est..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Mon pays s'appelle l'Égypte. Je suis égyptien. J'habite en Égypte, exactement au Caire. Le Caire est une très grande ville. Les habitants s'appellent les Égyptiens. L'Égypte est un pays arabe. Les pays voisins sont le Soudan et la Libye.</div></div>
+
+<!-- 9 -->
+<div class="card"><div class="ex-num">Exercise 9 · 10</div><span class="tag t-para">📝 Paragraph</span>
+<div class="prompt">Write a paragraph comparing yourself to a family member. Use: <b>Moi, je... / Mais mon/ma... / Nous aimons tous les deux...</b></div>
+<textarea class="ta xtall" placeholder="Moi, je m'appelle... et j'ai... ans. Mon père s'appelle... Moi j'aime... mais mon père aime..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">✅ Said it!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See model</button>
+<div class="ans"><strong>Model:</strong><br>Moi, je m'appelle Ahmed et j'ai 28 ans. Je suis ingénieur. J'aime faire du sport et lire. Mais mon père s'appelle Hassan et il a 57 ans. Il est retraité. Il n'aime pas le sport mais il aime cuisiner. Nous aimons tous les deux les fruits, le poulet avec du riz et la famille. Nous sommes tous les deux égyptiens et nous habitons au Caire.</div></div>
+
+<!-- 10 -->
+<div class="card"><div class="ex-num">Exercise 10 · 10</div><span class="tag t-para">📝 FINAL CHALLENGE</span>
+<div class="prompt" style="font-size:15px;"><b>🏆 Final Challenge:</b> Write a complete text about EVERYTHING — yourself, your family, your city, your routine, your hobbies, and your feelings. Aim for 15+ sentences. Then say it aloud completely from memory. This is your A0 graduation speech! 🎓</div>
+<div class="sbox"><div class="sbox-label">Include ALL of these topics</div>
+<div class="spills">
+  <button class="sp">✓ Qui suis-je ?</button><button class="sp">✓ Ma famille</button>
+  <button class="sp">✓ Mon pays</button><button class="sp">✓ Ma ville</button>
+  <button class="sp">✓ Ma routine</button><button class="sp">✓ Mes goûts</button>
+  <button class="sp">✓ Mes sentiments</button><button class="sp">✓ Mes passe-temps</button>
+</div></div>
+<textarea class="ta" style="min-height:280px;" placeholder="Je m'appelle... J'ai... ans. Je suis... J'habite... Dans ma famille... Le matin... J'aime... Je suis..."></textarea>
+<div class="row"><button class="btn btn-p" onclick="markDone(this)">🎓 A0 COMPLETE! Said from memory!</button></div>
+<button class="rev-btn" onclick="rev(this)">👁 See full model</button>
+<div class="ans"><strong>Full model (A0 graduation):</strong><br><br>
+Je m'appelle Ahmed. J'ai 28 ans. Je suis égyptien. Je suis né le vingt mars mille neuf cent quatre-vingt-dix-sept. J'habite en Égypte, exactement au Caire. Je suis ingénieur. J'ai les yeux noirs et les cheveux noirs.<br><br>
+Dans ma famille, il y a cinq personnes. Mon père s'appelle Hassan et il a 57 ans. Il est retraité. Ma mère s'appelle Fatima et elle a 52 ans. Elle est professeure. J'ai un frère, Adam, et une sœur, Sara.<br><br>
+J'habite dans le quartier de Maadi. C'est un beau quartier. Il y a une mosquée derrière ma maison et une pharmacie à côté. Il y a un parc à gauche. J'aime mon quartier.<br><br>
+Le matin, je me réveille à 7 heures. Je me douche, je mange des œufs et je bois du café. Je vais au travail en taxi à 9 heures. L'après-midi, je mange au restaurant. Le soir, je retourne à la maison en voiture. Je dîne avec ma famille à 20 heures. La nuit, je lis et je me couche à 23 heures.<br><br>
+Dans mon temps libre, j'aime lire, voyager et faire du sport. J'adore les mangues et le poulet avec du riz. Je n'aime pas les jeux vidéo.<br><br>
+Aujourd'hui, je suis heureux et plein d'énergie. J'ai hâte de parler français avec de nouvelles personnes. Je suis content de mes progrès ! Merci, Mme Sabria !</div></div>
+
+<div class="done-banner" id="finalbanner">
+  <h3>🎉 Félicitations ! Niveau A0 terminé !</h3>
+  <p>You've completed all 90 exercises. You're ready for A1. Bonne chance ! 🇫🇷</p>
+</div>
+</div>
+
+</main>
+
+<script>
+var doneCount = 0;
+var totalCount = 0;
+
+window.addEventListener('DOMContentLoaded', function() {
+  totalCount = document.querySelectorAll('.btn-p').length;
+  document.getElementById('pc').textContent = '0 / ' + totalCount;
+
+  // Assign unique name groups to every .mcq so only one radio per group can be selected
+  var mcqGroupCounter = 0;
+  document.querySelectorAll('.mcq').forEach(function(group) {
+    mcqGroupCounter++;
+    var groupName = 'mcq-group-' + mcqGroupCounter;
+    group.dataset.groupName = groupName;
+    group.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+      radio.name = groupName;
+    });
+  });
+
+  // Make checklist pills (those starting with ✓) clickable to tick off
+  document.querySelectorAll('.sbox .sp').forEach(function(pill) {
+    if (pill.textContent.trim().charAt(0) === '✓') {
+      pill.dataset.orig = pill.textContent.trim();
+      pill.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (pill.dataset.checked === '1') {
+          pill.dataset.checked = '';
+          pill.textContent = pill.dataset.orig;
+          pill.style.background = '';
+          pill.style.outline = '';
+        } else {
+          pill.dataset.checked = '1';
+          pill.textContent = '✅ ' + pill.dataset.orig.replace(/^✓\s*/, '');
+          pill.style.background = '#1e6b45';
+          pill.style.outline = '2px solid #145233';
+        }
+      });
+    }
+  });
+  document.querySelectorAll('.card').forEach(function(card) {
+    var doneBtn = card.querySelector('.btn-p');
+    if (doneBtn) doneBtn.dataset.orig = doneBtn.textContent;
+
+    var resetBtn = document.createElement('button');
+    resetBtn.className = 'reset-btn';
+    resetBtn.innerHTML = '↺ Reset exercise';
+    resetBtn.onclick = function() { resetCard(card); };
+    card.appendChild(resetBtn);
+  });
+});
+
+function resetCard(card) {
+  // Reset checklist pills
+  card.querySelectorAll('.sbox .sp').forEach(function(pill) {
+    if (pill.dataset.orig) {
+      pill.dataset.checked = '';
+      pill.textContent = pill.dataset.orig;
+      pill.style.background = '';
+      pill.style.outline = '';
+    }
+  });
+  // Clear all textareas
+  card.querySelectorAll('textarea').forEach(function(ta) { ta.value = ''; });
+  // Clear all text inputs
+  card.querySelectorAll('input[type="text"], input:not([type])').forEach(function(inp) { inp.value = ''; });
+  // Restore word chips
+  card.querySelectorAll('.wc').forEach(function(c) { c.classList.remove('used'); c.style.background = ''; });
+  // Reset MCQ options — remove colors AND uncheck radio inputs
+  card.querySelectorAll('.mcq-opt').forEach(function(o) {
+    o.classList.remove('correct','wrong');
+    var radio = o.querySelector('input[type="radio"]');
+    if (radio) radio.checked = false;
+  });
+  // Reset matching items
+  card.querySelectorAll('.mitem').forEach(function(m) {
+    m.classList.remove('matched','selected');
+    m.style.background = '';
+    m.style.pointerEvents = '';
+    m.style.opacity = '';
+    m.style.textDecoration = '';
+  });
+  // Hide answer panel
+  card.querySelectorAll('.ans').forEach(function(a) { a.classList.remove('show'); });
+  // Reset reveal buttons text
+  card.querySelectorAll('.rev-btn').forEach(function(b) { b.textContent = '👁 See example'; });
+  // Restore done button
+  var doneBtn = card.querySelector('.btn-p');
+  if (doneBtn && doneBtn.dataset.d) {
+    doneBtn.dataset.d = '';
+    doneBtn.disabled = false;
+    doneBtn.style.background = '';
+    if (!doneBtn.dataset.orig) doneBtn.dataset.orig = doneBtn.textContent;
+    doneBtn.textContent = doneBtn.dataset.orig;
+    doneCount = Math.max(0, doneCount - 1);
+    var p = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+    document.getElementById('pf').style.width = p + '%';
+    document.getElementById('pc').textContent = doneCount + ' / ' + totalCount;
+  }
+  // Flash yellow to confirm reset
+  card.style.transition = 'background 0.15s';
+  card.style.background = '#fff8e0';
+  setTimeout(function() { card.style.background = ''; }, 350);
+}
+
+function showSheet(id, btn) {
+  document.querySelectorAll('.sheet').forEach(function(s){ s.classList.remove('on'); });
+  document.querySelectorAll('.tab').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function rev(btn) {
+  var a = btn.nextElementSibling;
+  if (!a || !a.classList.contains('ans')) return;
+  a.classList.toggle('show');
+  btn.textContent = a.classList.contains('show') ? '🙈 Hide' : '👁 See example';
+}
+
+function chip(el) { el.classList.toggle('used'); }
+
+function ins(btn, id) {
+  var t = document.getElementById(id);
+  if (!t) return;
+  t.value = (t.value ? t.value + ' ' : '') + btn.textContent + ' ';
+  t.focus();
+}
+
+function markDone(btn) {
+  if (btn.dataset.d) return;
+  btn.dataset.d = '1';
+  doneCount++;
+  var p = Math.round((doneCount / totalCount) * 100);
+  document.getElementById('pf').style.width = p + '%';
+  document.getElementById('pc').textContent = doneCount + ' / ' + totalCount;
+  btn.textContent = '✅ Done!';
+  btn.style.background = '#1e6b45';
+  btn.disabled = true;
+  if (doneCount === totalCount) {
+    var b = document.getElementById('finalbanner');
+    if (b) { b.classList.add('show'); b.scrollIntoView({ behavior: 'smooth' }); }
+  }
+}
+
+function mcqCheck(opt, verdict) {
+  // Only allow one selection per .mcq group
+  var group = opt.closest('.mcq');
+  group.querySelectorAll('.mcq-opt').forEach(function(o) {
+    o.classList.remove('correct', 'wrong');
+    var radio = o.querySelector('input[type="radio"]');
+    if (radio) radio.checked = false;
+  });
+  // Mark the clicked option
+  opt.classList.add(verdict);
+  var radio = opt.querySelector('input[type="radio"]');
+  if (radio) radio.checked = true;
+}
+
+var matchSel = null;
+function matchClick(item) {
+  if (item.classList.contains('matched')) return;
+  if (!matchSel) {
+    matchSel = item;
+    item.classList.add('selected');
+  } else {
+    if (matchSel === item) { matchSel.classList.remove('selected'); matchSel = null; return; }
+    var l = matchSel.classList.contains('left') ? matchSel : item;
+    var r = matchSel.classList.contains('right') ? matchSel : item;
+    if (l && r && l !== r) {
+      if (r.dataset.match === l.textContent.trim()) {
+        l.classList.add('matched'); r.classList.add('matched');
+      } else {
+        l.style.background = '#ffe8ea'; r.style.background = '#ffe8ea';
+        setTimeout(function(){ l.style.background = ''; r.style.background = ''; }, 800);
+      }
+    }
+    matchSel.classList.remove('selected');
+    matchSel = null;
+  }
+}
+</script>
+</body>
+</html>
