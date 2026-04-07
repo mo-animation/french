@@ -5,98 +5,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>أدواتي الشخصية</title>
   <style>
+    :root {
+      --bg: #0d1117;
+      --sidebar: #161b22;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      background: #0d1117;
-      color: #c9d1d9;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
     .header {
       background: #161b22;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #30363d;
-    }
-    .container {
+      padding: 15px 20px;
       display: flex;
-      min-height: 100vh;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #30363d;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header h1 {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+    .menu-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 5px 10px;
     }
     .sidebar {
+      position: fixed;
+      top: 0;
+      right: -280px;           /* مخفي في الأول (لأن dir=rtl) */
       width: 280px;
-      background: #161b22;
+      height: 100vh;
+      background: var(--sidebar);
       padding: 20px;
-      border-left: 1px solid #30363d; /* لأن dir=rtl */
+      transition: right 0.3s ease;
+      z-index: 200;
+      overflow-y: auto;
+      border-left: 1px solid #30363d;
     }
+    .sidebar.open { right: 0; }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 150;
+      display: none;
+    }
+    .overlay.show { display: block; }
+
     .main-content {
-      flex: 1;
       padding: 20px;
+      margin-top: 60px;        /* عشان الـ header */
     }
-    h1 { margin: 0; color: #58a6ff; }
-    h2 { color: #c9d1d9; }
     button {
       width: 100%;
-      padding: 14px;
-      margin: 8px 0;
+      padding: 16px;
+      margin: 10px 0;
       background: #21262d;
-      color: #c9d1d9;
+      color: var(--text);
       border: 1px solid #30363d;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 8px;
+      font-size: 17px;
       cursor: pointer;
       text-align: right;
     }
     button:hover {
       background: #30363d;
-      border-color: #58a6ff;
+      border-color: var(--accent);
     }
     iframe {
       width: 100%;
-      height: 85vh;
+      height: 75vh;
       border: 1px solid #30363d;
-      border-radius: 8px;
+      border-radius: 10px;
       background: white;
     }
-    .empty {
+    .welcome {
       text-align: center;
       color: #8b949e;
-      margin-top: 100px;
+      margin-top: 80px;
       font-size: 18px;
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+      .sidebar {
+        position: relative;
+        right: 0;
+        width: 280px;
+        height: auto;
+        border-left: none;
+      }
+      .main-content {
+        margin-top: 0;
+        padding: 20px 20px 20px 300px;   /* مسافة للسايدبار */
+      }
+      .menu-btn, .overlay { display: none; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Header -->
   <div class="header">
     <h1>أدواتي الشخصية</h1>
-    <p>مجموعة أدواتي التعليمية والتفاعلية</p>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   </div>
 
-  <div class="container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <h2>الأدوات المتاحة</h2>
-      <button onclick="loadTool('french-reader.html')">📖 French Reader</button>
-      <button onclick="loadTool('A0-Paragraphs.html')">📘 A0 Paragraphs</button>
-      <button onclick="loadTool('A0-Practice.html')">🏋🏻‍♀️ A0 Practice</button>
-      <!-- هنا هتضيف باقي أدواتك لاحقًا -->
-      <!-- مثال:
-      <button onclick="loadTool('vocabulary.html')">📝 أداة المفردات</button>
-      -->
-    </div>
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-      <iframe id="toolFrame" src="about:blank"></iframe>
-      <div id="welcome" class="empty">
-        اختر أداة من الجانب عشان تبدأ
-      </div>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2 style="margin-bottom:20px; color:#58a6ff;">الأدوات المتاحة</h2>
+    
+    <button onclick="loadTool('french-reader.html')">📖 قارئ الفرنساوي (البراجرافات)</button>
+    <button onclick="loadTool('A0-Paragraphs.html')">📝 A0 - الفقرات</button>
+    <button onclick="loadTool('A0-Practice.html')">⚡ A0 - التدريب</button>
+    
+    <!-- أضف أدوات جديدة هنا بنفس الطريقة -->
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <iframe id="toolFrame" src="about:blank"></iframe>
+    <div id="welcome" class="welcome">
+      اختر أداة من القائمة عشان تبدأ<br>
+      <small>كل الأدوات تعمل offline بعد أول تحميل</small>
     </div>
   </div>
 
   <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+    }
+
     function loadTool(filename) {
       document.getElementById('welcome').style.display = 'none';
       document.getElementById('toolFrame').src = filename;
+      
+      // على الموبايل: نقفل السايدبار تلقائي بعد اختيار أداة
+      if (window.innerWidth < 768) {
+        toggleSidebar();
+      }
     }
+
+    // إغلاق السايدبار لو ضغط Esc
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape") {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar.classList.contains('open')) toggleSidebar();
+      }
+    });
   </script>
 </body>
 </html>
