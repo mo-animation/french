@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Mosap Tools</title>
   <style>
     :root {
-      --bg: #0a0c10;
-      --card: #161b22;
-      --accent: #58a6ff;
-      --text: #c9d1d9;
-      --text-light: #8b949e;
+      --bg: #0a0a0a;
+      --card: #121212;
+      --accent: #00b4ff;
+      --text: #e0e0e0;
+      --text-light: #aaaaaa;
+      --border: #222222;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
+
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -24,20 +29,20 @@
 
     /* Header */
     .header {
-      background: rgba(22, 27, 34, 0.95);
+      background: rgba(18, 18, 18, 0.95);
       backdrop-filter: blur(12px);
       padding: 16px 20px;
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .header h1 {
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       font-weight: 600;
       color: var(--accent);
     }
@@ -54,62 +59,63 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      transition: 0.3s;
     }
-    .menu-btn:hover { background: #21262d; }
+    .menu-btn:hover { background: #1f1f1f; }
 
     /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
-      right: -320px;
-      width: 320px;
+      right: -340px;
+      width: 340px;
       height: 100vh;
       background: var(--card);
       padding: 30px 20px;
       transition: right 0.4s ease;
       z-index: 200;
-      box-shadow: -8px 0 25px rgba(0,0,0,0.6);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.7);
     }
     .sidebar.open { right: 0; }
 
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       z-index: 150;
       display: none;
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(5px);
     }
     .overlay.show { display: block; }
 
     .sidebar h2 {
       color: var(--accent);
-      margin-bottom: 30px;
-      font-size: 1.4rem;
+      margin-bottom: 25px;
+      font-size: 1.35rem;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
     }
 
     .tool-btn {
       width: 100%;
-      padding: 18px 20px;
-      margin: 10px 0;
-      background: #21262d;
+      padding: 16px 20px;
+      margin: 8px 0;
+      background: #1a1a1a;
       color: var(--text);
-      border: 1px solid #30363d;
-      border-radius: 14px;
-      font-size: 17px;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      font-size: 16.5px;
       text-align: right;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .tool-btn:hover {
-      background: #30363d;
+      background: #242424;
       border-color: var(--accent);
-      transform: translateX(-6px);
+      transform: translateX(-5px);
     }
 
     /* Landing Page */
@@ -121,57 +127,62 @@
       justify-content: center;
       text-align: center;
       padding: 40px 20px;
-      background: linear-gradient(135deg, #0a0c10 0%, #1a2332 100%);
+      background: linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
     }
 
     .landing h1 {
-      font-size: 3.2rem;
-      margin-bottom: 16px;
+      font-size: 3.1rem;
+      margin-bottom: 12px;
       color: var(--accent);
+      font-weight: 500;
     }
 
     .landing p {
-      font-size: 1.35rem;
-      max-width: 600px;
+      font-size: 1.25rem;
+      max-width: 520px;
       color: var(--text-light);
-      margin-bottom: 40px;
+      margin-bottom: 45px;
+      line-height: 1.5;
     }
 
     .start-btn {
-      padding: 16px 40px;
-      font-size: 1.2rem;
+      padding: 16px 42px;
+      font-size: 1.15rem;
       background: var(--accent);
-      color: #0a0c10;
+      color: #0a0a0a;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
 
     .start-btn:hover {
-      transform: scale(1.05);
-      background: #7bbcff;
+      transform: scale(1.06);
+      background: #4cc6ff;
     }
 
     /* Main Content */
     .main-content {
       display: none;
       padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     iframe {
       width: 100%;
-      height: 82vh;
+      height: 84vh;
       border: none;
       border-radius: 16px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
       background: white;
     }
 
     /* Responsive */
     @media (min-width: 768px) {
       .sidebar { width: 340px; }
+      .main-content { padding: 30px; }
     }
   </style>
 </head>
@@ -206,11 +217,11 @@
   <!-- Landing Page -->
   <div class="landing" id="landing">
     <h1>Welcome to Mosap Tools</h1>
-    <p>Ma boîte à outils pédagogique personnelle<br>Apprenons et amusons-nous</p>
-    <button class="start-btn" onclick="startUsing()">Démarrer</button>
+    <p>مجموعة أدواتي التعليمية الشخصية<br>مصممة للتعلم بطريقة تفاعلية ومريحة</p>
+    <button class="start-btn" onclick="startUsing()">ابدأ الآن</button>
   </div>
 
-  <!-- Main Content Area -->
+  <!-- Main Content -->
   <div class="main-content" id="mainContent">
     <iframe id="toolFrame" src="about:blank"></iframe>
   </div>
@@ -224,16 +235,17 @@
     function startUsing() {
       document.getElementById('landing').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
-      // فتح القائمة تلقائيًا أول مرة
+      
+      // فتح السايدبار تلقائيًا بعد الدخول
       setTimeout(() => {
         toggleSidebar();
-      }, 400);
+      }, 500);
     }
 
     function loadTool(filename) {
       document.getElementById('toolFrame').src = filename;
       
-      // إغلاق السايدبار على الموبايل بعد الاختيار
+      // إغلاق السايدبار على الموبايل
       if (window.innerWidth < 768) {
         toggleSidebar();
       }
