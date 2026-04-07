@@ -36,15 +36,19 @@
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border);
+      
+      /* Changed to center the title */
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center; 
+      position: relative;
     }
 
     .header h1 {
       font-size: 1.65rem;
       font-weight: 600;
       color: var(--accent);
+      text-align: center;
     }
 
     .menu-btn {
@@ -59,6 +63,10 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
+      
+      /* Positioned to the right */
+      position: absolute;
+      right: 20px; 
     }
     .menu-btn:hover { background: #1f1f1f; }
 
@@ -236,7 +244,6 @@
       document.getElementById('landing').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
       
-      // فتح السايدبار تلقائيًا بعد الدخول
       setTimeout(() => {
         toggleSidebar();
       }, 500);
@@ -245,13 +252,10 @@
     function loadTool(filename) {
       document.getElementById('toolFrame').src = filename;
       
-      // إغلاق السايدبار على الموبايل
-      if (window.innerWidth < 768) {
-        toggleSidebar();
-      }
+      // CLOSES AUTOMATICALLY every time a tool is selected
+      toggleSidebar();
     }
 
-    // إغلاق بالـ Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === "Escape") {
         const sidebar = document.getElementById('sidebar');
