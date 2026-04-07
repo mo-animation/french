@@ -12,19 +12,20 @@
       --text: #c9d1d9;
       --text-light: #8b949e;
     }
-    
+
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      line-height: 1.6;
+      overflow-x: hidden;
     }
 
+    /* Header */
     .header {
       background: rgba(22, 27, 34, 0.95);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       padding: 16px 20px;
       position: sticky;
       top: 0;
@@ -36,7 +37,7 @@
     }
 
     .header h1 {
-      font-size: 1.55rem;
+      font-size: 1.6rem;
       font-weight: 600;
       color: var(--accent);
     }
@@ -44,7 +45,7 @@
     .menu-btn {
       background: none;
       border: none;
-      font-size: 30px;
+      font-size: 32px;
       color: var(--text);
       cursor: pointer;
       width: 50px;
@@ -53,115 +54,139 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
+      transition: 0.3s;
     }
     .menu-btn:hover { background: #21262d; }
 
+    /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
-      right: -300px;
-      width: 300px;
+      right: -320px;
+      width: 320px;
       height: 100vh;
       background: var(--card);
-      padding: 25px 20px;
+      padding: 30px 20px;
       transition: right 0.4s ease;
       z-index: 200;
-      box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+      box-shadow: -8px 0 25px rgba(0,0,0,0.6);
     }
     .sidebar.open { right: 0; }
 
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.8);
       z-index: 150;
       display: none;
-      backdrop-filter: blur(3px);
+      backdrop-filter: blur(4px);
     }
     .overlay.show { display: block; }
 
     .sidebar h2 {
       color: var(--accent);
-      margin-bottom: 25px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #30363d;
+      margin-bottom: 30px;
+      font-size: 1.4rem;
     }
 
     .tool-btn {
       width: 100%;
-      padding: 18px 16px;
-      margin: 8px 0;
+      padding: 18px 20px;
+      margin: 10px 0;
       background: #21262d;
       color: var(--text);
       border: 1px solid #30363d;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 17px;
       text-align: right;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .tool-btn:hover {
       background: #30363d;
       border-color: var(--accent);
-      transform: translateX(-4px);
+      transform: translateX(-6px);
     }
 
+    /* Landing Page */
+    .landing {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #0a0c10 0%, #1a2332 100%);
+    }
+
+    .landing h1 {
+      font-size: 3.2rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+
+    .landing p {
+      font-size: 1.35rem;
+      max-width: 600px;
+      color: var(--text-light);
+      margin-bottom: 40px;
+    }
+
+    .start-btn {
+      padding: 16px 40px;
+      font-size: 1.2rem;
+      background: var(--accent);
+      color: #0a0c10;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .start-btn:hover {
+      transform: scale(1.05);
+      background: #7bbcff;
+    }
+
+    /* Main Content */
     .main-content {
+      display: none;
       padding: 20px;
-      margin-top: 70px;
     }
 
     iframe {
       width: 100%;
-      height: 78vh;
+      height: 82vh;
       border: none;
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
       background: white;
     }
 
-    .welcome {
-      text-align: center;
-      margin-top: 120px;
-      color: var(--text-light);
-      font-size: 1.1rem;
-    }
-
-    .welcome small {
-      display: block;
-      margin-top: 12px;
-      opacity: 0.7;
-    }
-
+    /* Responsive */
     @media (min-width: 768px) {
-      .sidebar {
-        position: relative;
-        right: 0;
-        width: 300px;
-        height: auto;
-        box-shadow: none;
-      }
-      .main-content {
-        margin-top: 0;
-        padding: 30px 30px 30px 330px;
-      }
-      .menu-btn, .overlay { display: none; }
+      .sidebar { width: 340px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Header -->
   <div class="header">
     <h1>Mosap Tools</h1>
     <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   </div>
 
+  <!-- Overlay -->
   <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
+  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <h2>Available Tools</h2>
     
@@ -178,14 +203,16 @@
     </button>
   </div>
 
-  <div class="main-content">
+  <!-- Landing Page -->
+  <div class="landing" id="landing">
+    <h1>Welcome to Mosap Tools</h1>
+    <p>مجموعة أدواتي التعليمية الشخصية<br>مصممة خصيصًا لمساعدتي في التعلم بطريقة تفاعلية وممتعة</p>
+    <button class="start-btn" onclick="startUsing()">ابدأ الآن</button>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content" id="mainContent">
     <iframe id="toolFrame" src="about:blank"></iframe>
-    
-    <div id="welcome" class="welcome">
-      Welcome to my personal tools<br>
-      Choose a tool from the menu to start
-      <small>All tools work offline after first load</small>
-    </div>
   </div>
 
   <script>
@@ -194,15 +221,25 @@
       document.getElementById('overlay').classList.toggle('show');
     }
 
-    function loadTool(filename) {
-      document.getElementById('welcome').style.display = 'none';
-      document.getElementById('toolFrame').src = filename;
+    function startUsing() {
+      document.getElementById('landing').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+      // فتح القائمة تلقائيًا أول مرة
+      setTimeout(() => {
+        toggleSidebar();
+      }, 400);
+    }
 
+    function loadTool(filename) {
+      document.getElementById('toolFrame').src = filename;
+      
+      // إغلاق السايدبار على الموبايل بعد الاختيار
       if (window.innerWidth < 768) {
         toggleSidebar();
       }
     }
 
+    // إغلاق بالـ Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === "Escape") {
         const sidebar = document.getElementById('sidebar');
