@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canada Express Entry — CRS Calculator & Language Converter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --border: #30363d;
+    --border-light: #21262d;
+    --red: #f85149;
+    --maple: #d73a49;
+    --maple-glow: rgba(215,58,73,0.15);
+    --gold: #e3b341;
+    --green: #3fb950;
+    --green-glow: rgba(63,185,80,0.12);
+    --blue: #58a6ff;
+    --blue-glow: rgba(88,166,255,0.12);
+    --muted: #8b949e;
+    --text: #e6edf3;
+    --text-dim: #c9d1d9;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .maple-icon { font-size: 28px; }
+  .header-text h1 { font-size: 18px; font-weight: 600; letter-spacing: -.3px; }
+  .header-text p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .badge {
+    margin-left: auto;
+    background: var(--maple-glow);
+    border: 1px solid var(--maple);
+    color: var(--maple);
+    font-size: 11px; font-weight: 500;
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 0; padding: 0 2rem;
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 14px 18px; font-size: 13px; font-weight: 500;
+    color: var(--muted); cursor: pointer; border: none;
+    background: none; border-bottom: 2px solid transparent;
+    white-space: nowrap; transition: color .2s, border-color .2s;
+  }
+  .tab:hover { color: var(--text-dim); }
+  .tab.active { color: var(--text); border-bottom-color: var(--maple); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+  .pane { display: none; }
+  .pane.active { display: block; }
+
+  /* ── SECTIONS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 1rem; padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border-light);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title span { color: var(--maple); }
+
+  /* ── FORM ELEMENTS ── */
+  .field { margin-bottom: .9rem; }
+  .field:last-child { margin-bottom: 0; }
+  label { display: block; font-size: 13px; color: var(--text-dim); margin-bottom: 5px; }
+  label small { color: var(--muted); font-size: 11px; margin-left: 4px; }
+  select, input[type=number], input[type=text] {
+    width: 100%; padding: 8px 12px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 7px; color: var(--text); font-family: var(--font);
+    font-size: 13px; transition: border-color .2s;
+    appearance: none;
+  }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b949e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 32px; }
+  select:focus, input:focus { outline: none; border-color: var(--maple); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  /* ── RESULT BOX ── */
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+  .score-display { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .score-num { font-size: 56px; font-weight: 600; font-family: var(--mono); color: var(--text); line-height: 1; }
+  .score-denom { font-size: 20px; color: var(--muted); font-family: var(--mono); }
+  .score-label { font-size: 12px; color: var(--muted); margin-bottom: 1.25rem; }
+  .breakdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1rem; }
+  .bcard {
+    background: var(--surface2);
+    border: 1px solid var(--border-light);
+    border-radius: 8px; padding: 10px 12px;
+  }
+  .bcard .bval { font-size: 20px; font-weight: 600; font-family: var(--mono); }
+  .bcard .blbl { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.3; }
+  .status-bar {
+    padding: 10px 14px; border-radius: 7px;
+    font-size: 13px; font-weight: 500; line-height: 1.5;
+  }
+  .status-bar.good { background: var(--green-glow); border: 1px solid var(--green); color: var(--green); }
+  .status-bar.mid { background: rgba(227,179,65,.1); border: 1px solid var(--gold); color: var(--gold); }
+  .status-bar.low { background: var(--maple-glow); border: 1px solid var(--maple); color: var(--maple); }
+  .disclaimer { font-size: 11px; color: var(--muted); margin-top: .75rem; line-height: 1.6; }
+
+  /* ── LANG CONVERTER ── */
+  .converter-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width:640px) { .converter-wrap { grid-template-columns: 1fr; } .breakdown-grid { grid-template-columns: 1fr 1fr; } .grid2 { grid-template-columns: 1fr; } }
+
+  .clb-result-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+  .clb-result-row:last-child { border-bottom: none; }
+  .clb-skill { font-size: 13px; color: var(--text-dim); }
+  .clb-val {
+    font-family: var(--mono); font-size: 16px; font-weight: 600;
+    min-width: 80px; text-align: right;
+  }
+  .clb-val.c4  { color: var(--maple); }
+  .clb-val.c5  { color: #f0883e; }
+  .clb-val.c6  { color: var(--gold); }
+  .clb-val.c7  { color: #79c0ff; }
+  .clb-val.c8  { color: var(--blue); }
+  .clb-val.c9  { color: var(--green); }
+  .clb-val.c10 { color: #56d364; }
+  .clb-val.c-  { color: var(--muted); }
+
+  .min-tag {
+    font-size: 10px; padding: 2px 7px; border-radius: 10px;
+    margin-left: 8px; font-weight: 500;
+  }
+  .min-tag.pass { background: var(--green-glow); color: var(--green); border: 1px solid var(--green); }
+  .min-tag.fail { background: var(--maple-glow); color: var(--maple); border: 1px solid var(--maple); }
+
+  .test-input-row { display: flex; align-items: center; gap: 8px; margin-bottom: .7rem; }
+  .test-input-row label { min-width: 90px; margin-bottom: 0; white-space: nowrap; }
+  .test-input-row input { max-width: 110px; text-align: center; }
+  .test-input-row .clb-pill {
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    min-width: 60px; text-align: center;
+    padding: 6px 10px; border-radius: 6px;
+    background: var(--surface2); border: 1px solid var(--border);
+  }
+
+  .ref-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: .5rem; }
+  .ref-table th { color: var(--muted); font-weight: 500; text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  .ref-table td { padding: 5px 8px; border-bottom: 1px solid var(--border-light); color: var(--text-dim); font-family: var(--mono); font-size: 12px; }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table .clb-col { color: var(--blue); font-weight: 600; }
+
+  .section-note { font-size: 12px; color: var(--muted); margin-bottom: .75rem; line-height: 1.6; padding: 8px 12px; background: var(--surface2); border-radius: 6px; border-left: 3px solid var(--border); }
+
+  .overall-clb-box {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px; margin-top: 1rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .overall-clb-box .oc-num { font-size: 36px; font-weight: 600; font-family: var(--mono); }
+  .overall-clb-box .oc-text p { font-size: 11px; color: var(--muted); }
+  .overall-clb-box .oc-text strong { font-size: 14px; }
+  .divider { height: 1px; background: var(--border-light); margin: .75rem 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="maple-icon">🍁</div>
+  <div class="header-text">
+    <h1>Canada Express Entry Suite</h1>
+    <p>CRS Calculator · IELTS · PTE Core · TCF Canada → CLB Converter</p>
+  </div>
+  <div class="badge">Updated March 2025</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('crs')">CRS Calculator</button>
+  <button class="tab" onclick="showTab('ielts')">IELTS → CLB</button>
+  <button class="tab" onclick="showTab('pte')">PTE Core → CLB</button>
+  <button class="tab" onclick="showTab('tcf')">TCF Canada → CLB</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 1 — CRS CALCULATOR
+═══════════════════════════════════════════════════ -->
+<div class="main">
+<div id="pane-crs" class="pane active">
+
+  <!-- A: Personal Info -->
+  <div class="card">
+    <div class="card-title"><span>A</span> Core — personal info</div>
+    <div class="grid2">
+      <div class="field">
+        <label>Marital status</label>
+        <select id="marital" onchange="calcCRS()">
+          <option value="single">Single / divorced / widowed</option>
+          <option value="married">Married / common-law (coming to Canada)</option>
+          <option value="married_nc">Married / partner (NOT coming or is Canadian PR/citizen)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Your age</label>
+        <select id="age" onchange="calcCRS()">
+          <option value="17">17 or under</option>
+          <option value="18">18</option><option value="19">19</option>
+          <option value="20">20–29</option><option value="30">30</option>
+          <option value="31">31</option><option value="32">32</option>
+          <option value="33">33</option><option value="34">34</option>
+          <option value="35">35</option><option value="36">36</option>
+          <option value="37">37</option><option value="38">38</option>
+          <option value="39">39</option><option value="40">40</option>
+          <option value="41">41</option><option value="42">42</option>
+          <option value="43">43</option><option value="44">44</option>
+          <option value="45">45 or older</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Highest level of education</label>
+      <select id="edu" onchange="calcCRS()">
+        <option value="0">Less than high school</option>
+        <option value="hs">High school diploma</option>
+        <option value="1yr">1-year post-secondary certificate / diploma</option>
+        <option value="2yr">2-year post-secondary certificate / diploma</option>
+        <option value="bach">Bachelor's degree or 3+ year program</option>
+        <option value="two_deg">Two or more degrees (one must be 3+ years)</option>
+        <option value="masters">Master's or professional degree (medicine, law, etc.)</option>
+        <option value="phd">PhD / doctoral degree</option>
+      </select>
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>Canadian work experience <small>(in Canada, for Canadian employer)</small></label>
+        <select id="cdn_work" onchange="calcCRS()">
+          <option value="0">None / less than 1 year</option>
+          <option value="1">1 year</option><option value="2">2 years</option>
+          <option value="3">3 years</option><option value="4">4 years</option>
+          <option value="5">5 years or more</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Foreign work experience <small>(outside Canada, skilled NOC TEER 0–3)</small></label>
+        <select id="for_work" onchange="calcCRS()">
+          <option value="0">None</option>
+          <option value="1">1–2 years</option>
+          <option value="3">3 years or more</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- B: Language -->
+  <div class="card">
+    <div class="card-title"><span>B</span> First official language (English or French)</div>
+    <p class="section-note">Enter your CLB level per skill. Use the converters (tabs above) to get your CLB from IELTS, PTE Core, or TCF Canada.</p>
+    <div class="grid2">
+      <div class="field"><label>Speaking</label>
+        <select id="l1s" onchange="calcCRS()">
+          <option value="0">Below CLB 4</option><option value="4">CLB 4–5</option>
+          <option value="6">CLB 6</option><option value="7">CLB 7</option>
+          <option value="8">CLB 8</option><option value="9">CLB 9</option>
+          <option value="10">CLB 10+</option>
+        </select>
+      </div>
+      <div class="field"><label>Listening</label>
+        <select id="l1l" onchange="calcCRS()">
+          <option value="0">Below CLB 4</option><option value="4">CLB 4–5</option>
+          <option value="6">CLB 6</option><option value="7">CLB 7</option>
+          <option value="8">CLB 8</option><option value="9">CLB 9</option>
+          <option value="10">CLB 10+</option>
+        </select>
+      </div>
+      <div class="field"><label>Reading</label>
+        <select id="l1r" onchange="calcCRS()">
+          <option value="0">Below CLB 4</option><option value="4">CLB 4–5</option>
+          <option value="6">CLB 6</option><option value="7">CLB 7</option>
+          <option value="8">CLB 8</option><option value="9">CLB 9</option>
+          <option value="10">CLB 10+</option>
+        </select>
+      </div>
+      <div class="field"><label>Writing</label>
+        <select id="l1w" onchange="calcCRS()">
+          <option value="0">Below CLB 4</option><option value="4">CLB 4–5</option>
+          <option value="6">CLB 6</option><option value="7">CLB 7</option>
+          <option value="8">CLB 8</option><option value="9">CLB 9</option>
+          <option value="10">CLB 10+</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- C: Second Language -->
+  <div class="card">
+    <div class="card-title"><span>C</span> Second official language (optional)</div>
+    <p class="section-note">Only if you took tests in BOTH English and French. Select the CLB for your second language.</p>
+    <div class="grid2">
+      <div class="field"><label>Speaking</label>
+        <select id="l2s" onchange="calcCRS()">
+          <option value="0">None / CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+      <div class="field"><label>Listening</label>
+        <select id="l2l" onchange="calcCRS()">
+          <option value="0">None / CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+      <div class="field"><label>Reading</label>
+        <select id="l2r" onchange="calcCRS()">
+          <option value="0">None / CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+      <div class="field"><label>Writing</label>
+        <select id="l2w" onchange="calcCRS()">
+          <option value="0">None / CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- D: Spouse -->
+  <div class="card" id="spouse_section" style="display:none">
+    <div class="card-title"><span>D</span> Spouse / common-law partner factors</div>
+    <div class="grid2">
+      <div class="field">
+        <label>Spouse's education</label>
+        <select id="sp_edu" onchange="calcCRS()">
+          <option value="0">Less than high school</option>
+          <option value="hs">High school diploma</option>
+          <option value="1yr">1-year post-secondary</option>
+          <option value="2yr">2-year post-secondary</option>
+          <option value="bach">Bachelor's or 3+ year</option>
+          <option value="two_deg">Two or more degrees (one 3+ years)</option>
+          <option value="masters">Master's or professional degree</option>
+          <option value="phd">PhD</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Spouse's Canadian work experience</label>
+        <select id="sp_work" onchange="calcCRS()">
+          <option value="0">None / less than 1 year</option>
+          <option value="1">1 year</option><option value="2">2 years</option>
+          <option value="3">3 years</option><option value="4">4 years</option>
+          <option value="5">5 years or more</option>
+        </select>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:.75rem;">Spouse's first official language CLB levels:</p>
+    <div class="grid2">
+      <div class="field"><label>Speaking</label>
+        <select id="sp_ls" onchange="calcCRS()">
+          <option value="0">CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+      <div class="field"><label>Listening</label>
+        <select id="sp_ll" onchange="calcCRS()">
+          <option value="0">CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+      <div class="field"><label>Reading</label>
+        <select id="sp_lr" onchange="calcCRS()">
+          <option value="0">CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+      <div class="field"><label>Writing</label>
+        <select id="sp_lw" onchange="calcCRS()">
+          <option value="0">CLB 4 or less</option><option value="5">CLB 5–6</option>
+          <option value="7">CLB 7–8</option><option value="9">CLB 9+</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- E: Additional -->
+  <div class="card">
+    <div class="card-title"><span>E</span> Additional points</div>
+    <div class="grid2">
+      <div class="field">
+        <label>Post-secondary education in Canada</label>
+        <select id="cdn_edu" onchange="calcCRS()">
+          <option value="0">None</option>
+          <option value="15">1 or 2 year credential in Canada</option>
+          <option value="30">3+ year credential in Canada</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Sibling in Canada (18+, citizen or PR)?</label>
+        <select id="sibling" onchange="calcCRS()">
+          <option value="0">No</option>
+          <option value="15">Yes — 15 points</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>French language skills (NCLC/TCF/TEF)</label>
+        <select id="french" onchange="calcCRS()">
+          <option value="0">NCLC below 7 in any skill / no French test</option>
+          <option value="25">NCLC 7+ all French skills + English CLB 4 or lower / no English</option>
+          <option value="50">NCLC 7+ all French skills + English CLB 5+ all skills</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Provincial / territorial nomination (PNP)</label>
+        <select id="pnp" onchange="calcCRS()">
+          <option value="0">No nomination</option>
+          <option value="600">Yes — +600 points</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Trade certificate of qualification <small>(trade occupations only)</small></label>
+        <select id="trade_cert" onchange="calcCRS()">
+          <option value="0">No / not applicable</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-card">
+    <div class="score-display">
+      <span class="score-num" id="total_score">0</span>
+      <span class="score-denom">/ 1,200</span>
+    </div>
+    <div class="score-label">Estimated CRS score</div>
+    <div class="breakdown-grid">
+      <div class="bcard"><div class="bval" id="b_core">0</div><div class="blbl">Core human capital</div></div>
+      <div class="bcard"><div class="bval" id="b_spouse">0</div><div class="blbl">Spouse factors</div></div>
+      <div class="bcard"><div class="bval" id="b_skill">0</div><div class="blbl">Skill transferability</div></div>
+      <div class="bcard"><div class="bval" id="b_extra">0</div><div class="blbl">Additional points</div></div>
+    </div>
+    <div class="status-bar" id="status_bar"></div>
+    <p class="disclaimer">Estimate based on official IRCC point tables (canada.ca). Job offer points removed March 25, 2025. Actual score determined by IRCC upon profile submission. Test results valid for 2 years.</p>
+  </div>
+
+</div><!-- end pane-crs -->
+
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 2 — IELTS → CLB
+═══════════════════════════════════════════════════ -->
+<div id="pane-ielts" class="pane">
+  <div class="converter-wrap">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>IELTS</span> General Training → CLB</div>
+        <p class="section-note">Enter each band score (4.0 – 9.0). Only IELTS General Training is accepted — not Academic.</p>
+
+        <div class="test-input-row">
+          <label>Speaking</label>
+          <input type="number" id="ielts_s" min="0" max="9" step="0.5" placeholder="e.g. 7.0" oninput="calcIELTS()">
+          <div class="clb-pill" id="ip_s">—</div>
+        </div>
+        <div class="test-input-row">
+          <label>Listening</label>
+          <input type="number" id="ielts_l" min="0" max="9" step="0.5" placeholder="e.g. 7.5" oninput="calcIELTS()">
+          <div class="clb-pill" id="ip_l">—</div>
+        </div>
+        <div class="test-input-row">
+          <label>Reading</label>
+          <input type="number" id="ielts_r" min="0" max="9" step="0.5" placeholder="e.g. 6.5" oninput="calcIELTS()">
+          <div class="clb-pill" id="ip_r">—</div>
+        </div>
+        <div class="test-input-row">
+          <label>Writing</label>
+          <input type="number" id="ielts_w" min="0" max="9" step="0.5" placeholder="e.g. 7.0" oninput="calcIELTS()">
+          <div class="clb-pill" id="ip_w">—</div>
+        </div>
+
+        <div class="overall-clb-box" id="ielts_overall" style="display:none">
+          <div class="oc-num" id="ielts_oc">—</div>
+          <div class="oc-text">
+            <strong>Overall CLB (lowest skill)</strong>
+            <p>Used for program eligibility. CRS points are calculated per skill individually.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">IELTS GT → CLB reference table</div>
+        <table class="ref-table">
+          <thead><tr><th class="clb-col">CLB</th><th>Speaking</th><th>Listening</th><th>Reading</th><th>Writing</th></tr></thead>
+          <tbody>
+            <tr><td class="clb-col">4</td><td>4.0</td><td>4.5</td><td>3.5</td><td>4.0</td></tr>
+            <tr><td class="clb-col">5</td><td>5.0</td><td>5.0</td><td>4.0</td><td>5.0</td></tr>
+            <tr><td class="clb-col">6</td><td>5.5</td><td>5.5</td><td>5.0</td><td>5.5</td></tr>
+            <tr><td class="clb-col">7</td><td>6.0</td><td>6.0</td><td>6.0</td><td>6.0</td></tr>
+            <tr><td class="clb-col">8</td><td>6.5</td><td>7.5</td><td>6.5</td><td>6.5</td></tr>
+            <tr><td class="clb-col">9</td><td>7.0</td><td>8.0</td><td>7.0</td><td>7.0</td></tr>
+            <tr><td class="clb-col">10</td><td>7.5</td><td>8.5</td><td>8.0</td><td>7.5</td></tr>
+            <tr><td class="clb-col">11</td><td>8.0</td><td>9.0</td><td>8.5</td><td>8.0</td></tr>
+            <tr><td class="clb-col">12</td><td>9.0</td><td>9.0</td><td>9.0</td><td>9.0</td></tr>
+          </tbody>
+        </table>
+        <p class="disclaimer" style="margin-top:.75rem">Scores shown are minimum thresholds for that CLB level. Source: IRCC Language Test Equivalency Charts (canada.ca).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 3 — PTE CORE → CLB
+═══════════════════════════════════════════════════ -->
+<div id="pane-pte" class="pane">
+  <div class="converter-wrap">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>PTE Core</span> → CLB</div>
+        <p class="section-note">Enter your PTE Core scores (10–90 per skill). Only PTE Core is accepted — not PTE Academic.</p>
+
+        <div class="test-input-row">
+          <label>Speaking</label>
+          <input type="number" id="pte_s" min="10" max="90" step="1" placeholder="e.g. 68" oninput="calcPTE()">
+          <div class="clb-pill" id="pp_s">—</div>
+        </div>
+        <div class="test-input-row">
+          <label>Listening</label>
+          <input type="number" id="pte_l" min="10" max="90" step="1" placeholder="e.g. 71" oninput="calcPTE()">
+          <div class="clb-pill" id="pp_l">—</div>
+        </div>
+        <div class="test-input-row">
+          <label>Reading</label>
+          <input type="number" id="pte_r" min="10" max="90" step="1" placeholder="e.g. 60" oninput="calcPTE()">
+          <div class="clb-pill" id="pp_r">—</div>
+        </div>
+        <div class="test-input-row">
+          <label>Writing</label>
+          <input type="number" id="pte_w" min="10" max="90" step="1" placeholder="e.g. 69" oninput="calcPTE()">
+          <div class="clb-pill" id="pp_w">—</div>
+        </div>
+
+        <div class="overall-clb-box" id="pte_overall" style="display:none">
+          <div class="oc-num" id="pte_oc">—</div>
+          <div class="oc-text">
+            <strong>Overall CLB (lowest skill)</strong>
+            <p>Used for program eligibility. CRS points calculated per skill individually.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">PTE Core → CLB reference table</div>
+        <table class="ref-table">
+          <thead><tr><th class="clb-col">CLB</th><th>Speaking</th><th>Listening</th><th>Reading</th><th>Writing</th></tr></thead>
+          <tbody>
+            <tr><td class="clb-col">4</td><td>18–27</td><td>18–27</td><td>18–24</td><td>24–32</td></tr>
+            <tr><td class="clb-col">5</td><td>28–37</td><td>28–34</td><td>25–32</td><td>33–41</td></tr>
+            <tr><td class="clb-col">6</td><td>38–50</td><td>35–50</td><td>33–41</td><td>42–50</td></tr>
+            <tr><td class="clb-col">7</td><td>51–67</td><td>51–59</td><td>42–59</td><td>51–68</td></tr>
+            <tr><td class="clb-col">8</td><td>68–75</td><td>60–70</td><td>60–68</td><td>69–78</td></tr>
+            <tr><td class="clb-col">9</td><td>76–83</td><td>71–81</td><td>69–77</td><td>79–87</td></tr>
+            <tr><td class="clb-col">10</td><td>84–89</td><td>82–88</td><td>78–87</td><td>88–90</td></tr>
+            <tr><td class="clb-col">11–12</td><td>90</td><td>89–90</td><td>88–90</td><td>90</td></tr>
+          </tbody>
+        </table>
+        <p class="disclaimer" style="margin-top:.75rem">Source: Pearson PTE Core official CLB equivalency table (Jan 2024), referenced by IRCC. PTE Core approved by IRCC November 2023.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 4 — TCF CANADA → CLB (NCLC)
+═══════════════════════════════════════════════════ -->
+<div id="pane-tcf" class="pane">
+  <div class="converter-wrap">
+    <div>
+      <div class="card">
+        <div class="card-title"><span>TCF Canada</span> → CLB / NCLC</div>
+        <p class="section-note">TCF Canada uses two score scales: Listening & Reading use 100–699 numerical scores. Speaking & Writing use levels 0–20. Enter your scores below.</p>
+
+        <div class="field">
+          <label>Speaking <small>(TCF level 0–20)</small></label>
+          <input type="number" id="tcf_s" min="0" max="20" step="1" placeholder="e.g. 10" oninput="calcTCF()">
+        </div>
+        <div class="field">
+          <label>Listening <small>(TCF score 100–699)</small></label>
+          <input type="number" id="tcf_l" min="100" max="699" step="1" placeholder="e.g. 458" oninput="calcTCF()">
+        </div>
+        <div class="field">
+          <label>Reading <small>(TCF score 100–699)</small></label>
+          <input type="number" id="tcf_r" min="100" max="699" step="1" placeholder="e.g. 453" oninput="calcTCF()">
+        </div>
+        <div class="field">
+          <label>Writing <small>(TCF level 1–20)</small></label>
+          <input type="number" id="tcf_w" min="1" max="20" step="1" placeholder="e.g. 9" oninput="calcTCF()">
+        </div>
+
+        <div class="divider"></div>
+        <div class="clb-result-row"><span class="clb-skill">Speaking</span><span class="clb-val" id="tc_s">—</span></div>
+        <div class="clb-result-row"><span class="clb-skill">Listening</span><span class="clb-val" id="tc_l">—</span></div>
+        <div class="clb-result-row"><span class="clb-skill">Reading</span><span class="clb-val" id="tc_r">—</span></div>
+        <div class="clb-result-row"><span class="clb-skill">Writing</span><span class="clb-val" id="tc_w">—</span></div>
+
+        <div class="overall-clb-box" id="tcf_overall" style="display:none">
+          <div class="oc-num" id="tcf_oc">—</div>
+          <div class="oc-text">
+            <strong>Overall NCLC (lowest skill)</strong>
+            <p>French proficiency is measured as NCLC (equivalent to CLB). Used for CRS French bonus points.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">TCF Canada → NCLC/CLB reference table</div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:.75rem">Listening & Reading: numerical score. Speaking & Writing: level.</p>
+        <table class="ref-table">
+          <thead><tr><th class="clb-col">NCLC</th><th>Speaking (level)</th><th>Listening (score)</th><th>Reading (score)</th><th>Writing (level)</th></tr></thead>
+          <tbody>
+            <tr><td class="clb-col">4</td><td>4–5</td><td>331–368</td><td>331–368</td><td>4–5</td></tr>
+            <tr><td class="clb-col">5</td><td>6–7</td><td>369–397</td><td>369–397</td><td>6–7</td></tr>
+            <tr><td class="clb-col">6</td><td>8–9</td><td>398–457</td><td>398–452</td><td>8–9</td></tr>
+            <tr><td class="clb-col">7</td><td>10–11</td><td>458–502</td><td>453–498</td><td>10–11</td></tr>
+            <tr><td class="clb-col">8</td><td>12–13</td><td>503–540</td><td>499–523</td><td>12–13</td></tr>
+            <tr><td class="clb-col">9</td><td>14–15</td><td>541–573</td><td>524–548</td><td>14–15</td></tr>
+            <tr><td class="clb-col">10</td><td>16–17</td><td>574–613</td><td>549–574</td><td>16–17</td></tr>
+            <tr><td class="clb-col">11</td><td>18–19</td><td>614–668</td><td>575–634</td><td>18–19</td></tr>
+            <tr><td class="clb-col">12</td><td>20</td><td>669–699</td><td>635–699</td><td>20</td></tr>
+          </tbody>
+        </table>
+        <p class="disclaimer" style="margin-top:.75rem">Source: IRCC Language Test Equivalency Charts (canada.ca). TCF Canada is one of two approved French tests for federal immigration (with TEF Canada).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end .main -->
+
+<script>
+/* ═══════════ CRS LOGIC ═══════════ */
+const WS_AGE = {17:0,18:90,19:95,20:100,30:95,31:90,32:85,33:80,34:75,35:70,36:65,37:60,38:55,39:50,40:45,41:35,42:25,43:15,44:5,45:0};
+const NO_AGE = {17:0,18:99,19:105,20:110,30:105,31:99,32:94,33:88,34:83,35:77,36:72,37:66,38:61,39:55,40:50,41:39,42:28,43:17,44:6,45:0};
+const WS_EDU = {0:0,hs:28,'1yr':84,'2yr':91,bach:112,two_deg:119,masters:126,phd:140};
+const NO_EDU = {0:0,hs:30,'1yr':90,'2yr':98,bach:120,two_deg:128,masters:135,phd:150};
+const SP_EDU = {0:0,hs:2,'1yr':6,'2yr':7,bach:8,two_deg:9,masters:10,phd:10};
+const SP_WRK = {0:0,1:5,2:7,3:8,4:9,5:10};
+const CDN_WS  = {0:0,1:35,2:46,3:56,4:63,5:70};
+const CDN_NO  = {0:0,1:40,2:53,3:64,4:72,5:80};
+
+function l1Pts(clb,sp){const m={0:0,4:6,6:sp?8:9,7:sp?16:17,8:sp?22:23,9:sp?29:31,10:sp?32:34};return m[clb]||0;}
+function l2Pts(clb){const m={0:0,5:1,7:3,9:6};return m[clb]||0;}
+function spLangPts(clb){const m={0:0,5:1,7:3,9:5};return m[clb]||0;}
+function isPost(e){return['1yr','2yr','bach','two_deg','masters','phd'].includes(e);}
+function isTwoPlus(e){return['two_deg','masters','phd'].includes(e);}
+
+function skillTransfer(edu,cdn,foreign,l1arr,trade){
+  const clbs=l1arr.map(Number), mn=Math.min(...clbs);
+  const a7=mn>=7, a9=mn>=9, c=parseInt(cdn), f=parseInt(foreign);
+  let pts=0;
+  if(isPost(edu)){
+    let eL=0,eC=0;
+    if(a7){eL=isTwoPlus(edu)?(a9?50:25):(a9?25:13);}
+    if(c>=1){eC=isTwoPlus(edu)?(c>=2?50:25):(c>=2?25:13);}
+    pts+=Math.min(50,Math.max(eL,eC));
+  }
+  if(f>0){
+    let fL=0,fC=0;
+    if(a7){fL=f>=3?(a9?50:25):(a9?25:13);}
+    if(c>=1){fC=f>=3?(c>=2?50:25):(c>=2?25:13);}
+    pts+=Math.min(50,Math.max(fL,fC));
+  }
+  if(trade==='yes'&&mn>=7){pts+=Math.min(50,mn>=7?50:25);}
+  return Math.min(100,pts);
+}
+
+function calcCRS(){
+  const mar=document.getElementById('marital').value;
+  const sp=mar==='married', noSp=mar!=='married';
+  document.getElementById('spouse_section').style.display=sp?'block':'none';
+
+  const ageKey=document.getElementById('age').value;
+  const agePts=noSp?NO_AGE[ageKey]:WS_AGE[ageKey];
+  const edu=document.getElementById('edu').value;
+  const eduPts=noSp?NO_EDU[edu]:WS_EDU[edu];
+  const l1=[document.getElementById('l1s').value,document.getElementById('l1l').value,document.getElementById('l1r').value,document.getElementById('l1w').value];
+  let lang1=0;l1.forEach(v=>lang1+=l1Pts(parseInt(v),!noSp));lang1=Math.min(noSp?136:128,lang1);
+  const l2=[document.getElementById('l2s').value,document.getElementById('l2l').value,document.getElementById('l2r').value,document.getElementById('l2w').value];
+  let lang2=l2.reduce((s,v)=>s+l2Pts(parseInt(v)),0);lang2=Math.min(noSp?24:22,lang2);
+  const cdnW=parseInt(document.getElementById('cdn_work').value);
+  const cdnWPts=noSp?CDN_NO[cdnW]:CDN_WS[cdnW];
+  const core=agePts+eduPts+lang1+lang2+cdnWPts;
+
+  let spousePts=0;
+  if(sp){
+    const spE=document.getElementById('sp_edu').value;
+    const spW=parseInt(document.getElementById('sp_work').value);
+    const spL=[document.getElementById('sp_ls').value,document.getElementById('sp_ll').value,document.getElementById('sp_lr').value,document.getElementById('sp_lw').value];
+    const spLT=Math.min(20,spL.reduce((s,v)=>s+spLangPts(parseInt(v)),0));
+    spousePts=Math.min(40,SP_EDU[spE]+SP_WRK[spW]+spLT);
+  }
+
+  const forW=document.getElementById('for_work').value;
+  const trade=document.getElementById('trade_cert').value;
+  const skill=skillTransfer(edu,cdnW,forW,l1,trade);
+  const extra=Math.min(600,parseInt(document.getElementById('cdn_edu').value)+parseInt(document.getElementById('sibling').value)+parseInt(document.getElementById('french').value)+parseInt(document.getElementById('pnp').value));
+  const total=core+spousePts+skill+extra;
+
+  document.getElementById('total_score').textContent=total;
+  document.getElementById('b_core').textContent=core;
+  document.getElementById('b_spouse').textContent=spousePts;
+  document.getElementById('b_skill').textContent=skill;
+  document.getElementById('b_extra').textContent=extra;
+  const sb=document.getElementById('status_bar');
+  if(total>=480){sb.className='status-bar good';sb.textContent='Strong score — competitive for recent general draws (cut-off ~470–495). Consider submitting your profile soon.';}
+  else if(total>=400){sb.className='status-bar mid';sb.textContent='Moderate score — may qualify for category-based draws (healthcare, trades, French, STEM). Check current IRCC draw history.';}
+  else{sb.className='status-bar low';sb.textContent='Score is below recent cut-offs. Consider improving language scores (aim CLB 9+), gaining Canadian experience, or pursuing a PNP.';}
+}
+
+/* ═══════════ IELTS → CLB ═══════════ */
+/* Thresholds: minimum score to reach that CLB */
+const IELTS_TBL = {
+  s: [[4.0,4],[5.0,5],[5.5,6],[6.0,7],[6.5,8],[7.0,9],[7.5,10],[8.0,11],[9.0,12]],
+  l: [[4.5,4],[5.0,5],[5.5,6],[6.0,7],[7.5,8],[8.0,9],[8.5,10],[9.0,11]],
+  r: [[3.5,4],[4.0,5],[5.0,6],[6.0,7],[6.5,8],[7.0,9],[8.0,10],[8.5,11],[9.0,12]],
+  w: [[4.0,4],[5.0,5],[5.5,6],[6.0,7],[6.5,8],[7.0,9],[7.5,10],[8.0,11],[9.0,12]]
+};
+function scoreToClb(val,tbl){
+  if(isNaN(val)||val===''||val===null)return null;
+  let clb=null;
+  for(let[min,c]of tbl){if(val>=min)clb=c;}
+  return clb;
+}
+function clbColor(c){if(!c)return 'c-';if(c<=4)return 'c4';if(c===5)return 'c5';if(c===6)return 'c6';if(c===7)return 'c7';if(c===8)return 'c8';if(c===9)return 'c9';return 'c10';}
+function setClbPill(id,clb){
+  const el=document.getElementById(id);
+  el.textContent=clb?'CLB '+clb:'—';
+  el.className='clb-pill '+clbColor(clb);
+}
+
+function calcIELTS(){
+  const vals={s:parseFloat(document.getElementById('ielts_s').value),l:parseFloat(document.getElementById('ielts_l').value),r:parseFloat(document.getElementById('ielts_r').value),w:parseFloat(document.getElementById('ielts_w').value)};
+  const clbs={s:scoreToClb(vals.s,IELTS_TBL.s),l:scoreToClb(vals.l,IELTS_TBL.l),r:scoreToClb(vals.r,IELTS_TBL.r),w:scoreToClb(vals.w,IELTS_TBL.w)};
+  setClbPill('ip_s',clbs.s);setClbPill('ip_l',clbs.l);setClbPill('ip_r',clbs.r);setClbPill('ip_w',clbs.w);
+  const all=Object.values(clbs).filter(v=>v!==null);
+  const ob=document.getElementById('ielts_overall');
+  if(all.length===4){const mn=Math.min(...all);document.getElementById('ielts_oc').textContent='CLB '+mn;document.getElementById('ielts_oc').className='oc-num '+clbColor(mn);ob.style.display='flex';}
+  else{ob.style.display='none';}
+}
+
+/* ═══════════ PTE CORE → CLB ═══════════ */
+const PTE_TBL = {
+  s: [[18,4],[28,5],[38,6],[51,7],[68,8],[76,9],[84,10],[90,11]],
+  l: [[18,4],[28,5],[35,6],[51,7],[60,8],[71,9],[82,10],[89,11]],
+  r: [[18,4],[25,5],[33,6],[42,7],[60,8],[69,9],[78,10],[88,11]],
+  w: [[24,4],[33,5],[42,6],[51,7],[69,8],[79,9],[88,10],[90,11]]
+};
+function calcPTE(){
+  const vals={s:parseFloat(document.getElementById('pte_s').value),l:parseFloat(document.getElementById('pte_l').value),r:parseFloat(document.getElementById('pte_r').value),w:parseFloat(document.getElementById('pte_w').value)};
+  const clbs={s:scoreToClb(vals.s,PTE_TBL.s),l:scoreToClb(vals.l,PTE_TBL.l),r:scoreToClb(vals.r,PTE_TBL.r),w:scoreToClb(vals.w,PTE_TBL.w)};
+  setClbPill('pp_s',clbs.s);setClbPill('pp_l',clbs.l);setClbPill('pp_r',clbs.r);setClbPill('pp_w',clbs.w);
+  const all=Object.values(clbs).filter(v=>v!==null);
+  const ob=document.getElementById('pte_overall');
+  if(all.length===4){const mn=Math.min(...all);document.getElementById('pte_oc').textContent='CLB '+mn;document.getElementById('pte_oc').className='oc-num '+clbColor(mn);ob.style.display='flex';}
+  else{ob.style.display='none';}
+}
+
+/* ═══════════ TCF CANADA → NCLC ═══════════ */
+/* Speaking: level → NCLC */
+function tcfSpeakToNclc(v){if(isNaN(v))return null;if(v>=20)return 12;if(v>=18)return 11;if(v>=16)return 10;if(v>=14)return 9;if(v>=12)return 8;if(v>=10)return 7;if(v>=8)return 6;if(v>=6)return 5;if(v>=4)return 4;return null;}
+/* Listening: numerical score → NCLC */
+function tcfListenToNclc(v){if(isNaN(v))return null;if(v>=669)return 12;if(v>=614)return 11;if(v>=574)return 10;if(v>=541)return 9;if(v>=503)return 8;if(v>=458)return 7;if(v>=398)return 6;if(v>=369)return 5;if(v>=331)return 4;return null;}
+/* Reading: numerical score → NCLC */
+function tcfReadToNclc(v){if(isNaN(v))return null;if(v>=635)return 12;if(v>=575)return 11;if(v>=549)return 10;if(v>=524)return 9;if(v>=499)return 8;if(v>=453)return 7;if(v>=398)return 6;if(v>=369)return 5;if(v>=331)return 4;return null;}
+/* Writing: level → NCLC */
+function tcfWriteToNclc(v){if(isNaN(v))return null;if(v>=20)return 12;if(v>=18)return 11;if(v>=16)return 10;if(v>=14)return 9;if(v>=12)return 8;if(v>=10)return 7;if(v>=8)return 6;if(v>=6)return 5;if(v>=4)return 4;return null;}
+
+function setClbText(id,clb){
+  const el=document.getElementById(id);
+  if(clb){el.textContent='NCLC '+clb;el.className='clb-val '+clbColor(clb);}
+  else{el.textContent='—';el.className='clb-val c-';}
+}
+
+function calcTCF(){
+  const sv=parseFloat(document.getElementById('tcf_s').value);
+  const lv=parseFloat(document.getElementById('tcf_l').value);
+  const rv=parseFloat(document.getElementById('tcf_r').value);
+  const wv=parseFloat(document.getElementById('tcf_w').value);
+  const cs=tcfSpeakToNclc(sv),cl=tcfListenToNclc(lv),cr=tcfReadToNclc(rv),cw=tcfWriteToNclc(wv);
+  setClbText('tc_s',cs);setClbText('tc_l',cl);setClbText('tc_r',cr);setClbText('tc_w',cw);
+  const all=[cs,cl,cr,cw].filter(v=>v!==null);
+  const ob=document.getElementById('tcf_overall');
+  if(all.length===4){const mn=Math.min(...all);document.getElementById('tcf_oc').textContent='NCLC '+mn;document.getElementById('tcf_oc').className='oc-num '+clbColor(mn);ob.style.display='flex';}
+  else{ob.style.display='none';}
+}
+
+/* ═══════════ TAB SWITCHING ═══════════ */
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pane-'+id).classList.add('active');
+  const idx={'crs':0,'ielts':1,'pte':2,'tcf':3}[id];
+  document.querySelectorAll('.tab')[idx].classList.add('active');
+}
+
+calcCRS();
+</script>
+</body>
+</html>
